@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brasaland | Sabor a la parrilla en Colombia y Florida</title>
+    <meta
+      name="description"
+      content="Brasaland es una cadena de restaurantes a la parrilla con 14 sedes en Colombia y Florida, enfocada en sabor consistente, servicio calido y cocina rapida."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Brasaland | Sabor a la parrilla en Colombia y Florida" />
+    <meta
+      property="og:description"
+      content="Conoce las sedes Brasaland, los destacados del menu y unete a nuestra comunidad de clientes."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Space Grotesk", "sans-serif"],
+              body: ["IBM Plex Sans", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                cream: "#fff7e9",
+                ember: "#b54516",
+                charcoal: "#111827",
+                smoke: "#374151",
+                mint: "#d7f4e0",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Brasaland",
+        "description": "Cadena de restaurantes a la parrilla en Colombia y Estados Unidos.",
+        "url": "https://brasaland.example.com",
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "Brasaland"
+        },
+        "email": "hola@brasaland.com",
+        "telephone": "+57 604 555 0190",
+        "servesCuisine": ["Colombian", "Latin American", "Grill"],
+        "priceRange": "$$",
+        "address": [
+          {
+            "@type": "PostalAddress",
+            "addressLocality": "Medellin",
+            "addressCountry": "CO"
+          },
+          {
+            "@type": "PostalAddress",
+            "addressLocality": "Miami",
+            "addressRegion": "FL",
+            "addressCountry": "US"
+          }
+        ],
+        "areaServed": ["CO", "US"],
+        "industry": "Restaurants"
+      }
+    </script>
+  </head>
+  <body class="bg-brand-cream font-body text-brand-charcoal antialiased">
+    <a
+      href="#contenido-principal"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold"
+      >Saltar al contenido principal</a
+    >
+
+    <header class="sticky top-0 z-40 border-b border-brand-charcoal/10 bg-brand-cream/90 backdrop-blur">
+      <nav class="mx-auto max-w-6xl px-6 py-4" aria-label="Navegacion principal">
+        <div class="flex items-center justify-between">
+          <a href="#" class="font-display text-xl font-bold tracking-tight">Brasaland</a>
+          <ul class="hidden items-center gap-8 text-sm font-medium md:flex">
+            <li><a href="#menu" class="hover:text-brand-ember focus-visible:text-brand-ember">Menu</a></li>
+            <li><a href="#sedes" class="hover:text-brand-ember focus-visible:text-brand-ember">Sedes</a></li>
+            <li><a href="#comunidad" class="hover:text-brand-ember focus-visible:text-brand-ember">Brasa Points</a></li>
+            <li><a href="#contacto" class="hover:text-brand-ember focus-visible:text-brand-ember">Contacto</a></li>
+            <li><a href="index.html" lang="en" hreflang="en" class="rounded-full border border-brand-charcoal/20 px-3 py-1 hover:bg-white">EN</a></li>
+          </ul>
+          <div class="flex items-center gap-3 md:hidden">
+            <a
+              href="apply.es.html"
+              class="rounded-full bg-brand-charcoal px-4 py-2 text-sm font-semibold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              >Unirme</a
+            >
+            <button
+              id="mobile-menu-button"
+              type="button"
+              class="rounded-md border border-brand-charcoal/20 p-2"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
+              aria-label="Abrir menu"
+            >
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+          <a
+            href="apply.es.html"
+            class="hidden rounded-full bg-brand-charcoal px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:inline-flex"
+            >Unete ahora</a
+          >
+        </div>
+        <div id="mobile-menu" class="mt-4 hidden border-t border-brand-charcoal/10 pt-4 md:hidden">
+          <ul class="space-y-2 text-sm font-medium">
+            <li><a href="#menu" class="block rounded-lg px-3 py-2 hover:bg-white">Menu</a></li>
+            <li><a href="#sedes" class="block rounded-lg px-3 py-2 hover:bg-white">Sedes</a></li>
+            <li><a href="#comunidad" class="block rounded-lg px-3 py-2 hover:bg-white">Brasa Points</a></li>
+            <li><a href="#contacto" class="block rounded-lg px-3 py-2 hover:bg-white">Contacto</a></li>
+            <li><a href="index.html" lang="en" hreflang="en" class="block rounded-lg px-3 py-2 hover:bg-white">View in English</a></li>
+            <li><a href="apply.es.html" class="block rounded-lg px-3 py-2 hover:bg-white">Registro de clientes</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenido-principal">
+      <section class="relative overflow-hidden">
+        <div class="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-orange-300/30 blur-3xl" aria-hidden="true"></div>
+        <div class="pointer-events-none absolute -right-20 top-24 h-72 w-72 rounded-full bg-emerald-300/25 blur-3xl" aria-hidden="true"></div>
+
+        <div class="mx-auto grid max-w-6xl items-center gap-14 px-6 py-20 md:grid-cols-2 md:py-24">
+          <div>
+            <p class="mb-4 inline-flex rounded-full border border-brand-charcoal/20 px-4 py-1 text-sm font-semibold">
+              Desde 2008: sabor a la parrilla, servicio calido y cocina rapida
+            </p>
+            <h1 class="font-display text-4xl font-bold leading-tight md:text-6xl">
+              El mismo sabor Brasaland en Medellin y Miami.
+            </h1>
+            <p class="mt-6 max-w-xl text-lg leading-relaxed text-brand-smoke">
+              Somos una cadena de 14 restaurantes a la parrilla construida sobre tres promesas: sabor consistente, hospitalidad cercana y velocidad en cocina. Unete a nuestra comunidad para recibir novedades y beneficios.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a
+                href="apply.es.html"
+                class="rounded-full bg-brand-ember px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                >Unirme a la comunidad</a
+              >
+              <a
+                href="#menu"
+                class="rounded-full border border-brand-charcoal/30 px-6 py-3 text-sm font-semibold transition hover:border-brand-charcoal hover:bg-white"
+                >Ver destacados del menu</a
+              >
+            </div>
+          </div>
+
+          <article class="rounded-3xl border border-brand-charcoal/10 bg-white p-6 shadow-xl shadow-brand-charcoal/5" aria-label="Platos insignia">
+            <img
+              src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=1200&q=80"
+              alt="Hamburguesa a la parrilla con papas en mesa rustica"
+              class="h-56 w-full rounded-2xl object-cover"
+            />
+            <div class="mt-4 grid grid-cols-2 gap-3">
+              <img
+                src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
+                alt="Primer plano de una hamburguesa con queso derretido"
+                class="h-36 w-full rounded-xl object-cover"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+                alt="Interior de restaurante con ambiente calido y clientes"
+                class="h-36 w-full rounded-xl object-cover"
+              />
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="menu" class="mx-auto max-w-6xl px-6 py-14 md:py-20" aria-labelledby="menu-titulo">
+        <div class="max-w-3xl">
+          <h2 id="menu-titulo" class="font-display text-3xl font-bold md:text-4xl">Lo que hace que nuestros clientes vuelvan</h2>
+          <p class="mt-4 text-lg text-brand-smoke">
+            Cuidamos consistencia, velocidad y sabor en cada sede.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          <article class="rounded-2xl border border-brand-charcoal/10 bg-white p-6">
+            <h3 class="font-display text-xl font-semibold">Menu insignia a la parrilla</h3>
+            <p class="mt-3 text-brand-smoke">Desde hamburguesas hasta favoritos de parrilla, la receta mantiene el mismo estandar en cada ciudad.</p>
+          </article>
+          <article class="rounded-2xl border border-brand-charcoal/10 bg-white p-6">
+            <h3 class="font-display text-xl font-semibold">Cocina rapida, servicio cercano</h3>
+            <p class="mt-3 text-brand-smoke">La disciplina operativa reduce tiempos de espera sin perder calidad.</p>
+          </article>
+          <article class="rounded-2xl border border-brand-charcoal/10 bg-white p-6">
+            <h3 class="font-display text-xl font-semibold">Brasa Points con valor real</h3>
+            <p class="mt-3 text-brand-smoke">Unete para recibir ofertas, novedades y una experiencia digital de pedidos mas fluida.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="sedes" class="bg-brand-charcoal px-6 py-16 text-white md:py-20" aria-labelledby="sedes-titulo">
+        <div class="mx-auto max-w-6xl">
+          <h2 id="sedes-titulo" class="font-display text-3xl font-bold md:text-4xl">14 sedes, un solo estandar</h2>
+          <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <article class="rounded-2xl border border-white/20 bg-white/5 p-6">
+              <h3 class="font-semibold">Medellin</h3>
+              <p class="mt-3 text-sm text-white/80">Nuestra ciudad de origen y centro operativo, donde empezo Brasaland en 2008.</p>
+            </article>
+            <article class="rounded-2xl border border-white/20 bg-white/5 p-6">
+              <h3 class="font-semibold">Miami</h3>
+              <p class="mt-3 text-sm text-white/80">Nuestra base en Florida, con el mismo sabor Brasaland para el mercado de EE.UU.</p>
+            </article>
+            <article class="rounded-2xl border border-white/20 bg-white/5 p-6">
+              <h3 class="font-semibold">Dos mercados, una experiencia</h3>
+              <p class="mt-3 text-sm text-white/80">Servicio bilingue y procesos consistentes entre paises y monedas.</p>
+            </article>
+            <article id="comunidad" class="rounded-2xl border border-white/20 bg-white/5 p-6 lg:col-span-3">
+              <h3 class="font-semibold">Comunidad Brasa Points</h3>
+              <p class="mt-3 text-sm text-white/80">Estamos pasando de tarjetas fisicas a una experiencia digital. Registrate y ayudanos a construirla contigo.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" class="mx-auto max-w-6xl px-6 py-16 md:py-20" aria-labelledby="contacto-titulo">
+        <div class="grid gap-8 rounded-3xl border border-brand-charcoal/10 bg-white p-8 shadow-lg shadow-brand-charcoal/5 md:grid-cols-[2fr_1fr] md:items-center">
+          <div>
+            <h2 id="contacto-titulo" class="font-display text-3xl font-bold">Mantente cerca de Brasaland</h2>
+            <p class="mt-4 max-w-2xl text-brand-smoke">
+              Registrate para recibir novedades de menu, anuncios de sedes y actualizaciones de Brasa Points.
+            </p>
+            <a
+              href="apply.es.html"
+              class="mt-6 inline-flex rounded-full bg-brand-charcoal px-6 py-3 text-sm font-semibold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              >Abrir registro</a
+            >
+          </div>
+          <address class="not-italic text-sm leading-7 text-brand-smoke" aria-label="Datos de contacto de la empresa">
+            <p class="font-semibold text-brand-charcoal">Brasaland</p>
+            <p>Sede Medellin + Oficina operativa Miami</p>
+            <p><a href="mailto:hola@brasaland.com" class="underline hover:text-brand-charcoal">hola@brasaland.com</a></p>
+            <p><a href="tel:+576045550190" class="underline hover:text-brand-charcoal">+57 (604) 555-0190</a></p>
+          </address>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-brand-charcoal/10 bg-white">
+      <div class="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-8 text-sm text-brand-smoke md:flex-row md:items-center md:justify-between">
+        <p>© 2026 Brasaland. Sabor a la parrilla con servicio calido en cada sede.</p>
+        <p>
+          <a href="index.es.html" class="underline hover:text-brand-charcoal">Inicio</a>
+          |
+          <a href="apply.es.html" class="underline hover:text-brand-charcoal">Registro</a>
+          |
+          <a href="index.html" lang="en" hreflang="en" class="underline hover:text-brand-charcoal">English</a>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const menuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      if (menuButton && mobileMenu) {
+        menuButton.addEventListener("click", () => {
+          const expanded = menuButton.getAttribute("aria-expanded") === "true";
+          menuButton.setAttribute("aria-expanded", String(!expanded));
+          mobileMenu.classList.toggle("hidden", expanded);
+        });
+      }
+    </script>
+  </body>
+</html>
