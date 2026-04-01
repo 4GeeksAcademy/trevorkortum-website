@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,9 +90,9 @@
                 <!-- Desktop Navigation -->
                 <nav aria-label="Main navigation" class="hidden md:flex items-center gap-x-8 text-sm font-medium">
                     <a href="index.html" class="text-slate-700 hover:text-brand-600 transition-colors">Home</a>
-                    <a href="#" class="text-slate-700 hover:text-brand-600 transition-colors">Menu</a>
-                    <a href="#" class="text-slate-700 hover:text-brand-600 transition-colors">Locations</a>
-                    <a href="#" class="text-slate-700 hover:text-brand-600 transition-colors">Our Story</a>
+                    <a href="#menu" class="text-slate-700 hover:text-brand-600 transition-colors">Menu</a>
+                    <a href="#locations" class="text-slate-700 hover:text-brand-600 transition-colors">Locations</a>
+                    <a href="#our-story" class="text-slate-700 hover:text-brand-600 transition-colors">Our Story</a>
                     <a href="application.html" 
                        class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-2xl font-semibold transition-colors">
                         Join Brasa Points
@@ -115,9 +115,9 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4">
             <nav aria-label="Mobile navigation" class="flex flex-col gap-y-4 text-sm font-medium">
                 <a href="index.html" class="py-2 text-slate-700">Home</a>
-                <a href="#" class="py-2 text-slate-700">Menu</a>
-                <a href="#" class="py-2 text-slate-700">Locations</a>
-                <a href="#" class="py-2 text-slate-700">Our Story</a>
+                <a href="#menu" class="py-2 text-slate-700">Menu</a>
+                <a href="#locations" class="py-2 text-slate-700">Locations</a>
+                <a href="#our-story" class="py-2 text-slate-700">Our Story</a>
                 <a href="application.html" class="bg-brand-600 text-white py-3 text-center rounded-2xl font-semibold">Join Brasa Points</a>
             </nav>
         </div>
@@ -140,7 +140,7 @@
                        class="inline-flex items-center bg-white text-brand-700 hover:bg-brand-50 px-8 py-4 rounded-3xl font-semibold text-lg transition-colors">
                         Join Brasa Points → 
                     </a>
-                    <a href="#" 
+                    <a href="#locations" 
                        class="inline-flex items-center border border-white/70 hover:bg-white/10 px-8 py-4 rounded-3xl font-medium text-lg transition-colors">
                         See our locations
                     </a>
@@ -171,7 +171,7 @@
     </section>
 
     <!-- SECTION 1: Our Story / Experience -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section id="our-story" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 scroll-mt-24">
         <div class="grid md:grid-cols-12 gap-12 items-center">
             <div class="md:col-span-5">
                 <h2 class="text-4xl font-bold tracking-tight text-slate-900 mb-6">From one family grill to 14 restaurants across two countries</h2>
@@ -207,7 +207,7 @@
     </section>
 
     <!-- SECTION 2: Why Choose Brasaland (benefits + features) -->
-    <section class="bg-white py-20">
+    <section id="menu" class="bg-white py-20 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <span class="px-4 py-2 bg-brand-50 text-brand-700 text-sm font-medium rounded-3xl">Why customers love us</span>
@@ -269,6 +269,30 @@
         </div>
     </section>
 
+    <!-- SECTION 4: Locations -->
+    <section id="locations" class="bg-white py-20 scroll-mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="px-4 py-2 bg-brand-50 text-brand-700 text-sm font-medium rounded-3xl">Where to find us</span>
+                <h2 class="text-4xl font-bold tracking-tight mt-4">Brasaland locations in Colombia and Florida</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <article class="bg-stone-100 rounded-3xl p-8">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-2">Medellin</h3>
+                    <p class="text-slate-600">Our headquarters city, with multiple high-traffic stores and full menu availability.</p>
+                </article>
+                <article class="bg-stone-100 rounded-3xl p-8">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-2">Bogota</h3>
+                    <p class="text-slate-600">Consistent flavor and quick service in one of Colombia's busiest urban hubs.</p>
+                </article>
+                <article class="bg-stone-100 rounded-3xl p-8">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-2">Miami</h3>
+                    <p class="text-slate-600">Brickell and Wynwood stores bring the same Brasaland grill experience to Florida.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- CALL TO ACTION banner -->
     <div class="bg-canopy-600 text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
@@ -296,7 +320,7 @@
                 <div class="md:col-span-2">
                     <h4 class="font-medium text-white mb-4">Company</h4>
                     <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="hover:text-white">Our Story</a></li>
+                        <li><a href="#our-story" class="hover:text-white">Our Story</a></li>
                         <li><a href="#" class="hover:text-white">Leadership</a></li>
                         <li><a href="#" class="hover:text-white">Careers</a></li>
                     </ul>
