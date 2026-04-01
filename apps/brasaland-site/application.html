@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brasaland • Join Brasa Points</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function initializeTailwind() {
+            tailwind.config = {
+                content: ["./**/*.{html,js}"],
+                theme: {
+                    extend: {
+                        colors: {
+                            brand: {
+                                50: "#f7f2e8",
+                                500: "#b06a3a",
+                                600: "#94552e",
+                                700: "#783f23"
+                            },
+                            canopy: {
+                                600: "#4f6546"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-100 font-sans text-slate-800">
+    <!-- Same header as index.html (copy-pasted for self-contained page) -->
+    <header class="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-5">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-10 h-10 bg-brand-600 rounded-2xl flex items-center justify-center text-white text-2xl">🔥</div>
+                    <a href="index.html" class="text-3xl font-bold tracking-tight text-slate-900">Brasaland</a>
+                </div>
+                <nav aria-label="Main navigation" class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                    <a href="index.html" class="text-slate-700 hover:text-brand-600">Home</a>
+                    <a href="#" class="text-slate-700 hover:text-brand-600">Menu</a>
+                    <a href="#" class="text-slate-700 hover:text-brand-600">Locations</a>
+                    <a href="index.html" class="text-slate-700 hover:text-brand-600">Back to Home</a>
+                </nav>
+                <button id="mobile-menu-btn" class="md:hidden w-11 h-11 text-slate-700" aria-label="Toggle mobile menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-2xl mx-auto px-4 py-12">
+            <div class="bg-white/95 rounded-3xl shadow-xl p-8 md:p-12 border border-brand-50">
+            <h1 class="text-4xl font-bold text-center mb-2">Join Brasa Points</h1>
+            <p class="text-center text-slate-600 mb-10">Sign up for our loyalty program and enjoy exclusive offers, free items, and personalized recommendations across all 14 locations.</p>
+
+            <form id="application-form" novalidate>
+                <!-- Fieldset 1: Personal Information -->
+                <fieldset class="border border-slate-200 rounded-2xl p-6 mb-8">
+                    <legend class="font-semibold text-lg px-4 text-slate-700">Personal Information</legend>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- first_name -->
+                        <div>
+                            <label for="first_name" class="block text-sm font-medium text-slate-700 mb-1">First Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="first_name" name="first_name" required
+                                   class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-0 outline-none">
+                            <p id="first_name_error" class="text-red-500 text-sm mt-1 hidden"></p>
+                        </div>
+                        
+                        <!-- last_name -->
+                        <div>
+                            <label for="last_name" class="block text-sm font-medium text-slate-700 mb-1">Last Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="last_name" name="last_name" required
+                                   class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-0 outline-none">
+                            <p id="last_name_error" class="text-red-500 text-sm mt-1 hidden"></p>
+                        </div>
+                    </div>
+
+                    <!-- email -->
+                    <div class="mt-6">
+                        <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email Address <span class="text-red-500">*</span></label>
+                        <input type="email" id="email" name="email" required
+                               class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-0 outline-none">
+                        <p id="email_error" class="text-red-500 text-sm mt-1 hidden"></p>
+                    </div>
+
+                    <!-- phone -->
+                    <div class="mt-6">
+                        <label for="phone" class="block text-sm font-medium text-slate-700 mb-1">Phone Number <span class="text-red-500">*</span></label>
+                        <input type="tel" id="phone" name="phone" required pattern="^\+?\d{10,15}$"
+                               class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-0 outline-none"
+                               placeholder="+57 300 123 4567 or +1 305 123 4567">
+                        <p id="phone_error" class="text-red-500 text-sm mt-1 hidden"></p>
+                    </div>
+                </fieldset>
+
+                <!-- Fieldset 2: Preferences (domain-specific) -->
+                <fieldset class="border border-slate-200 rounded-2xl p-6 mb-8">
+                    <legend class="font-semibold text-lg px-4 text-slate-700">Your Preferences</legend>
+                    
+                    <!-- preferred_country -->
+                    <div class="mb-6">
+                        <label for="preferred_country" class="block text-sm font-medium text-slate-700 mb-1">Preferred Country <span class="text-red-500">*</span></label>
+                        <select id="preferred_country" name="preferred_country" required
+                                class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-0 outline-none">
+                            <option value="">Select country...</option>
+                            <option value="Colombia">Colombia</option>
+                            <option value="United States">United States</option>
+                        </select>
+                        <p id="preferred_country_error" class="text-red-500 text-sm mt-1 hidden"></p>
+                    </div>
+
+                    <!-- preferred_location (domain cities) -->
+                    <div class="mb-6">
+                        <label for="preferred_location" class="block text-sm font-medium text-slate-700 mb-1">Preferred Restaurant Location</label>
+                        <select id="preferred_location" name="preferred_location"
+                                class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-0 outline-none">
+                            <option value="">Any location is fine</option>
+                            <option value="Medellín Downtown">Medellín Downtown</option>
+                            <option value="Bogotá">Bogotá</option>
+                            <option value="Miami Brickell">Miami Brickell</option>
+                            <option value="Miami Wynwood">Miami Wynwood</option>
+                        </select>
+                    </div>
+
+                    <!-- favorite_grill_item -->
+                    <div>
+                        <label for="favorite_grill_item" class="block text-sm font-medium text-slate-700 mb-1">Favorite Grill Item</label>
+                        <select id="favorite_grill_item" name="favorite_grill_item"
+                                class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-0 outline-none">
+                            <option value="">Choose one...</option>
+                            <option value="Colombian Cheeseburger">Colombian Cheeseburger</option>
+                            <option value="Grilled Arepas">Grilled Arepas</option>
+                            <option value="Churrasco Steak">Churrasco Steak</option>
+                            <option value="Pollo a la Parrilla">Pollo a la Parrilla</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <!-- How did you hear -->
+                <div class="mb-8">
+                    <label for="how_did_you_hear" class="block text-sm font-medium text-slate-700 mb-1">How did you hear about us?</label>
+                    <select id="how_did_you_hear" name="how_did_you_hear"
+                            class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-0 outline-none">
+                        <option value="">Select option...</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="Friend or family">Friend or family</option>
+                        <option value="Google">Google search</option>
+                        <option value="In-store visit">In-store visit</option>
+                    </select>
+                </div>
+
+                <!-- Submit & Clear buttons -->
+                <div class="flex gap-4">
+                        <button type="submit"
+                            class="flex-1 bg-canopy-600 hover:bg-brand-700 text-white font-semibold py-4 rounded-3xl transition-colors">
+                        Submit Application
+                    </button>
+                    <button type="button" id="clear-form"
+                            class="flex-1 border border-slate-300 hover:bg-slate-50 font-medium py-4 rounded-3xl transition-colors">
+                        Clear Form
+                    </button>
+                </div>
+            </form>
+
+            <!-- Success message container -->
+            <div id="success-message" class="hidden mt-8 bg-green-50 border border-green-200 text-green-800 rounded-3xl p-8 text-center">
+                <h3 class="text-2xl font-bold mb-2">🎉 Welcome to Brasa Points!</h3>
+                <p class="text-green-700">Your application has been received. You will receive your digital loyalty card by email shortly. Thank you for choosing Brasaland!</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        initializeTailwind()
+    </script>
+    <script src="validation.js"></script>
+</body>
+</html>

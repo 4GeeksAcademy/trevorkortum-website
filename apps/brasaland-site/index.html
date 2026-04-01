@@ -1,283 +1,356 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brasaland | Fire-Grilled Flavor Across Colombia and Florida</title>
-    <meta
-      name="description"
-      content="Brasaland is a fire-grilled restaurant chain with 14 locations across Colombia and Florida, serving consistent flavor, warm service, and fast kitchen execution."
-    />
-    <meta name="robots" content="index,follow" />
-    <meta property="og:title" content="Brasaland | Fire-Grilled Flavor Across Colombia and Florida" />
-    <meta
-      property="og:description"
-      content="Explore Brasaland locations, menu highlights, and join our guest community for loyalty and updates."
-    />
-    <meta property="og:type" content="website" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Brasaland - Authentic Colombian grilled food with the same taste in Medellín and Miami. 14 locations, 15 years of consistent quality.">
+    <title>Brasaland • Grilled to Perfection in Colombia &amp; Florida</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ["Space Grotesk", "sans-serif"],
-              body: ["IBM Plex Sans", "sans-serif"],
-            },
-            colors: {
-              brand: {
-                cream: "#fff7e9",
-                ember: "#b54516",
-                charcoal: "#111827",
-                smoke: "#374151",
-                mint: "#d7f4e0",
-              },
-            },
-          },
-        },
-      };
+        // Tailwind configuration - subtle South America-inspired earth palette
+        function initializeTailwind() {
+            tailwind.config = {
+                content: ["./**/*.{html,js}"],
+                theme: {
+                    extend: {
+                        colors: {
+                            brand: {
+                                50: "#f7f2e8",
+                                300: "#d5b79b",
+                                500: "#b06a3a",
+                                600: "#94552e",
+                                700: "#783f23"
+                            },
+                            canopy: {
+                                500: "#5f7753",
+                                600: "#4f6546"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     </script>
+    <!-- Schema.org Organization markup (exact requirement) -->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Restaurant",
-        "name": "Brasaland",
-        "description": "Fire-grilled restaurant chain operating across Colombia and the United States.",
-        "url": "https://brasaland.example.com",
-        "parentOrganization": {
-          "@type": "Organization",
-          "name": "Brasaland"
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Brasaland",
+      "description": "Grilled food restaurant chain founded in 2008 in Medellín, Colombia. 14 company-owned locations across Colombia and Florida (USA). Consistent taste, warm service, fast kitchen.",
+      "url": "https://brasaland.example.com",
+      "logo": "https://brasaland.example.com/logo.png",
+      "foundingDate": "2008",
+      "founder": {
+        "@type": "Person",
+        "name": "Mariana Restrepo"
+      },
+      "address": [
+        {
+          "@type": "PostalAddress",
+          "streetAddress": "Carrera 43 # 10-25",
+          "addressLocality": "Medellín",
+          "addressRegion": "Antioquia",
+          "postalCode": "050001",
+          "addressCountry": "CO"
         },
-        "email": "hola@brasaland.com",
-        "telephone": "+57 604 555 0190",
-        "servesCuisine": ["Colombian", "Latin American", "Grill"],
-        "priceRange": "$$",
-        "address": [
-          {
-            "@type": "PostalAddress",
-            "addressLocality": "Medellin",
-            "addressCountry": "CO"
-          },
-          {
-            "@type": "PostalAddress",
-            "addressLocality": "Miami",
-            "addressRegion": "FL",
-            "addressCountry": "US"
-          }
-        ],
-        "areaServed": ["CO", "US"],
-        "industry": "Restaurants"
-      }
+        {
+          "@type": "PostalAddress",
+          "streetAddress": "123 Brickell Ave",
+          "addressLocality": "Miami",
+          "addressRegion": "Florida",
+          "postalCode": "33131",
+          "addressCountry": "US"
+        }
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+57-300-1234567",
+        "contactType": "customer service",
+        "email": "hello@brasaland.com"
+      },
+      "sameAs": [
+        "https://instagram.com/brasaland",
+        "https://facebook.com/brasaland"
+      ]
+    }
     </script>
-  </head>
-  <body class="bg-brand-cream font-body text-brand-charcoal antialiased">
-    <a
-      href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold"
-      >Skip to main content</a
-    >
+</head>
+<body class="bg-stone-100 font-sans antialiased text-slate-800">
+    <!-- HEADER - semantic + ARIA + responsive -->
+    <header class="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-5">
+                <!-- Logo / Name -->
+                <div class="flex items-center gap-x-3">
+                    <div class="w-10 h-10 bg-brand-600 rounded-2xl flex items-center justify-center text-white text-2xl">🔥</div>
+                    <a href="index.html" class="text-3xl font-bold tracking-tight text-slate-900">Brasaland</a>
+                </div>
 
-    <header class="sticky top-0 z-40 border-b border-brand-charcoal/10 bg-brand-cream/90 backdrop-blur">
-      <nav class="mx-auto max-w-6xl px-6 py-4" aria-label="Main navigation">
-        <div class="flex items-center justify-between">
-          <a href="#" class="font-display text-xl font-bold tracking-tight">Brasaland</a>
-          <ul class="hidden items-center gap-8 text-sm font-medium md:flex">
-            <li><a href="#menu" class="hover:text-brand-ember focus-visible:text-brand-ember">Menu</a></li>
-            <li><a href="#locations" class="hover:text-brand-ember focus-visible:text-brand-ember">Locations</a></li>
-            <li><a href="#community" class="hover:text-brand-ember focus-visible:text-brand-ember">Brasa Points</a></li>
-            <li><a href="#contact" class="hover:text-brand-ember focus-visible:text-brand-ember">Contact</a></li>
-            <li><a href="index.es.html" lang="es" hreflang="es" class="rounded-full border border-brand-charcoal/20 px-3 py-1 hover:bg-white">ES</a></li>
-          </ul>
-          <div class="flex items-center gap-3 md:hidden">
-            <a
-              href="apply.html"
-              class="rounded-full bg-brand-charcoal px-4 py-2 text-sm font-semibold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-              >Join</a
-            >
-            <button
-              id="mobile-menu-button"
-              type="button"
-              class="rounded-md border border-brand-charcoal/20 p-2"
-              aria-expanded="false"
-              aria-controls="mobile-menu"
-              aria-label="Toggle menu"
-            >
-              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-          <a
-            href="apply.html"
-            class="hidden rounded-full bg-brand-charcoal px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:inline-flex"
-            >Join now</a
-          >
+                <!-- Desktop Navigation -->
+                <nav aria-label="Main navigation" class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                    <a href="index.html" class="text-slate-700 hover:text-brand-600 transition-colors">Home</a>
+                    <a href="#" class="text-slate-700 hover:text-brand-600 transition-colors">Menu</a>
+                    <a href="#" class="text-slate-700 hover:text-brand-600 transition-colors">Locations</a>
+                    <a href="#" class="text-slate-700 hover:text-brand-600 transition-colors">Our Story</a>
+                    <a href="application.html" 
+                       class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-2xl font-semibold transition-colors">
+                        Join Brasa Points
+                    </a>
+                </nav>
+
+                <!-- Mobile Hamburger -->
+                <button id="mobile-menu-btn"
+                        class="md:hidden flex items-center justify-center w-11 h-11 text-slate-700 hover:text-brand-600"
+                        aria-label="Toggle mobile menu"
+                        aria-expanded="false">
+                    <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
         </div>
-        <div id="mobile-menu" class="mt-4 hidden border-t border-brand-charcoal/10 pt-4 md:hidden">
-          <ul class="space-y-2 text-sm font-medium">
-            <li><a href="#menu" class="block rounded-lg px-3 py-2 hover:bg-white">Menu</a></li>
-            <li><a href="#locations" class="block rounded-lg px-3 py-2 hover:bg-white">Locations</a></li>
-            <li><a href="#community" class="block rounded-lg px-3 py-2 hover:bg-white">Brasa Points</a></li>
-            <li><a href="#contact" class="block rounded-lg px-3 py-2 hover:bg-white">Contact</a></li>
-            <li><a href="index.es.html" lang="es" hreflang="es" class="block rounded-lg px-3 py-2 hover:bg-white">Ver en espanol</a></li>
-            <li><a href="apply.html" class="block rounded-lg px-3 py-2 hover:bg-white">Guest sign-up</a></li>
-          </ul>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4">
+            <nav aria-label="Mobile navigation" class="flex flex-col gap-y-4 text-sm font-medium">
+                <a href="index.html" class="py-2 text-slate-700">Home</a>
+                <a href="#" class="py-2 text-slate-700">Menu</a>
+                <a href="#" class="py-2 text-slate-700">Locations</a>
+                <a href="#" class="py-2 text-slate-700">Our Story</a>
+                <a href="application.html" class="bg-brand-600 text-white py-3 text-center rounded-2xl font-semibold">Join Brasa Points</a>
+            </nav>
         </div>
-      </nav>
     </header>
 
-    <main id="main-content">
-      <section class="relative overflow-hidden">
-        <div class="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-orange-300/30 blur-3xl" aria-hidden="true"></div>
-        <div class="pointer-events-none absolute -right-20 top-24 h-72 w-72 rounded-full bg-emerald-300/25 blur-3xl" aria-hidden="true"></div>
-
-        <div class="mx-auto grid max-w-6xl items-center gap-14 px-6 py-20 md:grid-cols-2 md:py-24">
-          <div>
-            <p class="mb-4 inline-flex rounded-full border border-brand-charcoal/20 px-4 py-1 text-sm font-semibold">
-              Since 2008: grilled flavor, warm service, real consistency
-            </p>
-            <h1 class="font-display text-4xl font-bold leading-tight md:text-6xl">
-              One Brasaland taste, whether you order in Medellin or Miami.
-            </h1>
-            <p class="mt-6 max-w-xl text-lg leading-relaxed text-brand-smoke">
-              We are a 14-location fire-grilled restaurant chain built on three promises: consistent taste, warm hospitality, and a fast kitchen. Join our guest community to get news, perks, and product updates first.
-            </p>
-            <div class="mt-8 flex flex-wrap gap-4">
-              <a
-                href="apply.html"
-                class="rounded-full bg-brand-ember px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                >Join our guest list</a
-              >
-              <a
-                href="#menu"
-                class="rounded-full border border-brand-charcoal/30 px-6 py-3 text-sm font-semibold transition hover:border-brand-charcoal hover:bg-white"
-                >See menu highlights</a
-              >
+    <!-- HERO SECTION - value proposition -->
+    <section class="bg-gradient-to-br from-brand-700 to-canopy-600 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <p class="uppercase tracking-[2px] text-brand-300 text-sm font-medium mb-3">Since 2008 • Medellín → Miami</p>
+                <h1 class="text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6">
+                    The same flame.<br>The same taste.<br>Wherever you are.
+                </h1>
+                <p class="text-xl md:text-2xl text-stone-100 max-w-md mb-8">
+                    14 restaurants • Colombia &amp; Florida • 115 team members<br>
+                    Authentic Colombian grilled food that feels like home in every location.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="application.html"
+                       class="inline-flex items-center bg-white text-brand-700 hover:bg-brand-50 px-8 py-4 rounded-3xl font-semibold text-lg transition-colors">
+                        Join Brasa Points → 
+                    </a>
+                    <a href="#" 
+                       class="inline-flex items-center border border-white/70 hover:bg-white/10 px-8 py-4 rounded-3xl font-medium text-lg transition-colors">
+                        See our locations
+                    </a>
+                </div>
+                <div class="mt-10 flex items-center gap-x-8 text-sm">
+                    <div class="flex -space-x-4">
+                        <div class="w-8 h-8 bg-white/20 rounded-2xl flex items-center justify-center text-xs ring-2 ring-white">🇨🇴</div>
+                        <div class="w-8 h-8 bg-white/20 rounded-2xl flex items-center justify-center text-xs ring-2 ring-white">🇺🇸</div>
+                    </div>
+                    <p class="text-stone-100">Trusted in <span class="font-semibold">2 countries • 14 cities</span></p>
+                </div>
             </div>
-          </div>
-
-          <article class="rounded-3xl border border-brand-charcoal/10 bg-white p-6 shadow-xl shadow-brand-charcoal/5" aria-label="Signature dishes">
-            <img
-              src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=1200&q=80"
-              alt="Fire-grilled burger with fries on a rustic table"
-              class="h-56 w-full rounded-2xl object-cover"
-            />
-            <div class="mt-4 grid grid-cols-2 gap-3">
-              <img
-                src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
-                alt="Close-up of a stacked burger with melted cheese"
-                class="h-36 w-full rounded-xl object-cover"
-              />
-              <img
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
-                alt="Busy restaurant interior with warm lights and guests"
-                class="h-36 w-full rounded-xl object-cover"
-              />
+            
+            <!-- Hero visual -->
+            <div class="relative">
+                 <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=1200&q=80" 
+                     alt="Flame-grilled meat platter with Colombian sides served on a rustic table"
+                     class="rounded-3xl shadow-2xl w-full object-cover aspect-video">
+                <div class="absolute -bottom-6 -left-6 bg-white text-slate-900 px-6 py-4 rounded-3xl shadow-xl flex items-center gap-x-3">
+                    <div class="text-4xl">⭐️⭐️⭐️⭐️⭐️</div>
+                    <div>
+                        <p class="font-semibold">“Best grilled food I’ve had in Miami and Medellín”</p>
+                        <p class="text-sm text-slate-500">— Maria López, loyal customer</p>
+                    </div>
+                </div>
             </div>
-          </article>
         </div>
-      </section>
+    </section>
 
-      <section id="menu" class="mx-auto max-w-6xl px-6 py-14 md:py-20" aria-labelledby="menu-title">
-        <div class="max-w-3xl">
-          <h2 id="menu-title" class="font-display text-3xl font-bold md:text-4xl">What keeps guests coming back</h2>
-          <p class="mt-4 text-lg text-brand-smoke">
-            We obsess over consistency, speed, and flavor at every location.
-          </p>
+    <!-- SECTION 1: Our Story / Experience -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-5">
+                <h2 class="text-4xl font-bold tracking-tight text-slate-900 mb-6">From one family grill to 14 restaurants across two countries</h2>
+                <p class="text-lg text-slate-600 mb-8">Founded in 2008 in Medellín by the Restrepo family. Today we employ 115 people and serve the same consistent Colombian grilled flavors in both Colombia and Florida.</p>
+                <div class="flex items-center gap-8">
+                    <div>
+                        <div class="text-brand-600 text-5xl font-bold">14</div>
+                        <div class="uppercase text-xs tracking-widest">Locations</div>
+                    </div>
+                    <div>
+                        <div class="text-brand-600 text-5xl font-bold">6M</div>
+                        <div class="uppercase text-xs tracking-widest">Annual revenue (USD)</div>
+                    </div>
+                    <div>
+                        <div class="text-brand-600 text-5xl font-bold">115</div>
+                        <div class="uppercase text-xs tracking-widest">Team members</div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:col-span-7">
+                <div class="grid grid-cols-2 gap-6">
+                    <article class="bg-white rounded-3xl p-8 shadow-sm">
+                        <h3 class="font-semibold text-xl mb-3">Same taste guarantee</h3>
+                        <p class="text-slate-600">Every burger, every arepa, every grilled chicken tastes identical whether you’re in Medellín downtown or Brickell Miami.</p>
+                    </article>
+                    <article class="bg-white rounded-3xl p-8 shadow-sm">
+                        <h3 class="font-semibold text-xl mb-3">Warm service, fast kitchen</h3>
+                        <p class="text-slate-600">Our three non-negotiables: consistent flavor, genuine hospitality, lightning-fast service.</p>
+                    </article>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="mt-10 grid gap-6 md:grid-cols-3">
-          <article class="rounded-2xl border border-brand-charcoal/10 bg-white p-6">
-            <h3 class="font-display text-xl font-semibold">Signature grilled menu</h3>
-            <p class="mt-3 text-brand-smoke">From burgers to grilled favorites, every recipe is designed to taste the same in every city.</p>
-          </article>
-          <article class="rounded-2xl border border-brand-charcoal/10 bg-white p-6">
-            <h3 class="font-display text-xl font-semibold">Fast kitchen, fresh service</h3>
-            <p class="mt-3 text-brand-smoke">Operational discipline keeps wait times low while preserving quality and warmth.</p>
-          </article>
-          <article class="rounded-2xl border border-brand-charcoal/10 bg-white p-6">
-            <h3 class="font-display text-xl font-semibold">Loyalty with real value</h3>
-            <p class="mt-3 text-brand-smoke">Join Brasa Points to get offers, updates, and a smoother ordering experience.</p>
-          </article>
+    <!-- SECTION 2: Why Choose Brasaland (benefits + features) -->
+    <section class="bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="px-4 py-2 bg-brand-50 text-brand-700 text-sm font-medium rounded-3xl">Why customers love us</span>
+                <h2 class="text-4xl font-bold tracking-tight mt-4">Three promises we never break</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6">🔥</div>
+                    <h3 class="text-2xl font-semibold mb-3">Flame-grilled authenticity</h3>
+                    <p class="text-slate-600">Traditional Colombian recipes prepared exactly the same way in every kitchen.</p>
+                </div>
+                <div class="text-center">
+                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6">❤️</div>
+                    <h3 class="text-2xl font-semibold mb-3">Warm service everywhere</h3>
+                    <p class="text-slate-600">From Medellín to Miami, you’ll always feel like family at our table.</p>
+                </div>
+                <div class="text-center">
+                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6">⚡</div>
+                    <h3 class="text-2xl font-semibold mb-3">Fast &amp; consistent</h3>
+                    <p class="text-slate-600">Your order is ready in minutes — every single time, every single location.</p>
+                </div>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <section id="locations" class="bg-brand-charcoal px-6 py-16 text-white md:py-20" aria-labelledby="locations-title">
-        <div class="mx-auto max-w-6xl">
-          <h2 id="locations-title" class="font-display text-3xl font-bold md:text-4xl">14 locations, one standard</h2>
-          <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <article class="rounded-2xl border border-white/20 bg-white/5 p-6">
-              <h3 class="font-semibold">Medellin</h3>
-              <p class="mt-3 text-sm text-white/80">Our home city and operational heart, where Brasaland started in 2008.</p>
-            </article>
-            <article class="rounded-2xl border border-white/20 bg-white/5 p-6">
-              <h3 class="font-semibold">Miami</h3>
-              <p class="mt-3 text-sm text-white/80">Our Florida base delivering the same Brasaland flavor for US guests.</p>
-            </article>
-            <article class="rounded-2xl border border-white/20 bg-white/5 p-6">
-              <h3 class="font-semibold">Two markets, one experience</h3>
-              <p class="mt-3 text-sm text-white/80">Bilingual service and standards that stay consistent across countries and currencies.</p>
-            </article>
-            <article id="community" class="rounded-2xl border border-white/20 bg-white/5 p-6 lg:col-span-3">
-              <h3 class="font-semibold">Brasa Points community</h3>
-              <p class="mt-3 text-sm text-white/80">Our loyalty evolution is moving from physical cards to a digital experience. Join now to help shape it and get early updates.</p>
-            </article>
-          </div>
+    <!-- SECTION 3: Grilled Food Gallery -->
+    <section class="py-20 bg-gradient-to-b from-stone-100 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-end justify-between flex-wrap gap-6 mb-10">
+                <div>
+                    <span class="px-4 py-2 bg-brand-50 text-brand-700 text-sm font-medium rounded-3xl">From our grill</span>
+                    <h2 class="text-4xl font-bold tracking-tight mt-4 text-slate-900">More of the food you came for</h2>
+                </div>
+                <p class="text-slate-600 max-w-md">Signature grilled cuts, smoky chicken, and classics straight from the fire in every Brasaland location.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <figure class="overflow-hidden rounded-3xl shadow-sm bg-white">
+                    <img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80"
+                         alt="Charcoal grilled beef steak with chimichurri and roasted vegetables"
+                         class="w-full h-64 object-cover">
+                </figure>
+                <figure class="overflow-hidden rounded-3xl shadow-sm bg-white">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
+                         alt="Grilled chicken thighs with crispy skin and fresh herbs"
+                         class="w-full h-64 object-cover">
+                </figure>
+                <figure class="overflow-hidden rounded-3xl shadow-sm bg-white">
+                    <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=900&q=80"
+                        alt="Fire-grilled steak served with fresh herbs"
+                         class="w-full h-64 object-cover">
+                </figure>
+                <figure class="overflow-hidden rounded-3xl shadow-sm bg-white">
+                    <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=900&q=80"
+                         alt="Flame-grilled pork ribs glazed with smoky barbecue sauce"
+                         class="w-full h-64 object-cover">
+                </figure>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <section id="contact" class="mx-auto max-w-6xl px-6 py-16 md:py-20" aria-labelledby="contact-title">
-        <div class="grid gap-8 rounded-3xl border border-brand-charcoal/10 bg-white p-8 shadow-lg shadow-brand-charcoal/5 md:grid-cols-[2fr_1fr] md:items-center">
-          <div>
-            <h2 id="contact-title" class="font-display text-3xl font-bold">Stay connected with Brasaland</h2>
-            <p class="mt-4 max-w-2xl text-brand-smoke">
-              Sign up to receive menu updates, location news, and Brasa Points announcements.
-            </p>
-            <a
-              href="apply.html"
-              class="mt-6 inline-flex rounded-full bg-brand-charcoal px-6 py-3 text-sm font-semibold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-              >Open sign-up form</a
-            >
-          </div>
-          <address class="not-italic text-sm leading-7 text-brand-smoke" aria-label="Company contact details">
-            <p class="font-semibold text-brand-charcoal">Brasaland</p>
-            <p>Medellin HQ + Miami Operations Office</p>
-            <p><a href="mailto:hola@brasaland.com" class="underline hover:text-brand-charcoal">hola@brasaland.com</a></p>
-            <p><a href="tel:+576045550190" class="underline hover:text-brand-charcoal">+57 (604) 555-0190</a></p>
-          </address>
+    <!-- CALL TO ACTION banner -->
+    <div class="bg-canopy-600 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <p class="text-2xl font-medium">Ready to experience the Brasaland difference?</p>
+            <a href="application.html" 
+               class="inline-flex items-center bg-white text-brand-700 px-10 py-4 rounded-3xl font-semibold text-lg hover:shadow-xl transition-all">
+                Join our loyalty program today
+            </a>
         </div>
-      </section>
-    </main>
+    </div>
 
-    <footer class="border-t border-brand-charcoal/10 bg-white">
-      <div class="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-8 text-sm text-brand-smoke md:flex-row md:items-center md:justify-between">
-        <p>© 2026 Brasaland. Fire-grilled flavor with warm service in every location.</p>
-        <p>
-          <a href="index.html" class="underline hover:text-brand-charcoal">Home</a>
-          |
-          <a href="apply.html" class="underline hover:text-brand-charcoal">Sign-up</a>
-          |
-          <a href="index.es.html" lang="es" hreflang="es" class="underline hover:text-brand-charcoal">Espanol</a>
-        </p>
-      </div>
+    <!-- FOOTER - semantic + contact -->
+    <footer class="bg-slate-900 text-slate-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+            <div class="grid md:grid-cols-12 gap-10">
+                <div class="md:col-span-5">
+                    <div class="flex items-center gap-x-3 text-white mb-6">
+                        <div class="w-9 h-9 bg-brand-600 rounded-2xl flex items-center justify-center text-2xl">🔥</div>
+                        <span class="text-3xl font-bold">Brasaland</span>
+                    </div>
+                    <p class="max-w-xs">Grilled with love since 2008. Same taste in every location across Colombia and Florida.</p>
+                    <p class="text-xs mt-8">© 2026 Brasaland. All rights reserved.</p>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <h4 class="font-medium text-white mb-4">Company</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-white">Our Story</a></li>
+                        <li><a href="#" class="hover:text-white">Leadership</a></li>
+                        <li><a href="#" class="hover:text-white">Careers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <h4 class="font-medium text-white mb-4">Locations</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li>Medellín (HQ)</li>
+                        <li>Bogotá</li>
+                        <li>Miami • Brickell</li>
+                        <li>Miami • Wynwood</li>
+                        <li>14 total restaurants</li>
+                    </ul>
+                </div>
+                
+                <div class="md:col-span-3">
+                    <h4 class="font-medium text-white mb-4">Contact us</h4>
+                    <p class="text-sm mb-1">hello@brasaland.com</p>
+                    <p class="text-sm mb-6">+57 300 123 4567</p>
+                    <p class="text-xs leading-relaxed">
+                        Medellín HQ<br>
+                        Carrera 43 #10-25, Antioquia, Colombia
+                    </p>
+                    <p class="text-xs mt-4 leading-relaxed">
+                        Miami Office<br>
+                        123 Brickell Ave, Florida, USA
+                    </p>
+                </div>
+            </div>
+        </div>
     </footer>
-    <script>
-      const menuButton = document.getElementById("mobile-menu-button");
-      const mobileMenu = document.getElementById("mobile-menu");
 
-      if (menuButton && mobileMenu) {
-        menuButton.addEventListener("click", () => {
-          const expanded = menuButton.getAttribute("aria-expanded") === "true";
-          menuButton.setAttribute("aria-expanded", String(!expanded));
-          mobileMenu.classList.toggle("hidden", expanded);
-        });
-      }
+    <script>
+        // Mobile menu toggle (ARIA compliant)
+        const mobileBtn = document.getElementById('mobile-menu-btn')
+        const mobileMenu = document.getElementById('mobile-menu')
+        const hamburger = document.getElementById('hamburger-icon')
+        
+        mobileBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('hidden') === false
+            mobileMenu.classList.toggle('hidden')
+            mobileBtn.setAttribute('aria-expanded', !isOpen)
+            
+            // Animate hamburger
+            if (isOpen) {
+                hamburger.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />`
+            } else {
+                hamburger.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6h12v12" />`
+            }
+        })
+        
+        // Initialize Tailwind
+        initializeTailwind()
     </script>
-  </body>
+</body>
 </html>
