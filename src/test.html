@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brasaland Data Utilities - Test Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-red-50 p-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="mb-12 text-center">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">🍖 Brasaland Data Utilities</h1>
+      <p class="text-gray-600">TypeScript utilities for restaurant operations and analytics</p>
+    </div>
+
+    <!-- Build Status -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">📋 Build Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex items-start">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-6 w-6 rounded-md bg-green-100">
+              <span class="text-green-700 font-bold">✓</span>
+            </div>
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-gray-900">TypeScript</h3>
+            <p class="text-sm text-gray-600">Strict mode enabled, v5.3+</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-6 w-6 rounded-md bg-green-100">
+              <span class="text-green-700 font-bold">✓</span>
+            </div>
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-gray-900">Compilation</h3>
+            <p class="text-sm text-gray-600">All files compile without errors</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-6 w-6 rounded-md bg-green-100">
+              <span class="text-green-700 font-bold">✓</span>
+            </div>
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-gray-900">Demo Tests</h3>
+            <p class="text-sm text-gray-600">All functions tested and working</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-6 w-6 rounded-md bg-green-100">
+              <span class="text-green-700 font-bold">✓</span>
+            </div>
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-gray-900">Production Ready</h3>
+            <p class="text-sm text-gray-600">Ready for integration</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Structure -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">📁 Project Structure</h2>
+      <div class="bg-gray-100 rounded p-4 font-mono text-sm text-gray-700 overflow-x-auto">
+        <pre>src/
+├── types/
+│   └── models.ts          # Business entity interfaces
+├── utils/
+│   ├── collections.ts     # Filter & sort (6 functions)
+│   ├── search.ts          # Linear & binary search (3 functions)
+│   ├── transformations.ts # Finance & reports (11 functions)
+│   └── validations.ts     # Business validations (3 functions)
+├── index.ts               # Main exports
+└── demo.ts                # Executable demo</pre>
+      </div>
+    </div>
+
+    <!-- Available Functions -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">⚙️ Available Functions</h2>
+      
+      <div class="space-y-6">
+        <!-- Collections -->
+        <div>
+          <h3 class="text-lg font-semibold text-orange-700 mb-3">Collection Operations</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> filterSalesByLocation()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> filterSalesByDateRange()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> filterMenuItemsByCategory()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> filterActiveLocations()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> sortLocationsByCapacity()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> sortMenuItemsByPrice()</li>
+          </ul>
+        </div>
+
+        <!-- Search -->
+        <div>
+          <h3 class="text-lg font-semibold text-orange-700 mb-3">Search Operations</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> findLocationById() - Linear search</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> findMenuItemByName() - Linear search</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> binarySearchLocationByCapacity() - Binary search</li>
+          </ul>
+        </div>
+
+        <!-- Financial -->
+        <div>
+          <h3 class="text-lg font-semibold text-orange-700 mb-3">Financial Calculations</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> convertCurrency() - USD ↔ COP</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> calculateDailyRevenue()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> calculateLocationMargin()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> calculateWasteCost()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> scoreLocationPerformance()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> rankLocationsByPerformance()</li>
+          </ul>
+        </div>
+
+        <!-- Reports -->
+        <div>
+          <h3 class="text-lg font-semibold text-orange-700 mb-3">Aggregations & Reports</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> countSalesByPaymentMethod()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> calculateAverageTicket()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> findTopSellingItems()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> groupWasteByReason()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> calculateCountryComparison()</li>
+          </ul>
+        </div>
+
+        <!-- Validations -->
+        <div>
+          <h3 class="text-lg font-semibold text-orange-700 mb-3">Validations</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> validateMenuItem()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> validateSaleTransaction()</li>
+            <li class="flex items-center"><span class="text-blue-500 mr-2">→</span> validateLocation()</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Start -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">🚀 Quick Start</h2>
+      <div class="space-y-3">
+        <div class="bg-gray-100 rounded p-3 font-mono text-sm">
+          <p class="text-gray-700 mb-2"># Install dependencies</p>
+          <p class="text-blue-700">$ npm install</p>
+        </div>
+        <div class="bg-gray-100 rounded p-3 font-mono text-sm">
+          <p class="text-gray-700 mb-2"># Type check</p>
+          <p class="text-blue-700">$ npm run typecheck</p>
+        </div>
+        <div class="bg-gray-100 rounded p-3 font-mono text-sm">
+          <p class="text-gray-700 mb-2"># Run demo</p>
+          <p class="text-blue-700">$ npm run demo</p>
+        </div>
+        <div class="bg-gray-100 rounded p-3 font-mono text-sm">
+          <p class="text-gray-700 mb-2"># Build</p>
+          <p class="text-blue-700">$ npm run build</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Entities -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">📊 Business Entities</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="border-l-4 border-orange-500 pl-4">
+          <h3 class="font-semibold text-gray-900 mb-2">MenuItem</h3>
+          <p class="text-sm text-gray-600">Menu items with pricing in USD/COP, costs, and availability</p>
+        </div>
+        <div class="border-l-4 border-red-500 pl-4">
+          <h3 class="font-semibold text-gray-900 mb-2">SaleTransaction</h3>
+          <p class="text-sm text-gray-600">Individual sales with location, item, quantity, and payment method</p>
+        </div>
+        <div class="border-l-4 border-yellow-500 pl-4">
+          <h3 class="font-semibold text-gray-900 mb-2">Location</h3>
+          <p class="text-sm text-gray-600">Restaurant locations with capacity, staffing, and operating costs</p>
+        </div>
+        <div class="border-l-4 border-green-500 pl-4">
+          <h3 class="font-semibold text-gray-900 mb-2">WasteRecord</h3>
+          <p class="text-sm text-gray-600">Food waste tracking by location, reason, and cost</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">✨ Key Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="flex items-start">
+          <span class="text-2xl mr-3">🔒</span>
+          <div>
+            <h4 class="font-semibold text-gray-900">Type Safe</h4>
+            <p class="text-sm text-gray-600">TypeScript strict mode throughout</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <span class="text-2xl mr-3">💱</span>
+          <div>
+            <h4 class="font-semibold text-gray-900">Dual Currency</h4>
+            <p class="text-sm text-gray-600">USD & COP support with automatic conversion</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <span class="text-2xl mr-3">🔍</span>
+          <div>
+            <h4 class="font-semibold text-gray-900">Search Algorithms</h4>
+            <p class="text-sm text-gray-600">Linear + Binary search implementations</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <span class="text-2xl mr-3">♻️</span>
+          <div>
+            <h4 class="font-semibold text-gray-900">Pure Functions</h4>
+            <p class="text-sm text-gray-600">No global state, immutable operations</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <span class="text-2xl mr-3">✅</span>
+          <div>
+            <h4 class="font-semibold text-gray-900">Validation</h4>
+            <p class="text-sm text-gray-600">Business rule enforcement</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <span class="text-2xl mr-3">📈</span>
+          <div>
+            <h4 class="font-semibold text-gray-900">Reporting</h4>
+            <p class="text-sm text-gray-600">Aggregations and country comparisons</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-gray-900 text-white rounded-lg shadow-md p-6 text-center">
+      <p class="text-sm mb-2">Built for <strong>Brasaland Digital</strong></p>
+      <p class="text-sm text-gray-400">A grilled food restaurant chain with 14 locations across Colombia and USA</p>
+      <p class="text-sm text-gray-500 mt-3">Milestone 2: Programming Fundamentals</p>
+    </div>
+  </div>
+</body>
+</html>
