@@ -31,6 +31,17 @@
             }
         }
     </script>
+    <style>
+        html {
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        body {
+            min-height: 100vh;
+            overflow-y: scroll;
+        }
+    </style>
     <!-- Schema.org Organization markup (exact requirement) -->
     <script type="application/ld+json">
     {
@@ -76,9 +87,9 @@
     }
     </script>
 </head>
-<body class="bg-stone-100 font-sans antialiased text-slate-800">
+<body class="relative min-h-screen overflow-y-auto bg-gradient-to-br from-stone-100 via-amber-50 to-white font-sans antialiased text-slate-800">
     <!-- HEADER - semantic + ARIA + responsive -->
-    <header class="bg-white border-b sticky top-0 z-50 shadow-sm">
+    <header class="relative bg-white/90 border-b border-slate-200/70 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-5">
                 <!-- Logo / Name -->
@@ -124,8 +135,9 @@
     </header>
 
     <!-- HERO SECTION - value proposition -->
-    <section class="bg-gradient-to-br from-brand-700 to-canopy-600 text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+    <section class="bg-gradient-to-br from-brand-700 via-orange-600 to-canopy-600 text-white py-24 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.22),_transparent_22%),radial-gradient(circle_at_bottom_right,_rgba(20,83,45,0.16),_transparent_30%)]"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
             <div>
                 <p class="uppercase tracking-[2px] text-brand-300 text-sm font-medium mb-3">Since 2008 • Medellín → Miami</p>
                 <h1 class="text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6">
@@ -147,8 +159,8 @@
                 </div>
                 <div class="mt-10 flex items-center gap-x-8 text-sm">
                     <div class="flex -space-x-4">
-                        <div class="w-8 h-8 bg-white/20 rounded-2xl flex items-center justify-center text-xs ring-2 ring-white">🇨🇴</div>
-                        <div class="w-8 h-8 bg-white/20 rounded-2xl flex items-center justify-center text-xs ring-2 ring-white">🇺🇸</div>
+                        <div class="w-10 h-10 bg-white/25 rounded-2xl flex items-center justify-center text-sm ring-2 ring-white shadow-sm">🇨🇴</div>
+                        <div class="w-10 h-10 bg-white/25 rounded-2xl flex items-center justify-center text-sm ring-2 ring-white shadow-sm">🇺🇸</div>
                     </div>
                     <p class="text-stone-100">Trusted in <span class="font-semibold">2 countries • 14 cities</span></p>
                 </div>
@@ -158,8 +170,8 @@
             <div class="relative">
                  <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=1200&q=80" 
                      alt="Flame-grilled meat platter with Colombian sides served on a rustic table"
-                     class="rounded-3xl shadow-2xl w-full object-cover aspect-video">
-                <div class="absolute -bottom-6 -left-6 bg-white text-slate-900 px-6 py-4 rounded-3xl shadow-xl flex items-center gap-x-3">
+                     class="rounded-3xl shadow-2xl w-full object-cover aspect-video transition-transform duration-700 ease-out hover:-translate-y-2 hover:scale-105">
+                <div class="absolute -bottom-6 -left-6 bg-white text-slate-900 px-6 py-4 rounded-3xl shadow-2xl flex items-center gap-x-3 transition-transform duration-300 hover:-translate-y-1">
                     <div class="text-4xl">⭐️⭐️⭐️⭐️⭐️</div>
                     <div>
                         <p class="font-semibold">“Best grilled food I’ve had in Miami and Medellín”</p>
@@ -176,28 +188,28 @@
             <div class="md:col-span-5">
                 <h2 class="text-4xl font-bold tracking-tight text-slate-900 mb-6">From one family grill to 14 restaurants across two countries</h2>
                 <p class="text-lg text-slate-600 mb-8">Founded in 2008 in Medellín by the Restrepo family. Today we employ 115 people and serve the same consistent Colombian grilled flavors in both Colombia and Florida.</p>
-                <div class="flex items-center gap-8">
-                    <div>
-                        <div class="text-brand-600 text-5xl font-bold">14</div>
-                        <div class="uppercase text-xs tracking-widest">Locations</div>
+                <div class="flex flex-wrap items-center gap-8">
+                    <div class="rounded-3xl bg-brand-50/80 px-6 py-5 shadow-lg ring-1 ring-brand-200/50">
+                        <div class="text-brand-700 text-5xl font-bold">14</div>
+                        <div class="uppercase text-xs tracking-widest text-brand-900/80">Locations</div>
                     </div>
-                    <div>
-                        <div class="text-brand-600 text-5xl font-bold">6M</div>
-                        <div class="uppercase text-xs tracking-widest">Annual revenue (USD)</div>
+                    <div class="rounded-3xl bg-brand-50/80 px-6 py-5 shadow-lg ring-1 ring-brand-200/50">
+                        <div class="text-brand-700 text-5xl font-bold">6M</div>
+                        <div class="uppercase text-xs tracking-widest text-brand-900/80">Annual revenue (USD)</div>
                     </div>
-                    <div>
-                        <div class="text-brand-600 text-5xl font-bold">115</div>
-                        <div class="uppercase text-xs tracking-widest">Team members</div>
+                    <div class="rounded-3xl bg-brand-50/80 px-6 py-5 shadow-lg ring-1 ring-brand-200/50">
+                        <div class="text-brand-700 text-5xl font-bold">115</div>
+                        <div class="uppercase text-xs tracking-widest text-brand-900/80">Team members</div>
                     </div>
                 </div>
             </div>
             <div class="md:col-span-7">
                 <div class="grid grid-cols-2 gap-6">
-                    <article class="bg-white rounded-3xl p-8 shadow-sm">
+                    <article class="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-slate-200/80 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
                         <h3 class="font-semibold text-xl mb-3">Same taste guarantee</h3>
                         <p class="text-slate-600">Every burger, every arepa, every grilled chicken tastes identical whether you’re in Medellín downtown or Brickell Miami.</p>
                     </article>
-                    <article class="bg-white rounded-3xl p-8 shadow-sm">
+                    <article class="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-slate-200/80 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
                         <h3 class="font-semibold text-xl mb-3">Warm service, fast kitchen</h3>
                         <p class="text-slate-600">Our three non-negotiables: consistent flavor, genuine hospitality, lightning-fast service.</p>
                     </article>
@@ -213,19 +225,19 @@
                 <span class="px-4 py-2 bg-brand-50 text-brand-700 text-sm font-medium rounded-3xl">Why customers love us</span>
                 <h2 class="text-4xl font-bold tracking-tight mt-4">Three promises we never break</h2>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6">🔥</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                <div class="text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
+                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">🔥</div>
                     <h3 class="text-2xl font-semibold mb-3">Flame-grilled authenticity</h3>
                     <p class="text-slate-600">Traditional Colombian recipes prepared exactly the same way in every kitchen.</p>
                 </div>
-                <div class="text-center">
-                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6">❤️</div>
+                <div class="text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
+                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">❤️</div>
                     <h3 class="text-2xl font-semibold mb-3">Warm service everywhere</h3>
                     <p class="text-slate-600">From Medellín to Miami, you’ll always feel like family at our table.</p>
                 </div>
-                <div class="text-center">
-                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6">⚡</div>
+                <div class="text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
+                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">⚡</div>
                     <h3 class="text-2xl font-semibold mb-3">Fast &amp; consistent</h3>
                     <p class="text-slate-600">Your order is ready in minutes — every single time, every single location.</p>
                 </div>
@@ -277,16 +289,16 @@
                 <h2 class="text-4xl font-bold tracking-tight mt-4">Brasaland locations in Colombia and Florida</h2>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
-                <article class="bg-stone-100 rounded-3xl p-8">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-2">Medellin</h3>
+                <article class="bg-brand-50 rounded-3xl p-8 shadow-lg ring-1 ring-brand-200/60 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <h3 class="text-2xl font-semibold text-brand-800 mb-2">Medellin</h3>
                     <p class="text-slate-600">Our headquarters city, with multiple high-traffic stores and full menu availability.</p>
                 </article>
-                <article class="bg-stone-100 rounded-3xl p-8">
+                <article class="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-brand-200/40 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
                     <h3 class="text-2xl font-semibold text-slate-900 mb-2">Bogota</h3>
                     <p class="text-slate-600">Consistent flavor and quick service in one of Colombia's busiest urban hubs.</p>
                 </article>
-                <article class="bg-stone-100 rounded-3xl p-8">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-2">Miami</h3>
+                <article class="bg-brand-50 rounded-3xl p-8 shadow-lg ring-1 ring-brand-200/60 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <h3 class="text-2xl font-semibold text-brand-800 mb-2">Miami</h3>
                     <p class="text-slate-600">Brickell and Wynwood stores bring the same Brasaland grill experience to Florida.</p>
                 </article>
             </div>
@@ -294,11 +306,11 @@
     </section>
 
     <!-- CALL TO ACTION banner -->
-    <div class="bg-canopy-600 text-white py-12">
+    <div class="bg-gradient-to-r from-brand-600 via-orange-600 to-canopy-600 text-white py-14">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-            <p class="text-2xl font-medium">Ready to experience the Brasaland difference?</p>
+            <p class="text-2xl font-semibold tracking-tight">Ready to experience the Brasaland difference?</p>
             <a href="application.html" 
-               class="inline-flex items-center bg-white text-brand-700 px-10 py-4 rounded-3xl font-semibold text-lg hover:shadow-xl transition-all">
+               class="inline-flex items-center bg-white text-brand-700 px-10 py-4 rounded-3xl font-semibold text-lg shadow-xl transition duration-300 hover:-translate-y-0.5 hover:shadow-2xl">
                 Join our loyalty program today
             </a>
         </div>
