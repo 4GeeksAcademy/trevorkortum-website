@@ -6,7 +6,8 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "demo": "tsx src/demo.ts"
+    "demo": "tsx src/demo.ts",
+    "serve": "npx http-server . -p 3000 -a localhost"
   },
   "keywords": ["brasaland", "typescript", "data-processing"],
   "author": "Brasaland Digital Team",

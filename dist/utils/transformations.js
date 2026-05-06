@@ -1,20 +1,7 @@
-"use strict";
 /**
  * Data Transformations and Aggregations
  * Financial calculations, performance scoring, and reporting functions
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.convertCurrency = convertCurrency;
-exports.calculateDailyRevenue = calculateDailyRevenue;
-exports.calculateLocationMargin = calculateLocationMargin;
-exports.calculateWasteCost = calculateWasteCost;
-exports.scoreLocationPerformance = scoreLocationPerformance;
-exports.rankLocationsByPerformance = rankLocationsByPerformance;
-exports.countSalesByPaymentMethod = countSalesByPaymentMethod;
-exports.calculateAverageTicket = calculateAverageTicket;
-exports.findTopSellingItems = findTopSellingItems;
-exports.groupWasteByReason = groupWasteByReason;
-exports.calculateCountryComparison = calculateCountryComparison;
 // Constants
 const USD_TO_COP_RATE = 4000;
 const CURRENT_YEAR = new Date().getFullYear();
@@ -25,7 +12,7 @@ const CURRENT_YEAR = new Date().getFullYear();
  * @param toCurrency - Target currency ("USD" or "COP")
  * @returns Converted amount rounded to 2 decimal places
  */
-function convertCurrency(amount, fromCurrency, toCurrency) {
+export function convertCurrency(amount, fromCurrency, toCurrency) {
     if (fromCurrency === toCurrency) {
         return Math.round(amount * 100) / 100;
     }
@@ -45,7 +32,7 @@ function convertCurrency(amount, fromCurrency, toCurrency) {
  * @param currency - Currency ("USD" or "COP")
  * @returns Total revenue rounded to 2 decimal places
  */
-function calculateDailyRevenue(sales, date, currency) {
+export function calculateDailyRevenue(sales, date, currency) {
     const dayStart = new Date(date);
     dayStart.setHours(0, 0, 0, 0);
     const dayEnd = new Date(date);
@@ -69,7 +56,7 @@ function calculateDailyRevenue(sales, date, currency) {
  * @param currency - Currency ("USD" or "COP")
  * @returns Profit margin as percentage (0-100), rounded to 2 decimal places
  */
-function calculateLocationMargin(sales, menuItems, locationId, currency) {
+export function calculateLocationMargin(sales, menuItems, locationId, currency) {
     // Filter sales for location
     const locationSales = sales.filter((sale) => sale.locationId === locationId);
     if (locationSales.length === 0) {
@@ -103,7 +90,7 @@ function calculateLocationMargin(sales, menuItems, locationId, currency) {
  * @param currency - Currency ("USD" or "COP")
  * @returns Total waste cost rounded to 2 decimal places
  */
-function calculateWasteCost(wasteRecords, locationId, currency) {
+export function calculateWasteCost(wasteRecords, locationId, currency) {
     const locationWaste = wasteRecords.filter((record) => record.locationId === locationId);
     let totalWasteCost = 0;
     for (const record of locationWaste) {
@@ -124,7 +111,7 @@ function calculateWasteCost(wasteRecords, locationId, currency) {
  * @param menuItems - Array of menu items
  * @returns Performance score (0-100) rounded to 2 decimal places
  */
-function scoreLocationPerformance(location, sales, wasteRecords, menuItems) {
+export function scoreLocationPerformance(location, sales, wasteRecords, menuItems) {
     // Revenue Performance (40 points max)
     const locationSales = sales.filter((sale) => sale.locationId === location.id);
     const totalRevenue = locationSales.reduce((sum, sale) => sum + sale.totalPrice.USD, 0);
@@ -152,7 +139,7 @@ function scoreLocationPerformance(location, sales, wasteRecords, menuItems) {
  * @param menuItems - Array of menu items
  * @returns Array of location performance results sorted by score (highest first)
  */
-function rankLocationsByPerformance(locations, sales, wasteRecords, menuItems) {
+export function rankLocationsByPerformance(locations, sales, wasteRecords, menuItems) {
     const results = locations.map((location) => ({
         location,
         score: scoreLocationPerformance(location, sales, wasteRecords, menuItems),
@@ -165,7 +152,7 @@ function rankLocationsByPerformance(locations, sales, wasteRecords, menuItems) {
  * @param sales - Array of sales transactions
  * @returns Object with count of sales for each payment method
  */
-function countSalesByPaymentMethod(sales) {
+export function countSalesByPaymentMethod(sales) {
     const counts = {
         Cash: 0,
         "Credit card": 0,
@@ -183,7 +170,7 @@ function countSalesByPaymentMethod(sales) {
  * @param currency - Currency ("USD" or "COP")
  * @returns Average sale value rounded to 2 decimal places
  */
-function calculateAverageTicket(sales, currency) {
+export function calculateAverageTicket(sales, currency) {
     if (sales.length === 0) {
         return 0;
     }
@@ -198,7 +185,7 @@ function calculateAverageTicket(sales, currency) {
  * @param topN - Number of top items to return
  * @returns Array of top selling items with quantities (sorted highest first)
  */
-function findTopSellingItems(sales, menuItems, topN) {
+export function findTopSellingItems(sales, menuItems, topN) {
     // Create lookup map
     const itemMap = new Map();
     for (const item of menuItems) {
@@ -226,7 +213,7 @@ function findTopSellingItems(sales, menuItems, topN) {
  * @param wasteRecords - Array of waste records
  * @returns Object with waste records grouped by reason
  */
-function groupWasteByReason(wasteRecords) {
+export function groupWasteByReason(wasteRecords) {
     const groups = {
         Expired: [],
         "Cooking error": [],
@@ -246,7 +233,7 @@ function groupWasteByReason(wasteRecords) {
  * @param menuItems - Array of menu items (unused but kept for interface consistency)
  * @returns Object with metrics for Colombia and USA
  */
-function calculateCountryComparison(sales, locations, menuItems) {
+export function calculateCountryComparison(sales, locations, menuItems) {
     // Get locations by country
     const colombiaLocations = locations.filter((loc) => loc.country === "Colombia");
     const usaLocations = locations.filter((loc) => loc.country === "USA");

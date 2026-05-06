@@ -1,19 +1,14 @@
-"use strict";
 /**
  * Business Validations
  * Functions to validate data complies with Brasaland's business rules
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateMenuItem = validateMenuItem;
-exports.validateSaleTransaction = validateSaleTransaction;
-exports.validateLocation = validateLocation;
 const CURRENT_YEAR = new Date().getFullYear();
 /**
  * Validates a menu item according to business rules
  * @param item - Menu item to validate
  * @returns ValidationResult with valid flag and error messages
  */
-function validateMenuItem(item) {
+export function validateMenuItem(item) {
     const errors = [];
     // Validate name
     if (!item.name || item.name.trim() === "") {
@@ -53,7 +48,7 @@ function validateMenuItem(item) {
  * @param sale - Sale transaction to validate
  * @returns ValidationResult with valid flag and error messages
  */
-function validateSaleTransaction(sale) {
+export function validateSaleTransaction(sale) {
     const errors = [];
     // Validate quantity
     if (sale.quantity <= 0) {
@@ -80,7 +75,7 @@ function validateSaleTransaction(sale) {
  * @param location - Location to validate
  * @returns ValidationResult with valid flag and error messages
  */
-function validateLocation(location) {
+export function validateLocation(location) {
     const errors = [];
     // Validate opening year
     if (location.openingYear < 2008) {

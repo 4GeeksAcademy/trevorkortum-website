@@ -1,10 +1,8 @@
-"use strict";
 /**
  * Brasaland Data Processing Demo
  * Tests all utilities with sample data
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = require("./index");
+import { filterSalesByLocation, filterMenuItemsByCategory, filterActiveLocations, sortLocationsByCapacity, sortMenuItemsByPrice, findLocationById, findMenuItemByName, binarySearchLocationByCapacity, convertCurrency, calculateDailyRevenue, calculateLocationMargin, calculateWasteCost, countSalesByPaymentMethod, calculateAverageTicket, findTopSellingItems, groupWasteByReason, calculateCountryComparison, validateMenuItem, validateSaleTransaction, validateLocation, } from "./index";
 // Sample Data
 const sampleMenuItems = [
     {
@@ -167,89 +165,89 @@ function main() {
     // Collection Operations
     console.log("--- COLLECTION OPERATIONS ---");
     console.log("\n1. Filter sales by location (Medellín):");
-    const medellinSales = (0, index_1.filterSalesByLocation)(sampleSales, "LOC-MEDELLIN-01");
+    const medellinSales = filterSalesByLocation(sampleSales, "LOC-MEDELLIN-01");
     console.log(`   Found ${medellinSales.length} sales`);
     console.log("\n2. Filter menu items by category (Meat):");
-    const meatItems = (0, index_1.filterMenuItemsByCategory)(sampleMenuItems, "Meat");
+    const meatItems = filterMenuItemsByCategory(sampleMenuItems, "Meat");
     console.log(`   Found ${meatItems.length} items: ${meatItems.map((i) => i.name).join(", ")}`);
     console.log("\n3. Filter active locations:");
-    const activeLocations = (0, index_1.filterActiveLocations)(sampleLocations);
+    const activeLocations = filterActiveLocations(sampleLocations);
     console.log(`   Found ${activeLocations.length} active locations`);
     console.log("\n4. Sort locations by capacity (ascending):");
-    const sortedByCapacity = (0, index_1.sortLocationsByCapacity)(sampleLocations, "asc");
+    const sortedByCapacity = sortLocationsByCapacity(sampleLocations, "asc");
     sortedByCapacity.forEach((loc) => {
         console.log(`   ${loc.name}: ${loc.seatingCapacity} seats`);
     });
     console.log("\n5. Sort menu items by price (USD, descending):");
-    const sortedByPrice = (0, index_1.sortMenuItemsByPrice)(sampleMenuItems, "USD", "desc");
+    const sortedByPrice = sortMenuItemsByPrice(sampleMenuItems, "USD", "desc");
     sortedByPrice.forEach((item) => {
         console.log(`   ${item.name}: $${item.basePrice.USD}`);
     });
     // Search Operations
     console.log("\n--- SEARCH OPERATIONS ---");
     console.log("\n6. Find location by ID (LOC-MEDELLIN-01):");
-    const found = (0, index_1.findLocationById)(sampleLocations, "LOC-MEDELLIN-01");
+    const found = findLocationById(sampleLocations, "LOC-MEDELLIN-01");
     console.log(`   ${found ? `Found: ${found.name}` : "Not found"}`);
     console.log("\n7. Find menu item by name (case-insensitive - 'FRENCH FRIES'):");
-    const foundItem = (0, index_1.findMenuItemByName)(sampleMenuItems, "FRENCH FRIES");
+    const foundItem = findMenuItemByName(sampleMenuItems, "FRENCH FRIES");
     console.log(`   ${foundItem ? `Found: ${foundItem.name}` : "Not found"}`);
     console.log("\n8. Binary search location by capacity (in sorted array):");
-    const sortedLocs = (0, index_1.sortLocationsByCapacity)(sampleLocations, "asc");
-    const index = (0, index_1.binarySearchLocationByCapacity)(sortedLocs, 100);
+    const sortedLocs = sortLocationsByCapacity(sampleLocations, "asc");
+    const index = binarySearchLocationByCapacity(sortedLocs, 100);
     console.log(`   Location with 100 seats at index: ${index}`);
     // Financial Calculations
     console.log("\n--- FINANCIAL CALCULATIONS ---");
     console.log("\n9. Currency conversion (100 USD to COP):");
-    const converted = (0, index_1.convertCurrency)(100, "USD", "COP");
+    const converted = convertCurrency(100, "USD", "COP");
     console.log(`   100 USD = ${converted} COP`);
     console.log("\n10. Daily revenue (2024-03-15, USD):");
-    const dailyRev = (0, index_1.calculateDailyRevenue)(sampleSales, new Date("2024-03-15"), "USD");
+    const dailyRev = calculateDailyRevenue(sampleSales, new Date("2024-03-15"), "USD");
     console.log(`    Total: $${dailyRev}`);
     console.log("\n11. Location margin (LOC-MEDELLIN-01, USD):");
-    const margin = (0, index_1.calculateLocationMargin)(sampleSales, sampleMenuItems, "LOC-MEDELLIN-01", "USD");
+    const margin = calculateLocationMargin(sampleSales, sampleMenuItems, "LOC-MEDELLIN-01", "USD");
     console.log(`    Margin: ${margin}%`);
     console.log("\n12. Waste cost (LOC-MEDELLIN-01, USD):");
-    const wasteCost = (0, index_1.calculateWasteCost)(sampleWaste, "LOC-MEDELLIN-01", "USD");
+    const wasteCost = calculateWasteCost(sampleWaste, "LOC-MEDELLIN-01", "USD");
     console.log(`    Total waste cost: $${wasteCost}`);
     // Aggregations
     console.log("\n--- AGGREGATIONS & REPORTS ---");
     console.log("\n13. Count sales by payment method:");
-    const paymentCounts = (0, index_1.countSalesByPaymentMethod)(sampleSales);
+    const paymentCounts = countSalesByPaymentMethod(sampleSales);
     Object.entries(paymentCounts).forEach(([method, count]) => {
         console.log(`    ${method}: ${count}`);
     });
     console.log("\n14. Average ticket (USD):");
-    const avgTicket = (0, index_1.calculateAverageTicket)(sampleSales, "USD");
+    const avgTicket = calculateAverageTicket(sampleSales, "USD");
     console.log(`    $${avgTicket}`);
     console.log("\n15. Top 2 selling items:");
-    const topItems = (0, index_1.findTopSellingItems)(sampleSales, sampleMenuItems, 2);
+    const topItems = findTopSellingItems(sampleSales, sampleMenuItems, 2);
     topItems.forEach((result) => {
         console.log(`    ${result.item.name}: ${result.totalSold} units`);
     });
     console.log("\n16. Waste grouped by reason:");
-    const wasteGroups = (0, index_1.groupWasteByReason)(sampleWaste);
+    const wasteGroups = groupWasteByReason(sampleWaste);
     Object.entries(wasteGroups).forEach(([reason, records]) => {
         if (records.length > 0) {
             console.log(`    ${reason}: ${records.length} record(s)`);
         }
     });
     console.log("\n17. Country comparison:");
-    const comparison = (0, index_1.calculateCountryComparison)(sampleSales, sampleLocations, sampleMenuItems);
+    const comparison = calculateCountryComparison(sampleSales, sampleLocations, sampleMenuItems);
     console.log(`    Colombia: ${comparison.Colombia.totalLocations} locations, $${comparison.Colombia.totalRevenue.USD} USD`);
     console.log(`    USA: ${comparison.USA.totalLocations} locations, $${comparison.USA.totalRevenue.USD} USD`);
     // Validations
     console.log("\n--- VALIDATIONS ---");
     console.log("\n18. Validate menu item (valid):");
-    const menuValidation = (0, index_1.validateMenuItem)(sampleMenuItems[0]);
+    const menuValidation = validateMenuItem(sampleMenuItems[0]);
     console.log(`    Valid: ${menuValidation.valid}`);
     if (menuValidation.errors.length > 0) {
         menuValidation.errors.forEach((err) => console.log(`    Error: ${err}`));
     }
     console.log("\n19. Validate sale transaction (valid):");
-    const saleValidation = (0, index_1.validateSaleTransaction)(sampleSales[0]);
+    const saleValidation = validateSaleTransaction(sampleSales[0]);
     console.log(`    Valid: ${saleValidation.valid}`);
     console.log("\n20. Validate location (valid):");
-    const locValidation = (0, index_1.validateLocation)(sampleLocations[0]);
+    const locValidation = validateLocation(sampleLocations[0]);
     console.log(`    Valid: ${locValidation.valid}`);
     // Invalid data test
     console.log("\n21. Validate invalid menu item (negative price):");
@@ -257,7 +255,7 @@ function main() {
         ...sampleMenuItems[0],
         basePrice: { USD: -10, COP: -40000 },
     };
-    const invalidValidation = (0, index_1.validateMenuItem)(invalidItem);
+    const invalidValidation = validateMenuItem(invalidItem);
     console.log(`    Valid: ${invalidValidation.valid}`);
     invalidValidation.errors.forEach((err) => console.log(`    Error: ${err}`));
     console.log("\n=== DEMO COMPLETE ===");

@@ -1,22 +1,14 @@
-"use strict";
 /**
  * Collection Operations
  * Functions to filter, sort, search, and group elements within arrays
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.filterSalesByLocation = filterSalesByLocation;
-exports.filterSalesByDateRange = filterSalesByDateRange;
-exports.filterMenuItemsByCategory = filterMenuItemsByCategory;
-exports.filterActiveLocations = filterActiveLocations;
-exports.sortLocationsByCapacity = sortLocationsByCapacity;
-exports.sortMenuItemsByPrice = sortMenuItemsByPrice;
 /**
  * Filters sales by location ID
  * @param sales - Array of sales transactions
  * @param locationId - Location ID to filter by
  * @returns Array of sales from the specified location
  */
-function filterSalesByLocation(sales, locationId) {
+export function filterSalesByLocation(sales, locationId) {
     return sales.filter((sale) => sale.locationId === locationId);
 }
 /**
@@ -26,7 +18,7 @@ function filterSalesByLocation(sales, locationId) {
  * @param endDate - End date (inclusive)
  * @returns Array of sales within the date range
  */
-function filterSalesByDateRange(sales, startDate, endDate) {
+export function filterSalesByDateRange(sales, startDate, endDate) {
     return sales.filter((sale) => {
         const saleDate = sale.timestamp;
         return saleDate >= startDate && saleDate <= endDate;
@@ -38,7 +30,7 @@ function filterSalesByDateRange(sales, startDate, endDate) {
  * @param category - Menu category to filter by
  * @returns Array of menu items in the specified category
  */
-function filterMenuItemsByCategory(items, category) {
+export function filterMenuItemsByCategory(items, category) {
     return items.filter((item) => item.category === category);
 }
 /**
@@ -46,7 +38,7 @@ function filterMenuItemsByCategory(items, category) {
  * @param locations - Array of locations
  * @returns Array of active locations
  */
-function filterActiveLocations(locations) {
+export function filterActiveLocations(locations) {
     return locations.filter((location) => location.status === "Active");
 }
 /**
@@ -55,7 +47,7 @@ function filterActiveLocations(locations) {
  * @param order - Sort order: "asc" or "desc"
  * @returns New array of locations sorted by capacity (does not mutate original)
  */
-function sortLocationsByCapacity(locations, order) {
+export function sortLocationsByCapacity(locations, order) {
     const sorted = [...locations];
     sorted.sort((a, b) => {
         if (order === "asc") {
@@ -74,7 +66,7 @@ function sortLocationsByCapacity(locations, order) {
  * @param order - Sort order: "asc" or "desc"
  * @returns New array of menu items sorted by price (does not mutate original)
  */
-function sortMenuItemsByPrice(items, currency, order) {
+export function sortMenuItemsByPrice(items, currency, order) {
     const sorted = [...items];
     sorted.sort((a, b) => {
         const priceA = a.basePrice[currency];
