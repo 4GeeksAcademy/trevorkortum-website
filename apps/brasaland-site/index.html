@@ -7,7 +7,7 @@
     <title>Brasaland • Grilled to Perfection in Colombia &amp; Florida</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Tailwind configuration - subtle South America-inspired earth palette
+        // Tailwind configuration - Colombian flag colors (Yellow, Blue, Red)
         function initializeTailwind() {
             tailwind.config = {
                 content: ["./**/*.{html,js}"],
@@ -15,15 +15,25 @@
                     extend: {
                         colors: {
                             brand: {
-                                50: "#f7f2e8",
-                                300: "#d5b79b",
-                                500: "#b06a3a",
-                                600: "#94552e",
-                                700: "#783f23"
+                                50: "#FEF9E7",
+                                100: "#FEF3CF",
+                                300: "#FCD34D",
+                                500: "#FBBF24",
+                                600: "#F59E0B",
+                                700: "#D97706"
+                            },
+                            colombia: {
+                                yellow: "#FFD100",
+                                blue: "#003893",
+                                red: "#CE1126",
+                                lightBlue: "#0066CC",
+                                darkRed: "#8B0000",
+                                tropical: "#00A86B",
+                                goldAccent: "#FFB81C"
                             },
                             canopy: {
-                                500: "#5f7753",
-                                600: "#4f6546"
+                                500: "#00A86B",
+                                600: "#009960"
                             }
                         }
                     }
@@ -87,32 +97,32 @@
     }
     </script>
 </head>
-<body class="relative min-h-screen overflow-y-auto bg-gradient-to-br from-stone-100 via-amber-50 to-white font-sans antialiased text-slate-800">
+<body class="relative min-h-screen overflow-y-auto bg-gradient-to-br from-brand-50 via-blue-50 to-slate-50 font-sans antialiased text-slate-800">
     <!-- HEADER - semantic + ARIA + responsive -->
     <header class="relative bg-white/90 border-b border-slate-200/70 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-5">
                 <!-- Logo / Name -->
                 <div class="flex items-center gap-x-3">
-                    <div class="w-10 h-10 bg-brand-600 rounded-2xl flex items-center justify-center text-white text-2xl">🔥</div>
+                    <div class="w-10 h-10 bg-colombia-blue rounded-2xl flex items-center justify-center text-white text-2xl">🔥</div>
                     <a href="index.html" class="text-3xl font-bold tracking-tight text-slate-900">Brasaland</a>
                 </div>
 
                 <!-- Desktop Navigation -->
                 <nav aria-label="Main navigation" class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-                    <a href="index.html" class="text-slate-700 hover:text-brand-600 transition-colors">Home</a>
-                    <a href="#menu" class="text-slate-700 hover:text-brand-600 transition-colors">Menu</a>
-                    <a href="#locations" class="text-slate-700 hover:text-brand-600 transition-colors">Locations</a>
-                    <a href="#our-story" class="text-slate-700 hover:text-brand-600 transition-colors">Our Story</a>
+                    <a href="index.html" class="text-slate-700 hover:text-colombia-blue transition-colors">Home</a>
+                    <a href="#menu" class="text-slate-700 hover:text-colombia-blue transition-colors">Menu</a>
+                    <a href="#locations" class="text-slate-700 hover:text-colombia-blue transition-colors">Locations</a>
+                    <a href="#our-story" class="text-slate-700 hover:text-colombia-blue transition-colors">Our Story</a>
                     <a href="application.html" 
-                       class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-2xl font-semibold transition-colors">
+                       class="bg-colombia-blue hover:bg-colombia-darkBlue text-white px-6 py-2.5 rounded-2xl font-semibold transition-colors">
                         Join Brasa Points
                     </a>
                 </nav>
 
                 <!-- Mobile Hamburger -->
                 <button id="mobile-menu-btn"
-                        class="md:hidden flex items-center justify-center w-11 h-11 text-slate-700 hover:text-brand-600"
+                        class="md:hidden flex items-center justify-center w-11 h-11 text-slate-700 hover:text-colombia-blue"
                         aria-label="Toggle mobile menu"
                         aria-expanded="false">
                     <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -129,13 +139,13 @@
                 <a href="#menu" class="py-2 text-slate-700">Menu</a>
                 <a href="#locations" class="py-2 text-slate-700">Locations</a>
                 <a href="#our-story" class="py-2 text-slate-700">Our Story</a>
-                <a href="application.html" class="bg-brand-600 text-white py-3 text-center rounded-2xl font-semibold">Join Brasa Points</a>
+                <a href="application.html" class="bg-colombia-blue text-white py-3 text-center rounded-2xl font-semibold">Join Brasa Points</a>
             </nav>
         </div>
     </header>
 
     <!-- HERO SECTION - value proposition -->
-    <section class="bg-gradient-to-br from-brand-700 via-orange-600 to-canopy-600 text-white py-24 relative overflow-hidden">
+    <section class="bg-gradient-to-br from-colombia-blue via-colombia-red to-colombia-tropical text-white py-24 relative overflow-hidden">
         <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.22),_transparent_22%),radial-gradient(circle_at_bottom_right,_rgba(20,83,45,0.16),_transparent_30%)]"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -149,7 +159,7 @@
                 </p>
                 <div class="flex flex-wrap gap-4">
                     <a href="application.html"
-                       class="inline-flex items-center bg-white text-brand-700 hover:bg-brand-50 px-8 py-4 rounded-3xl font-semibold text-lg transition-colors">
+                       class="inline-flex items-center bg-white text-colombia-blue hover:bg-brand-50 px-8 py-4 rounded-3xl font-semibold text-lg transition-colors">
                         Join Brasa Points → 
                     </a>
                     <a href="#locations" 
@@ -190,16 +200,16 @@
                 <p class="text-lg text-slate-600 mb-8">Founded in 2008 in Medellín by the Restrepo family. Today we employ 115 people and serve the same consistent Colombian grilled flavors in both Colombia and Florida.</p>
                 <div class="flex flex-wrap items-center gap-8">
                     <div class="rounded-3xl bg-brand-50/80 px-6 py-5 shadow-lg ring-1 ring-brand-200/50">
-                        <div class="text-brand-700 text-5xl font-bold">14</div>
-                        <div class="uppercase text-xs tracking-widest text-brand-900/80">Locations</div>
+                        <div class="text-colombia-blue text-5xl font-bold">14</div>
+                        <div class="uppercase text-xs tracking-widest text-slate-700/80">Locations</div>
                     </div>
                     <div class="rounded-3xl bg-brand-50/80 px-6 py-5 shadow-lg ring-1 ring-brand-200/50">
-                        <div class="text-brand-700 text-5xl font-bold">6M</div>
-                        <div class="uppercase text-xs tracking-widest text-brand-900/80">Annual revenue (USD)</div>
+                        <div class="text-colombia-blue text-5xl font-bold">6M</div>
+                        <div class="uppercase text-xs tracking-widest text-slate-700/80">Annual revenue (USD)</div>
                     </div>
                     <div class="rounded-3xl bg-brand-50/80 px-6 py-5 shadow-lg ring-1 ring-brand-200/50">
-                        <div class="text-brand-700 text-5xl font-bold">115</div>
-                        <div class="uppercase text-xs tracking-widest text-brand-900/80">Team members</div>
+                        <div class="text-colombia-blue text-5xl font-bold">115</div>
+                        <div class="uppercase text-xs tracking-widest text-slate-700/80">Team members</div>
                     </div>
                 </div>
             </div>
@@ -222,22 +232,22 @@
     <section id="menu" class="bg-white py-20 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <span class="px-4 py-2 bg-brand-50 text-brand-700 text-sm font-medium rounded-3xl">Why customers love us</span>
+                <span class="px-4 py-2 bg-brand-100 text-colombia-blue text-sm font-medium rounded-3xl">Why customers love us</span>
                 <h2 class="text-4xl font-bold tracking-tight mt-4">Three promises we never break</h2>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                 <div class="text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
-                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">🔥</div>
+                    <div class="mx-auto w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">🔥</div>
                     <h3 class="text-2xl font-semibold mb-3">Flame-grilled authenticity</h3>
                     <p class="text-slate-600">Traditional Colombian recipes prepared exactly the same way in every kitchen.</p>
                 </div>
                 <div class="text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
-                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">❤️</div>
+                    <div class="mx-auto w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">❤️</div>
                     <h3 class="text-2xl font-semibold mb-3">Warm service everywhere</h3>
                     <p class="text-slate-600">From Medellín to Miami, you’ll always feel like family at our table.</p>
                 </div>
                 <div class="text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
-                    <div class="mx-auto w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">⚡</div>
+                    <div class="mx-auto w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-md">⚡</div>
                     <h3 class="text-2xl font-semibold mb-3">Fast &amp; consistent</h3>
                     <p class="text-slate-600">Your order is ready in minutes — every single time, every single location.</p>
                 </div>
@@ -246,11 +256,11 @@
     </section>
 
     <!-- SECTION 3: Grilled Food Gallery -->
-    <section class="py-20 bg-gradient-to-b from-stone-100 to-white">
+    <section class="py-20 bg-gradient-to-b from-brand-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-end justify-between flex-wrap gap-6 mb-10">
                 <div>
-                    <span class="px-4 py-2 bg-brand-50 text-brand-700 text-sm font-medium rounded-3xl">From our grill</span>
+                    <span class="px-4 py-2 bg-brand-100 text-colombia-blue text-sm font-medium rounded-3xl">From our grill</span>
                     <h2 class="text-4xl font-bold tracking-tight mt-4 text-slate-900">More of the food you came for</h2>
                 </div>
                 <p class="text-slate-600 max-w-md">Signature grilled cuts, smoky chicken, and classics straight from the fire in every Brasaland location.</p>
@@ -285,20 +295,20 @@
     <section id="locations" class="bg-white py-20 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <span class="px-4 py-2 bg-brand-50 text-brand-700 text-sm font-medium rounded-3xl">Where to find us</span>
+                <span class="px-4 py-2 bg-brand-100 text-colombia-blue text-sm font-medium rounded-3xl">Where to find us</span>
                 <h2 class="text-4xl font-bold tracking-tight mt-4">Brasaland locations in Colombia and Florida</h2>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
-                <article class="bg-brand-50 rounded-3xl p-8 shadow-lg ring-1 ring-brand-200/60 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    <h3 class="text-2xl font-semibold text-brand-800 mb-2">Medellin</h3>
+                <article class="bg-brand-100 rounded-3xl p-8 shadow-lg ring-1 ring-brand-200/60 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <h3 class="text-2xl font-semibold text-colombia-blue mb-2">Medellin</h3>
                     <p class="text-slate-600">Our headquarters city, with multiple high-traffic stores and full menu availability.</p>
                 </article>
                 <article class="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-brand-200/40 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
                     <h3 class="text-2xl font-semibold text-slate-900 mb-2">Bogota</h3>
                     <p class="text-slate-600">Consistent flavor and quick service in one of Colombia's busiest urban hubs.</p>
                 </article>
-                <article class="bg-brand-50 rounded-3xl p-8 shadow-lg ring-1 ring-brand-200/60 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    <h3 class="text-2xl font-semibold text-brand-800 mb-2">Miami</h3>
+                <article class="bg-brand-100 rounded-3xl p-8 shadow-lg ring-1 ring-brand-200/60 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <h3 class="text-2xl font-semibold text-colombia-blue mb-2">Miami</h3>
                     <p class="text-slate-600">Brickell and Wynwood stores bring the same Brasaland grill experience to Florida.</p>
                 </article>
             </div>
@@ -306,23 +316,23 @@
     </section>
 
     <!-- CALL TO ACTION banner -->
-    <div class="bg-gradient-to-r from-brand-600 via-orange-600 to-canopy-600 text-white py-14">
+    <div class="bg-gradient-to-r from-colombia-blue via-colombia-red to-colombia-yellow text-white py-14">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
             <p class="text-2xl font-semibold tracking-tight">Ready to experience the Brasaland difference?</p>
             <a href="application.html" 
-               class="inline-flex items-center bg-white text-brand-700 px-10 py-4 rounded-3xl font-semibold text-lg shadow-xl transition duration-300 hover:-translate-y-0.5 hover:shadow-2xl">
+               class="inline-flex items-center bg-white text-colombia-blue px-10 py-4 rounded-3xl font-semibold text-lg shadow-xl transition duration-300 hover:-translate-y-0.5 hover:shadow-2xl">
                 Join our loyalty program today
             </a>
         </div>
     </div>
 
     <!-- FOOTER - semantic + contact -->
-    <footer class="bg-slate-900 text-slate-400">
+    <footer class="bg-colombia-blue text-slate-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
             <div class="grid md:grid-cols-12 gap-10">
                 <div class="md:col-span-5">
                     <div class="flex items-center gap-x-3 text-white mb-6">
-                        <div class="w-9 h-9 bg-brand-600 rounded-2xl flex items-center justify-center text-2xl">🔥</div>
+                        <div class="w-9 h-9 bg-colombia-goldAccent rounded-2xl flex items-center justify-center text-2xl">🔥</div>
                         <span class="text-3xl font-bold">Brasaland</span>
                     </div>
                     <p class="max-w-xs">Grilled with love since 2008. Same taste in every location across Colombia and Florida.</p>
