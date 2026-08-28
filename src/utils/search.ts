@@ -33,9 +33,13 @@ export function findMenuItemByName(
   items: MenuItem[],
   name: string
 ): MenuItem | null {
-  const searchName = name.toLowerCase();
+  const searchName = name.trim().toLowerCase();
+  if (searchName === "") {
+    return null;
+  }
+
   for (const item of items) {
-    if (item.name.toLowerCase() === searchName) {
+    if (item.name.trim().toLowerCase() === searchName) {
       return item;
     }
   }
@@ -53,6 +57,10 @@ export function binarySearchLocationByCapacity(
   sortedLocations: Location[],
   targetCapacity: number
 ): number {
+  if (sortedLocations.length === 0) {
+    return -1;
+  }
+
   let left = 0;
   let right = sortedLocations.length - 1;
 

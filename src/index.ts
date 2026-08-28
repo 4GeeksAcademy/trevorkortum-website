@@ -8,6 +8,8 @@ export * from "./types/models";
 
 // Export collections utilities
 export {
+  filterByCriteria,
+  sortByCriteria,
   filterSalesByLocation,
   filterSalesByDateRange,
   filterMenuItemsByCategory,
@@ -25,6 +27,11 @@ export {
 
 // Export transformation utilities
 export {
+  sumBy,
+  minBy,
+  maxBy,
+  averageBy,
+  countMenuItemsByCategory,
   convertCurrency,
   calculateDailyRevenue,
   calculateLocationMargin,

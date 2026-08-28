@@ -10,6 +10,69 @@ import {
   Location,
 } from "../types/models";
 
+export type SortOrder = "asc" | "desc";
+
+export type Predicate<T> = (item: T) => boolean;
+
+export interface SortCriterion<T> {
+  selector: (item: T) => string | number | Date;
+  order: SortOrder;
+}
+
+/**
+ * Applies multiple predicates to a collection.
+ * Predicates are combined with AND logic.
+ */
+export function filterByCriteria<T>(
+  items: readonly T[],
+  predicates: ReadonlyArray<Predicate<T>>
+): T[] {
+  if (items.length === 0) {
+    return [];
+  }
+
+  if (predicates.length === 0) {
+    return [...items];
+  }
+
+  return items.filter((item) => predicates.every((predicate) => predicate(item)));
+}
+
+/**
+ * Sorts by one or more criteria without mutating the original array.
+ */
+export function sortByCriteria<T>(
+  items: readonly T[],
+  criteria: ReadonlyArray<SortCriterion<T>>
+): T[] {
+  if (items.length <= 1 || criteria.length === 0) {
+    return [...items];
+  }
+
+  const normalizeValue = (value: string | number | Date): string | number => {
+    if (value instanceof Date) {
+      return value.getTime();
+    }
+    return value;
+  };
+
+  return [...items].sort((a, b) => {
+    for (const criterion of criteria) {
+      const left = normalizeValue(criterion.selector(a));
+      const right = normalizeValue(criterion.selector(b));
+
+      if (left === right) {
+        continue;
+      }
+
+      const result = left < right ? -1 : 1;
+      return criterion.order === "asc" ? result : -result;
+    }
+
+    return 0;
+  });
+}
+
 /**
  * Filters sales by location ID
  * @param sales - Array of sales transactions
@@ -20,7 +83,7 @@ export function filterSalesByLocation(
   sales: SaleTransaction[],
   locationId: string
 ): SaleTransaction[] {
-  return sales.filter((sale) => sale.locationId === locationId);
+  return filterByCriteria(sales, [(sale) => sale.locationId === locationId]);
 }
 
 /**
@@ -35,10 +98,14 @@ export function filterSalesByDateRange(
   startDate: Date,
   endDate: Date
 ): SaleTransaction[] {
-  return sales.filter((sale) => {
-    const saleDate = sale.timestamp;
-    return saleDate >= startDate && saleDate <= endDate;
-  });
+  if (startDate > endDate) {
+    return [];
+  }
+
+  return filterByCriteria(sales, [
+    (sale) => sale.timestamp >= startDate,
+    (sale) => sale.timestamp <= endDate,
+  ]);
 }
 
 /**
@@ -51,7 +118,7 @@ export function filterMenuItemsByCategory(
   items: MenuItem[],
   category: MenuCategory
 ): MenuItem[] {
-  return items.filter((item) => item.category === category);
+  return filterByCriteria(items, [(item) => item.category === category]);
 }
 
 /**
@@ -60,7 +127,7 @@ export function filterMenuItemsByCategory(
  * @returns Array of active locations
  */
 export function filterActiveLocations(locations: Location[]): Location[] {
-  return locations.filter((location) => location.status === "Active");
+  return filterByCriteria(locations, [(location) => location.status === "Active"]);
 }
 
 /**
@@ -73,15 +140,9 @@ export function sortLocationsByCapacity(
   locations: Location[],
   order: "asc" | "desc"
 ): Location[] {
-  const sorted = [...locations];
-  sorted.sort((a, b) => {
-    if (order === "asc") {
-      return a.seatingCapacity - b.seatingCapacity;
-    } else {
-      return b.seatingCapacity - a.seatingCapacity;
-    }
-  });
-  return sorted;
+  return sortByCriteria(locations, [
+    { selector: (location) => location.seatingCapacity, order },
+  ]);
 }
 
 /**
@@ -96,16 +157,7 @@ export function sortMenuItemsByPrice(
   currency: "USD" | "COP",
   order: "asc" | "desc"
 ): MenuItem[] {
-  const sorted = [...items];
-  sorted.sort((a, b) => {
-    const priceA = a.basePrice[currency];
-    const priceB = b.basePrice[currency];
-
-    if (order === "asc") {
-      return priceA - priceB;
-    } else {
-      return priceB - priceA;
-    }
-  });
-  return sorted;
+  return sortByCriteria(items, [
+    { selector: (item) => item.basePrice[currency], order },
+  ]);
 }
