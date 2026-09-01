@@ -115,26 +115,140 @@
         </div>
       </section>
 
-      <section class="workstream-grid" aria-label="Department workstreams">
-        <article id="procurement" class="workstream-card">
-          <p class="eyebrow">Lucia Fernandez · Procurement</p>
-          <h2>Supplier price watch</h2>
-          <p>Meat and packaging suppliers need consolidated purchasing history across Colombia and Florida.</p>
-          <strong>20 suppliers tracked next</strong>
-        </article>
-        <article id="training" class="workstream-card">
-          <p class="eyebrow">Jake Morrison · Training</p>
-          <h2>Recipe update queue</h2>
-          <p>Centralized recipe publishing will replace scattered Google Drive updates across 14 locations.</p>
-          <strong>Spanish-English support planned</strong>
-        </article>
-        <article id="executive" class="workstream-card">
-          <p class="eyebrow">Mariana Restrepo · Executive</p>
-          <h2>Monday report pipeline</h2>
-          <p>Executive reporting will combine COP and USD views without hiding market-level currency context.</p>
-          <strong>7:00 AM automation target</strong>
-        </article>
+      <section class="panel" id="procurement" aria-labelledby="procurement-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Lucia Fernandez · Procurement</p>
+            <h2 id="procurement-title">Supplier price watch</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Supplier</th>
+                <th>Category</th>
+                <th>Market</th>
+                <th>Latest price</th>
+                <th>Change</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Carnicos Antioquia</td>
+                <td>Meat</td>
+                <td>Colombia · es-CO</td>
+                <td>COP 1,250 / kg</td>
+                <td>+4.2% this month</td>
+                <td><span class="tag warn">Renegotiate</span></td>
+              </tr>
+              <tr>
+                <td>Empaques del Valle</td>
+                <td>Packaging</td>
+                <td>Colombia · es-CO</td>
+                <td>COP 380 / unit</td>
+                <td>Stable</td>
+                <td><span class="tag good">On contract</span></td>
+              </tr>
+              <tr>
+                <td>Gulf Coast Produce</td>
+                <td>Vegetables</td>
+                <td>Florida · en-US</td>
+                <td>USD 2.10 / lb</td>
+                <td>+6.5% this month</td>
+                <td><span class="tag danger">Price spike</span></td>
+              </tr>
+              <tr>
+                <td>Sunshine Beverage Co</td>
+                <td>Beverage</td>
+                <td>Florida · en-US</td>
+                <td>USD 0.85 / unit</td>
+                <td>Stable</td>
+                <td><span class="tag good">On contract</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="training" aria-labelledby="training-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Jake Morrison · Training</p>
+            <h2 id="training-title">Recipe update queue</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Recipe</th>
+                <th>Category</th>
+                <th>Locations pending</th>
+                <th>Language readiness</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Churrasco a la Brasa v3</td>
+                <td>Meat</td>
+                <td>14 of 14</td>
+                <td>ES ready · EN draft</td>
+                <td><span class="tag warn">Translation pending</span></td>
+              </tr>
+              <tr>
+                <td>Patacones con Hogao</td>
+                <td>Side</td>
+                <td>6 of 14 (Colombia)</td>
+                <td>ES ready</td>
+                <td><span class="tag good">Published</span></td>
+              </tr>
+              <tr>
+                <td>Grilled Chicken Bowl</td>
+                <td>Meat</td>
+                <td>8 of 14 (Florida + Doral)</td>
+                <td>EN ready · ES draft</td>
+                <td><span class="tag warn">Translation pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="executive" aria-labelledby="executive-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Mariana Restrepo · Executive</p>
+            <h2 id="executive-title">Monday report pipeline</h2>
+          </div>
+          <button type="button">Ask the AI assistant</button>
+        </div>
+        <div class="metric-grid" aria-label="Executive weekly snapshot">
+          <article class="metric-card">
+            <span>Total weekly sales</span>
+            <strong>COP 184.2M</strong>
+            <small>Colombia locations</small>
+          </article>
+          <article class="metric-card">
+            <span>Total weekly sales</span>
+            <strong>USD 42.6K</strong>
+            <small>Florida locations</small>
+          </article>
+          <article class="metric-card">
+            <span>Weekly report</span>
+            <strong>Mondays 7:00 AM</strong>
+            <small>Automation target, not yet live</small>
+          </article>
+          <article class="metric-card alert">
+            <span>AI assistant</span>
+            <strong>Not connected</strong>
+            <small>Natural-language queries planned</small>
+          </article>
+        </div>
       </section>
     </main>
+    <script src="./app.js"></script>
   </body>
 </html>

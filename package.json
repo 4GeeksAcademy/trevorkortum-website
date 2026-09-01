@@ -7,6 +7,7 @@
     "typecheck": "tsc --noEmit",
     "build": "tsc",
     "demo": "tsx src/demo.ts",
+    "test": "tsx --test tests/*.test.ts",
     "serve": "npx http-server . -p 3000 -a localhost",
     "dev:website": "npx http-server ./uis/website -p 3001 -a localhost",
     "dev:backoffice": "npx http-server ./uis/backoffice -p 3002 -a localhost"
