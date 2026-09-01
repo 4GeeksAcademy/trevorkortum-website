@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brasaland Backoffice</title>
+    <meta name="description" content="Internal Brasaland Digital operations overview for Colombia and Florida." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23bd3f22'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' font-family='Segoe UI' fill='white'%3EB%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar" aria-label="Backoffice navigation">
+      <div class="brand-lockup">
+        <span class="brand-icon">B</span>
+        <div>
+          <strong>Brasaland</strong>
+          <span>Backoffice</span>
+        </div>
+      </div>
+      <nav>
+        <a class="active" href="/">Operations</a>
+        <a href="#procurement">Procurement</a>
+        <a href="#training">Training</a>
+        <a href="#executive">Executive</a>
+      </nav>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Live operations preview</p>
+          <h1>Two markets, one operating picture.</h1>
+        </div>
+        <div class="status-pill" aria-label="Telemetry status">Telemetry foundation active</div>
+      </header>
+
+      <section class="metric-grid" aria-label="Executive metrics">
+        <article class="metric-card">
+          <span>Total weekly sales</span>
+          <strong>COP 184.2M</strong>
+          <small>Colombia locations</small>
+        </article>
+        <article class="metric-card">
+          <span>Total weekly sales</span>
+          <strong>USD 42.6K</strong>
+          <small>Florida locations</small>
+        </article>
+        <article class="metric-card alert">
+          <span>No-sales alerts</span>
+          <strong>2</strong>
+          <small>Opening-hours checks pending</small>
+        </article>
+        <article class="metric-card">
+          <span>Open staff roles</span>
+          <strong>7</strong>
+          <small>Segmented by country</small>
+        </article>
+      </section>
+
+      <section class="panel" aria-labelledby="locations-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Felipe Guerrero · Restaurant Operations</p>
+            <h2 id="locations-title">Location operating overview</h2>
+          </div>
+          <button type="button">Export Monday report</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Market</th>
+                <th>Today sales</th>
+                <th>Covers</th>
+                <th>Average ticket</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Medellin Downtown</td>
+                <td>Colombia · es-CO</td>
+                <td>COP 18,400,000</td>
+                <td>612</td>
+                <td>COP 30,065</td>
+                <td><span class="tag good">On pace</span></td>
+              </tr>
+              <tr>
+                <td>Envigado</td>
+                <td>Colombia · es-CO</td>
+                <td>COP 13,900,000</td>
+                <td>438</td>
+                <td>COP 31,735</td>
+                <td><span class="tag warn">Stock watch</span></td>
+              </tr>
+              <tr>
+                <td>Miami Flagship</td>
+                <td>Florida · en-US</td>
+                <td>USD 8,750</td>
+                <td>286</td>
+                <td>USD 30.59</td>
+                <td><span class="tag good">On pace</span></td>
+              </tr>
+              <tr>
+                <td>Doral Kitchen</td>
+                <td>Florida · en-US</td>
+                <td>USD 2,140</td>
+                <td>74</td>
+                <td>USD 28.92</td>
+                <td><span class="tag danger">Slow week</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="procurement" aria-labelledby="procurement-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Lucia Fernandez · Procurement</p>
+            <h2 id="procurement-title">Supplier price watch</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Supplier</th>
+                <th>Category</th>
+                <th>Market</th>
+                <th>Latest price</th>
+                <th>Change</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Carnicos Antioquia</td>
+                <td>Meat</td>
+                <td>Colombia · es-CO</td>
+                <td>COP 1,250 / kg</td>
+                <td>+4.2% this month</td>
+                <td><span class="tag warn">Renegotiate</span></td>
+              </tr>
+              <tr>
+                <td>Empaques del Valle</td>
+                <td>Packaging</td>
+                <td>Colombia · es-CO</td>
+                <td>COP 380 / unit</td>
+                <td>Stable</td>
+                <td><span class="tag good">On contract</span></td>
+              </tr>
+              <tr>
+                <td>Gulf Coast Produce</td>
+                <td>Vegetables</td>
+                <td>Florida · en-US</td>
+                <td>USD 2.10 / lb</td>
+                <td>+6.5% this month</td>
+                <td><span class="tag danger">Price spike</span></td>
+              </tr>
+              <tr>
+                <td>Sunshine Beverage Co</td>
+                <td>Beverage</td>
+                <td>Florida · en-US</td>
+                <td>USD 0.85 / unit</td>
+                <td>Stable</td>
+                <td><span class="tag good">On contract</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="training" aria-labelledby="training-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Jake Morrison · Training</p>
+            <h2 id="training-title">Recipe update queue</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Recipe</th>
+                <th>Category</th>
+                <th>Locations pending</th>
+                <th>Language readiness</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Churrasco a la Brasa v3</td>
+                <td>Meat</td>
+                <td>14 of 14</td>
+                <td>ES ready · EN draft</td>
+                <td><span class="tag warn">Translation pending</span></td>
+              </tr>
+              <tr>
+                <td>Patacones con Hogao</td>
+                <td>Side</td>
+                <td>6 of 14 (Colombia)</td>
+                <td>ES ready</td>
+                <td><span class="tag good">Published</span></td>
+              </tr>
+              <tr>
+                <td>Grilled Chicken Bowl</td>
+                <td>Meat</td>
+                <td>8 of 14 (Florida + Doral)</td>
+                <td>EN ready · ES draft</td>
+                <td><span class="tag warn">Translation pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="executive" aria-labelledby="executive-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Mariana Restrepo · Executive</p>
+            <h2 id="executive-title">Monday report pipeline</h2>
+          </div>
+          <button type="button">Ask the AI assistant</button>
+        </div>
+        <div class="metric-grid" aria-label="Executive weekly snapshot">
+          <article class="metric-card">
+            <span>Total weekly sales</span>
+            <strong>COP 184.2M</strong>
+            <small>Colombia locations</small>
+          </article>
+          <article class="metric-card">
+            <span>Total weekly sales</span>
+            <strong>USD 42.6K</strong>
+            <small>Florida locations</small>
+          </article>
+          <article class="metric-card">
+            <span>Weekly report</span>
+            <strong>Mondays 7:00 AM</strong>
+            <small>Automation target, not yet live</small>
+          </article>
+          <article class="metric-card alert">
+            <span>AI assistant</span>
+            <strong>Not connected</strong>
+            <small>Natural-language queries planned</small>
+          </article>
+        </div>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
