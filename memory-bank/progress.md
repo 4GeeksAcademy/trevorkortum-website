@@ -12,6 +12,10 @@ Brasaland Digital is initializing its AI-driven monorepo infrastructure and base
 - The technology platform starts near-zero, so shared conventions must stay simple, explicit, and easy to verify.
 - `.agents/` is reserved for development tool configuration; `/agents` and `/skills` remain reserved for product/runtime code.
 
+## Recent Changes
+
+- `uis/website/index.html` and `styles.css`: balanced the public locations grid to alternate Colombia/Florida (Medellin Downtown, Miami, Envigado, Doral) and added a "Menu" section listing signature grilled dishes served identically in both markets.
+
 ## Planned Roadmap
 
 - Establish shared TypeScript business models for locations, currencies, suppliers, sales, customers, HR, and training.
