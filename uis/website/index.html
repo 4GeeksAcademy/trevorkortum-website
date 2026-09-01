@@ -38,52 +38,48 @@
             <a class="button secondary" href="#story">Our story</a>
           </div>
         </div>
-        <div class="grill-stage" aria-label="Brasaland grilled food visual">
-          <div class="ember-grid" aria-hidden="true"></div>
-          <div class="plate">
-            <span class="grill-line line-one"></span>
-            <span class="grill-line line-two"></span>
-            <span class="grill-line line-three"></span>
+        <div class="grill-stage" aria-label="Brasaland geographic connection from Medellin to Miami">
+          <div class="geo-split">
+            <div class="geo-region colombia" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Medell%C3%ADn_Colombia.jpg/960px-Medell%C3%ADn_Colombia.jpg');">
+              <div class="geo-label">Medellin<br/>Colombia</div>
+            </div>
+            <div class="geo-connector">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <polygon points="0 0, 10 3, 0 6" fill="#f3a22d" />
+                  </marker>
+                </defs>
+                <path d="M 10 50 Q 50 30 90 50" stroke="#f3a22d" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead)" />
+                <circle cx="50" cy="35" r="3" fill="#d84a1b" opacity="0.8">
+                  <animate attributeName="r" from="2" to="6" dur="2s" repeatCount="indefinite" />
+                </circle>
+              </svg>
+            </div>
+            <div class="geo-region florida">
+              <div class="geo-label">Miami<br/>Florida</div>
+            </div>
           </div>
-          <div class="location-chip medellin">Medellin</div>
-          <div class="location-chip miami">Miami</div>
         </div>
       </section>
 
       <section id="photo-options" class="section photo-options" aria-labelledby="photo-options-title">
         <div class="section-heading">
           <p class="eyebrow">Hero photography direction</p>
-          <h2 id="photo-options-title">Choose the grill photo style for the homepage.</h2>
         </div>
         <div class="photo-grid">
-          <figure class="photo-card">
-            <img
-              src="https://placehold.co/640x480/d84a1b/fffaf1?text=Medellin+Style"
-              alt="High-resolution overhead photo of Colombian-style grilled meats, featuring tender carne asada, chorizo, visual grill marks, golden arepas, and fresh chimichurri, brightly lit on a wooden platter."
-              width="640"
-              height="480"
-              loading="lazy"
-            />
-            <figcaption>
-              <span class="country-code">CO</span>
-              <h3>Option 1 · Medellin style</h3>
-              <p>Overhead grilled carne asada and chorizo with visible grill marks, golden arepas, and fresh chimichurri on a wooden platter.</p>
-            </figcaption>
-          </figure>
-          <figure class="photo-card">
-            <img
-              src="https://placehold.co/640x480/211b18/fffaf1?text=Miami+Style"
-              alt="Professional restaurant food photography of a modern Latin grill plate with juicy grilled steak, sweet plantains, seasoned rice, and avocado, styled for a Miami-inspired upscale casual restaurant."
-              width="640"
-              height="480"
-              loading="lazy"
-            />
-            <figcaption>
-              <span class="country-code">US</span>
-              <h3>Option 2 · Miami style</h3>
-              <p>Upscale casual plating with juicy grilled steak, sweet plantains, seasoned rice, and avocado.</p>
-            </figcaption>
-          </figure>
+          <div class="photo-card" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Churrasco_brasileiro.jpg/960px-Churrasco_brasileiro.jpg');">
+            <div class="photo-card-footer">
+              <span class="country-code">CO · US</span>
+              <h3>Overhead presentation</h3>
+            </div>
+          </div>
+          <div class="photo-card" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=640&h=480&fit=crop');">
+            <div class="photo-card-footer">
+              <span class="country-code">CO · US</span>
+              <h3>Plated presentation</h3>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -122,35 +118,41 @@
           <h2 id="menu-title">One menu, cooked the same way in Medellin and Miami.</h2>
         </div>
         <div class="menu-grid">
-          <article class="dish-card">
-            <span class="country-code">CO · US</span>
-            <h3>Churrasco a la Brasa</h3>
-            <p>Grilled churrasco steak finished over open flame, the dish that started Brasaland in 2008.</p>
+          <article class="dish-card" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Churrasco_brasileiro.jpg/960px-Churrasco_brasileiro.jpg');">
+            <div class="dish-card-overlay">
+              <span class="country-code">CO · US</span>
+              <h3>Churrasco a la Brasa</h3>
+            </div>
           </article>
-          <article class="dish-card">
-            <span class="country-code">CO · US</span>
-            <h3>Pollo a la Brasa</h3>
-            <p>Slow-grilled marinated chicken, Brasaland's most-ordered plate in both countries.</p>
+          <article class="dish-card" style="background-image: url('https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=400&fit=crop&q=80');">
+            <div class="dish-card-overlay">
+              <span class="country-code">CO · US</span>
+              <h3>Pollo a la Brasa</h3>
+            </div>
           </article>
-          <article class="dish-card">
-            <span class="country-code">CO · US</span>
-            <h3>Chorizo Santa Rosa</h3>
-            <p>Traditional Colombian grilled sausage served with lime and ripe tomato.</p>
+          <article class="dish-card" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Grilled_sausage_and_beer.jpg/960px-Grilled_sausage_and_beer.jpg');">
+            <div class="dish-card-overlay">
+              <span class="country-code">CO · US</span>
+              <h3>Chorizo Santa Rosa</h3>
+            </div>
           </article>
-          <article class="dish-card">
-            <span class="country-code">CO · US</span>
-            <h3>Patacones con Hogao</h3>
-            <p>Twice-fried green plantain topped with a Medellin-style tomato and onion sauce.</p>
+          <article class="dish-card" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Patacones.JPG/960px-Patacones.JPG');">
+            <div class="dish-card-overlay">
+              <span class="country-code">CO · US</span>
+              <h3>Patacones con Hogao</h3>
+            </div>
           </article>
-          <article class="dish-card">
-            <span class="country-code">CO · US</span>
-            <h3>Mazorca Asada</h3>
-            <p>Grilled corn on the cob brushed with butter, a staple side across every location.</p>
+          <article class="dish-card" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Grilled_Corn_%28Unsplash%29.jpg/960px-Grilled_Corn_%28Unsplash%29.jpg');">
+            <div class="dish-card-overlay">
+              <span class="country-code">CO · US</span>
+              <h3>Mazorca Asada</h3>
+            </div>
           </article>
-          <article class="dish-card">
-            <span class="country-code">CO · US</span>
-            <h3>Chicharron</h3>
-            <p>Crispy pork belly, always fried fresh to order.</p>
+          <article class="dish-card" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Chicharr%C3%B3n_fried_pork_rinds.jpg/960px-Chicharr%C3%B3n_fried_pork_rinds.jpg');">
+            <div class="dish-card-overlay">
+              <span class="country-code">CO · US</span>
+              <h3>Chicharron</h3>
+            </div>
           </article>
         </div>
       </section>

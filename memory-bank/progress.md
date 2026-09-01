@@ -15,6 +15,7 @@ Brasaland Digital is initializing its AI-driven monorepo infrastructure and base
 ## Recent Changes
 
 - `uis/website/index.html` and `styles.css`: balanced the public locations grid to alternate Colombia/Florida (Medellin Downtown, Miami, Envigado, Doral) and added a "Menu" section listing signature grilled dishes served identically in both markets.
+- `uis/website/index.html` and `styles.css`: added a Medellin, Colombia photo to the hero's Colombia region and replaced five broken Unsplash dish photo URLs (Churrasco, Chorizo, Patacones, Mazorca Asada, Chicharron) with verified, freely licensed Wikimedia Commons images after confirming all image URLs resolve (including under concurrent page load).
 
 ## Planned Roadmap
 
