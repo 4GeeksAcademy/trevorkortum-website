@@ -18,7 +18,9 @@
         </div>
       </div>
       <nav>
-        <a class="active" href="/">Operations</a>
+        <a class="active" href="#operations">Operations</a>
+        <a href="#talent-pipeline">Talent Pipeline</a>
+        <a href="#incident-analysis">Incident Analysis</a>
         <a href="#procurement">Procurement</a>
         <a href="#training">Training</a>
         <a href="#executive">Executive</a>
@@ -57,7 +59,7 @@
         </article>
       </section>
 
-      <section class="panel" aria-labelledby="locations-title">
+      <section class="panel" id="operations" aria-labelledby="locations-title">
         <div class="panel-heading">
           <div>
             <p class="eyebrow">Felipe Guerrero · Restaurant Operations</p>
@@ -111,6 +113,202 @@
                 <td><span class="tag danger">Slow week</span></td>
               </tr>
             </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="talent-pipeline" aria-labelledby="talent-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Ashley Turner · People &amp; Culture</p>
+            <h2 id="talent-title">Talent recruitment pipeline &amp; open roles</h2>
+          </div>
+          <button type="button">+ New Job Opening</button>
+        </div>
+        <div class="metric-grid" aria-label="Talent pipeline metrics">
+          <article class="metric-card">
+            <span>Open roles</span>
+            <strong>7</strong>
+            <small>4 Colombia · 3 Florida</small>
+          </article>
+          <article class="metric-card">
+            <span>Active applicants</span>
+            <strong>48</strong>
+            <small>Across both markets</small>
+          </article>
+          <article class="metric-card">
+            <span>In interview</span>
+            <strong>12</strong>
+            <small>Next 5 business days</small>
+          </article>
+          <article class="metric-card">
+            <span>Avg time-to-hire</span>
+            <strong>14 days</strong>
+            <small>Benchmark target: 18 days</small>
+          </article>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Role applied</th>
+                <th>Market / Location</th>
+                <th>Stage</th>
+                <th>Applied date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mateo Salazar</td>
+                <td>Head Grill Master</td>
+                <td>Medellin Downtown · es-CO</td>
+                <td>Technical Kitchen Trial</td>
+                <td>2026-09-02</td>
+                <td><span class="tag good">Final review</span></td>
+              </tr>
+              <tr>
+                <td>Carolina Restrepo</td>
+                <td>Restaurant Supervisor</td>
+                <td>Envigado · es-CO</td>
+                <td>Culture Interview</td>
+                <td>2026-09-05</td>
+                <td><span class="tag warn">Interview scheduled</span></td>
+              </tr>
+              <tr>
+                <td>David Miller</td>
+                <td>Shift Lead</td>
+                <td>Miami Flagship · en-US</td>
+                <td>Background Check</td>
+                <td>2026-08-28</td>
+                <td><span class="tag good">Offer sent</span></td>
+              </tr>
+              <tr>
+                <td>Elena Vasquez</td>
+                <td>Prep Cook &amp; Expediter</td>
+                <td>Doral Kitchen · en-US</td>
+                <td>Phone Screening</td>
+                <td>2026-09-08</td>
+                <td><span class="tag warn">Screening</span></td>
+              </tr>
+              <tr>
+                <td>Andres Gomez</td>
+                <td>Service &amp; Cashier</td>
+                <td>Medellin Poblado · es-CO</td>
+                <td>Manager Interview</td>
+                <td>2026-09-09</td>
+                <td><span class="tag good">Interview scheduled</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="incident-analysis" aria-labelledby="incidents-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Felipe Guerrero · Restaurant Operations</p>
+            <h2 id="incidents-title">Incident report analysis &amp; CSV ingestion</h2>
+          </div>
+          <button type="button" id="btn-export-incident-csv">Export Results CSV</button>
+        </div>
+
+        <div class="upload-container">
+          <div class="upload-dropzone" id="csv-dropzone">
+            <div class="upload-icon">📄</div>
+            <div class="upload-details">
+              <h3>Add CSV documents</h3>
+              <p>Drag &amp; drop location incident report CSVs, or click browse to upload.</p>
+            </div>
+            <div class="upload-actions">
+              <label for="incident-csv-input" class="upload-btn-label">Browse CSV</label>
+              <input type="file" id="incident-csv-input" accept=".csv" style="display: none;" />
+              <button type="button" id="btn-load-sample" class="btn-secondary">Load Sample Data</button>
+            </div>
+          </div>
+          <div class="active-file-pill" id="active-file-indicator">
+            <span>Active dataset:</span>
+            <strong id="loaded-filename">incidents-brasaland.csv</strong>
+            <small id="loaded-file-meta">(100 records processed)</small>
+          </div>
+        </div>
+
+        <div class="metric-grid" aria-label="Incident metrics">
+          <article class="metric-card">
+            <span>Total records</span>
+            <strong id="metric-total-records">100</strong>
+            <small>Input rows</small>
+          </article>
+          <article class="metric-card">
+            <span>Valid records</span>
+            <strong id="metric-valid-records" style="color: var(--green);">96</strong>
+            <small id="metric-valid-pct">96.0% valid</small>
+          </article>
+          <article class="metric-card alert">
+            <span>Invalid / flagged</span>
+            <strong id="metric-invalid-records" style="color: var(--red);">4</strong>
+            <small id="metric-invalid-pct">4.0% flagged</small>
+          </article>
+          <article class="metric-card">
+            <span>Avg satisfaction</span>
+            <strong id="metric-avg-satisfaction">3.46</strong>
+            <small id="metric-satisfaction-sub">50 scored closed cases (/ 5.00)</small>
+          </article>
+        </div>
+
+        <div class="analysis-breakdown-grid">
+          <div class="breakdown-card">
+            <div class="breakdown-header">
+              <h3>Category Breakdown (Valid)</h3>
+            </div>
+            <ul class="breakdown-list" id="category-breakdown-list"></ul>
+          </div>
+
+          <div class="breakdown-card">
+            <div class="breakdown-header">
+              <h3>Status Breakdown (Valid)</h3>
+            </div>
+            <ul class="breakdown-list" id="status-breakdown-list"></ul>
+          </div>
+
+          <div class="breakdown-card">
+            <div class="breakdown-header">
+              <h3>Invalid Records Breakdown</h3>
+            </div>
+            <ul class="breakdown-list" id="invalid-rules-list"></ul>
+          </div>
+
+          <div class="breakdown-card">
+            <div class="breakdown-header">
+              <h3>Satisfaction Index (Closed)</h3>
+            </div>
+            <ul class="breakdown-list" id="satisfaction-breakdown-list"></ul>
+          </div>
+        </div>
+
+        <div class="table-toolbar">
+          <div class="filter-tabs">
+            <button type="button" class="tab-filter active" data-filter="all">All Records (<span id="count-all">100</span>)</button>
+            <button type="button" class="tab-filter" data-filter="valid">Valid Records (<span id="count-valid">96</span>)</button>
+            <button type="button" class="tab-filter" data-filter="invalid">Invalid Records (<span id="count-invalid">4</span>)</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Incident ID</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Score</th>
+                <th>Reporter</th>
+                <th>Validation</th>
+              </tr>
+            </thead>
+            <tbody id="incidents-table-body"></tbody>
           </table>
         </div>
       </section>
