@@ -1,4 +1,4 @@
-Welcome to Brasaland
+AI Engineering · 4Geeks Academy — Company Briefing
 Brasaland is a grilled food restaurant chain founded in 2008 in Medellín, Colombia. What began as a single family-run location has grown, over fifteen years, into a chain of 14 company-owned restaurants operating across two countries: Colombia and the United States (Florida). The company employs approximately 115 people and generates around 6 million dollars in annual revenue.
 
 The brand has always stood for three things: food that tastes the same whether you order it in Medellín or Miami, a service experience that feels warm and consistent, and a kitchen that moves fast. Those three commitments are what built the business — and they are also what make running it increasingly difficult without the right tools.
@@ -65,7 +65,7 @@ Manager: Jake Morrison (Miami)
 
 Every location must follow the same recipes, preparation techniques, and presentation standards regardless of country. Training materials are stored in a shared Google Drive that nobody can navigate. When a recipe or procedure changes, communicating the update to all 14 locations in two languages takes days and often creates confusion.
 
-What they need: A bilingual training platform with a searchable recipe catalogue, a structured onboarding path for new staff, and a system that pushes recipe updates to all locations simultaneously in Spanish and English.
+What they need: A training platform with a searchable recipe catalogue, a structured onboarding path for new staff, and a system that pushes recipe updates to all locations simultaneously. Multilingual support (Spanish and English) is optional but highly recommended, starting from one base language.
 
 💻 Technology
 CTO: Nicolás Park (Medellín)
@@ -84,7 +84,7 @@ What she needs: An executive dashboard with total chain sales in USD and COP, an
 Why Choose Brasaland?
 Choose Brasaland if you are drawn to:
 
-Consumer-facing products — a loyalty app, a bilingual website, a customer CRM — built for real people who eat at restaurants.
+Consumer-facing products — a loyalty app, a corporate website, a customer CRM — built for real people who eat at restaurants.
 Multi-market complexity — building systems that work simultaneously in two countries, two currencies, and two languages.
 Operations at scale — 14 physical locations generating data that needs to be captured, unified, and surfaced in real time.
 A domain that is universally relatable — everyone understands what a restaurant does, which makes it easier to focus on the engineering.
