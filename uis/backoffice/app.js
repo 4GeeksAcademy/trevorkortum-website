@@ -54,17 +54,45 @@ function validateRecord(row) {
 }
 
 function parseCSV(text) {
-  const lines = text.trim().split(/\r?\n/).filter(Boolean);
-  if (lines.length < 2) return [];
-  const headers = lines[0].split(",").map((h) => h.trim().replace(/^["']|["']$/g, ""));
+  const rows = [];
+  let row = [];
+  let field = "";
+  let quoted = false;
 
-  return lines.slice(1).map((line) => {
-    const values = line.split(",").map((v) => v.trim().replace(/^["']|["']$/g, ""));
-    const row = {};
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (character === '"') {
+      if (quoted && text[index + 1] === '"') {
+        field += '"';
+        index += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (character === "," && !quoted) {
+      row.push(field.trim());
+      field = "";
+    } else if ((character === "\n" || character === "\r") && !quoted) {
+      if (character === "\r" && text[index + 1] === "\n") index += 1;
+      row.push(field.trim());
+      if (row.some((value) => value)) rows.push(row);
+      row = [];
+      field = "";
+    } else {
+      field += character;
+    }
+  }
+
+  row.push(field.trim());
+  if (row.some((value) => value)) rows.push(row);
+  if (rows.length < 2) return [];
+
+  const headers = rows[0].map((header) => header.replace(/^\uFEFF/, "").trim());
+  return rows.slice(1).map((values) => {
+    const record = {};
     headers.forEach((header, index) => {
-      row[header] = values[index] || "";
+      record[header] = values[index] || "";
     });
-    return row;
+    return record;
   });
 }
 
@@ -205,18 +233,76 @@ function renderTable() {
     .join("");
 }
 
+const REQUIRED_INCIDENT_COLUMNS = [
+  "incident_id",
+  "location_id",
+  "category",
+  "description",
+  "status",
+  "satisfaction_score",
+  "reporter_id",
+];
+
 const fileInput = document.getElementById("incident-csv-input");
-if (fileInput) {
-  fileInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const data = parseCSV(event.target.result);
+const dropzone = document.getElementById("csv-dropzone");
+const uploadFeedback = document.getElementById("upload-feedback");
+
+function setUploadFeedback(message, isError = false) {
+  if (!uploadFeedback) return;
+  uploadFeedback.textContent = message;
+  uploadFeedback.classList.toggle("error", isError);
+}
+
+function loadIncidentFile(file) {
+  if (!file || !file.name.toLowerCase().endsWith(".csv")) {
+    setUploadFeedback("Choose a CSV file to analyze.", true);
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const data = parseCSV(String(event.target.result || ""));
+    const columns = Object.keys(data[0] || {});
+    const missingColumns = REQUIRED_INCIDENT_COLUMNS.filter((column) => !columns.includes(column));
+
+    if (!data.length) {
+      setUploadFeedback("The CSV has no incident records.", true);
+    } else if (missingColumns.length) {
+      setUploadFeedback(`Missing required columns: ${missingColumns.join(", ")}.`, true);
+    } else {
+      activeFilter = "all";
+      document.querySelectorAll(".tab-filter").forEach((button) => {
+        button.classList.toggle("active", button.dataset.filter === "all");
+      });
       renderDashboard(data, file.name);
-    };
-    reader.readAsText(file);
+      setUploadFeedback(`${file.name} loaded. Metrics and records now reflect this file.`);
+    }
+  };
+  reader.onerror = () => setUploadFeedback("The CSV could not be read.", true);
+  reader.readAsText(file);
+}
+
+if (fileInput) {
+  fileInput.addEventListener("change", (event) => {
+    loadIncidentFile(event.target.files[0]);
+    event.target.value = "";
   });
+}
+
+if (dropzone) {
+  ["dragenter", "dragover"].forEach((eventName) => {
+    dropzone.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      dropzone.classList.add("dragover");
+    });
+  });
+  ["dragleave", "drop"].forEach((eventName) => {
+    dropzone.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      dropzone.classList.remove("dragover");
+    });
+  });
+  dropzone.addEventListener("drop", (event) => loadIncidentFile(event.dataTransfer.files[0]));
 }
 
 document.querySelectorAll(".tab-filter").forEach((btn) => {

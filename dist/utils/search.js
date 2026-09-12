@@ -23,9 +23,12 @@ export function findLocationById(locations, id) {
  * @returns MenuItem if found, null otherwise
  */
 export function findMenuItemByName(items, name) {
-    const searchName = name.toLowerCase();
+    const searchName = name.trim().toLowerCase();
+    if (searchName === "") {
+        return null;
+    }
     for (const item of items) {
-        if (item.name.toLowerCase() === searchName) {
+        if (item.name.trim().toLowerCase() === searchName) {
             return item;
         }
     }
@@ -39,6 +42,9 @@ export function findMenuItemByName(items, name) {
  * @returns Index of location with target capacity if found, -1 otherwise
  */
 export function binarySearchLocationByCapacity(sortedLocations, targetCapacity) {
+    if (sortedLocations.length === 0) {
+        return -1;
+    }
     let left = 0;
     let right = sortedLocations.length - 1;
     while (left <= right) {

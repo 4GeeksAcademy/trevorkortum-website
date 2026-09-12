@@ -3,6 +3,21 @@
  * Functions to filter, sort, search, and group elements within arrays
  */
 import { MenuItem, MenuCategory, SaleTransaction, Location } from "../types/models";
+export type SortOrder = "asc" | "desc";
+export type Predicate<T> = (item: T) => boolean;
+export interface SortCriterion<T> {
+    selector: (item: T) => string | number | Date;
+    order: SortOrder;
+}
+/**
+ * Applies multiple predicates to a collection.
+ * Predicates are combined with AND logic.
+ */
+export declare function filterByCriteria<T>(items: readonly T[], predicates: ReadonlyArray<Predicate<T>>): T[];
+/**
+ * Sorts by one or more criteria without mutating the original array.
+ */
+export declare function sortByCriteria<T>(items: readonly T[], criteria: ReadonlyArray<SortCriterion<T>>): T[];
 /**
  * Filters sales by location ID
  * @param sales - Array of sales transactions

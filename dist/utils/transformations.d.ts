@@ -2,7 +2,27 @@
  * Data Transformations and Aggregations
  * Financial calculations, performance scoring, and reporting functions
  */
-import { SaleTransaction, MenuItem, Location, WasteRecord, PaymentMethod, WasteReason, CountryMetrics, LocationPerformanceResult, TopSellingItemResult } from "../types/models";
+import { SaleTransaction, MenuItem, MenuCategory, Location, WasteRecord, PaymentMethod, WasteReason, CountryMetrics, LocationPerformanceResult, TopSellingItemResult } from "../types/models";
+/**
+ * Sums numeric values from a collection.
+ */
+export declare function sumBy<T>(items: readonly T[], selector: (item: T) => number): number;
+/**
+ * Returns the minimum selected value, or null when collection is empty.
+ */
+export declare function minBy<T>(items: readonly T[], selector: (item: T) => number): number | null;
+/**
+ * Returns the maximum selected value, or null when collection is empty.
+ */
+export declare function maxBy<T>(items: readonly T[], selector: (item: T) => number): number | null;
+/**
+ * Returns average selected value rounded to 2 decimals, or 0 when empty.
+ */
+export declare function averageBy<T>(items: readonly T[], selector: (item: T) => number): number;
+/**
+ * Counts menu items by category.
+ */
+export declare function countMenuItemsByCategory(menuItems: MenuItem[]): Record<MenuCategory, number>;
 /**
  * Converts amount between USD and COP
  * @param amount - Amount to convert
