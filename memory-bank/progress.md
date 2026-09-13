@@ -14,6 +14,8 @@ Brasaland Digital is initializing its AI-driven monorepo infrastructure and base
 
 ## Recent Changes
 
+- Added PR evidence screenshots under `docs/screenshots/` (CLI console for the 100-row CSV and backoffice analysis UI). Fixed backoffice validation crash when `satisfaction_score` was numeric (sample dataset / JSON).
+- Aligned incident test data to the required monorepo layout: `scripts/incidents-brasaland.csv` next to `scripts/analyze.py`; API sample endpoint and docs now point at that path. `services/api/` and `uis/backoffice/` remain the backend and upload UI surfaces.
 - Incident analysis stack: extracted shared validation/metrics into `shared/incident_analysis/`, wired `scripts/analyze.py` to that module, added FastAPI endpoints in `services/api` (`POST /api/incidents/analyze`, `GET /api/incidents/results/export`), and connected `uis/backoffice` upload/export to the API with a local fallback.
 - `uis/website/index.html` and `styles.css`: balanced the public locations grid to alternate Colombia/Florida (Medellin Downtown, Miami, Envigado, Doral) and added a "Menu" section listing signature grilled dishes served identically in both markets.
 - `uis/website/index.html` and `styles.css`: added a Medellin, Colombia photo to the hero's Colombia region and replaced five broken Unsplash dish photo URLs (Churrasco, Chorizo, Patacones, Mazorca Asada, Chicharron) with verified, freely licensed Wikimedia Commons images after confirming all image URLs resolve (including under concurrent page load).

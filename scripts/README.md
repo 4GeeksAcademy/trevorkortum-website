@@ -8,8 +8,10 @@ This folder contains **helper scripts** for the monorepo: development automation
 ## Incident analyzer
 
 ```bash
-python3 scripts/analyze.py data/raw/incidents-brasaland.csv
+python3 scripts/analyze.py scripts/incidents-brasaland.csv
 ```
+
+Test data lives next to the script as `scripts/incidents-brasaland.csv` (Brasaland company sample).
 
 Validation and metrics come from `shared/incident_analysis` (same module used by `services/api`).
 

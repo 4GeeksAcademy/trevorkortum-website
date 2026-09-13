@@ -8,7 +8,7 @@ FastAPI service for Brasaland Digital. Current surface focuses on incident CSV a
 |--------|------|-------------|
 | `GET` | `/health` | Liveness check |
 | `POST` | `/api/incidents/analyze` | Upload a CSV (`multipart/form-data` field `file`) and receive a JSON summary |
-| `POST` | `/api/incidents/analyze-sample` | Analyze the bundled `data/raw/incidents-brasaland.csv` sample |
+| `POST` | `/api/incidents/analyze-sample` | Analyze the bundled `scripts/incidents-brasaland.csv` sample |
 | `GET` | `/api/incidents/results/export` | Download the latest analysis summary as CSV |
 
 Validation and metrics logic is shared with `scripts/analyze.py` via `shared/incident_analysis/`.
@@ -42,7 +42,7 @@ API docs: http://127.0.0.1:8000/docs
 
 ```bash
 curl -X POST http://127.0.0.1:8000/api/incidents/analyze \
-  -F "file=@data/raw/incidents-brasaland.csv"
+  -F "file=@scripts/incidents-brasaland.csv"
 
 curl -OJ http://127.0.0.1:8000/api/incidents/results/export
 ```

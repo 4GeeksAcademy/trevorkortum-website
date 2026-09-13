@@ -1,0 +1,101 @@
+incident_id,date,location_id,category,description,status,customer_id,satisfaction_score,reporter_id
+BRS-000001,2026-08-01,COL-01,CUSTOMER_COMPLAINT,Customer complained about delayed table service during peak dinner rush,CLOSED,CLI-100000,1,MGR-01
+BRS-000002,2026-08-02,COL-02,CUSTOMER_COMPLAINT,Diner reported waiter was inattentive and mixed up the side order,CLOSED,CLI-100037,1,MGR-02
+BRS-000003,2026-08-03,COL-03,CUSTOMER_COMPLAINT,Customer upset about long wait time for takeout order pickup,CLOSED,CLI-100074,1,MGR-03
+BRS-000004,2026-08-04,COL-04,CUSTOMER_COMPLAINT,Guest noted that the seating area was excessively noisy near the kitchen,CLOSED,CLI-100111,1,MGR-04
+BRS-000005,2026-08-05,COL-05,CUSTOMER_COMPLAINT,Customer requested refund due to billing discrepancy on receipt,CLOSED,CLI-100148,2,MGR-05
+BRS-000006,2026-08-06,COL-06,CUSTOMER_COMPLAINT,Patron mentioned air conditioning was set too cold in the dining room,CLOSED,CLI-100185,2,MGR-06
+BRS-000007,2026-08-07,COL-07,CUSTOMER_COMPLAINT,Customer reported table was not properly wiped down prior to seating,CLOSED,CLI-100222,2,MGR-07
+BRS-000008,2026-08-08,COL-08,CUSTOMER_COMPLAINT,Guest felt server was rushed and did not explain menu specials clearly,CLOSED,CLI-100259,2,MGR-08
+BRS-000009,2026-08-09,COL-09,CUSTOMER_COMPLAINT,Online order placed through website was ready 20 minutes past estimate,CLOSED,CLI-100296,2,MGR-09
+BRS-000010,2026-08-10,COL-10,CUSTOMER_COMPLAINT,Customer complained about parking validation process at the mall location,CLOSED,CLI-100333,2,MGR-10
+BRS-000011,2026-08-11,FLA-01,CUSTOMER_COMPLAINT,Guest disputed additional charge for extra hogao dipping sauce,CLOSED,CLI-100370,3,MGR-11
+BRS-000012,2026-08-12,FLA-02,CUSTOMER_COMPLAINT,Customer reported beverage was served lukewarm without ice,CLOSED,CLI-100407,3,MGR-12
+BRS-000013,2026-08-13,FLA-03,CUSTOMER_COMPLAINT,Diner noted delay in receiving dessert and final check,CLOSED,CLI-100444,3,MGR-13
+BRS-000014,2026-08-14,FLA-04,CUSTOMER_COMPLAINT,Customer felt host was impolite when assigning high-top bar table,CLOSED,CLI-100481,3,MGR-14
+BRS-000015,2026-08-15,COL-01,CUSTOMER_COMPLAINT,Guest complained of draft near front entrance during rainy evening,CLOSED,CLI-100518,3,MGR-01
+BRS-000016,2026-08-16,COL-02,CUSTOMER_COMPLAINT,Customer experienced app glitch while attempting to redeem loyalty points,CLOSED,CLI-100555,3,MGR-02
+BRS-000017,2026-08-17,COL-03,CUSTOMER_COMPLAINT,Patron noted kids menu options were not provided upon request,CLOSED,CLI-100592,3,MGR-03
+BRS-000018,2026-08-18,COL-04,CUSTOMER_COMPLAINT,Customer reported delay in getting water refills during lunch peak,CLOSED,CLI-100629,3,MGR-04
+BRS-000019,2026-08-19,COL-05,CUSTOMER_COMPLAINT,Diner complained about incorrect dressing served with side avocado salad,CLOSED,CLI-100666,3,MGR-05
+BRS-000020,2026-08-20,COL-06,CUSTOMER_COMPLAINT,Customer mentioned restroom was out of hand soap and paper towels,CLOSED,CLI-100703,3,MGR-06
+BRS-000021,2026-08-21,COL-07,CUSTOMER_COMPLAINT,Guest felt portion size of grilled flank steak was smaller than expected,CLOSED,CLI-100740,3,MGR-07
+BRS-000022,2026-08-22,COL-08,CUSTOMER_COMPLAINT,Customer noted take-out bag was not sealed properly upon handover,CLOSED,CLI-100777,3,MGR-08
+BRS-000023,2026-08-23,COL-09,CUSTOMER_COMPLAINT,Diner complained about slow response when asking for manager assistance,CLOSED,CLI-100814,4,MGR-09
+BRS-000024,2026-08-24,COL-10,CUSTOMER_COMPLAINT,Customer reported cutlery was missing from curbside pickup bag,CLOSED,CLI-100851,4,MGR-10
+BRS-000025,2026-08-25,FLA-01,CUSTOMER_COMPLAINT,Guest commented that music volume in main dining room was too high,CLOSED,CLI-100888,4,MGR-11
+BRS-000026,2026-08-26,FLA-02,CUSTOMER_COMPLAINT,Customer requested drink replacement due to incorrect syrup ratio in soda,CLOSED,CLI-100925,4,MGR-12
+BRS-000027,2026-08-27,FLA-03,CUSTOMER_COMPLAINT,Patron complained that table reservation was delayed by 15 minutes,CLOSED,CLI-100962,4,MGR-13
+BRS-000028,2026-08-28,FLA-04,CUSTOMER_COMPLAINT,Guest noted missing side of fried plantains in delivery meal order,CLOSED,CLI-100999,4,MGR-14
+BRS-000029,2026-08-01,COL-01,CUSTOMER_COMPLAINT,Customer reported outdoor patio heaters were not functioning on cold evening,CLOSED,CLI-101036,4,MGR-01
+BRS-000030,2026-08-02,COL-02,EQUIPMENT,Main charcoal grill exhaust hood fan making abnormal grinding noise,CLOSED,,4,MGR-02
+BRS-000031,2026-08-03,COL-03,EQUIPMENT,Front-of-house POS terminal 2 unresponsive and rebooting repeatedly,CLOSED,CLI-101110,4,MGR-03
+BRS-000032,2026-08-04,COL-04,EQUIPMENT,Walk-in cooler thermostat reading 4 degrees above target temperature,CLOSED,,4,MGR-04
+BRS-000033,2026-08-05,COL-05,EQUIPMENT,Commercial deep fryer heating element failing to reach target oil temp,CLOSED,,4,MGR-05
+BRS-000034,2026-08-06,COL-06,EQUIPMENT,Kitchen ticket printer jammed during lunch rush and dropped tickets,CLOSED,CLI-101221,4,MGR-06
+BRS-000035,2026-08-07,COL-07,EQUIPMENT,Ice machine dispensing mechanism clogged with frost buildup,CLOSED,,4,MGR-07
+BRS-000036,2026-08-08,COL-08,EQUIPMENT,Under-counter beverage refrigerator door gasket torn and leaking cold air,CLOSED,,4,MGR-08
+BRS-000037,2026-08-09,COL-09,EQUIPMENT,Meat slicer blade guard loose and requiring immediate maintenance,CLOSED,CLI-101332,4,MGR-09
+BRS-000038,2026-08-10,COL-10,EQUIPMENT,Back kitchen prep sink drainage pipe backing up slowly during wash cycle,CLOSED,,4,MGR-10
+BRS-000039,2026-08-11,FLA-01,EQUIPMENT,Espresso machine steam wand low pressure affecting beverage prep,CLOSED,,4,MGR-11
+BRS-000040,2026-08-12,FLA-02,EQUIPMENT,Overhead warming lamps in plating line cycling on and off erratically,CLOSED,CLI-101443,4,MGR-12
+BRS-000041,2026-08-13,FLA-03,EQUIPMENT,Digital kitchen order display monitor flickering intermittently,CLOSED,,4,MGR-13
+BRS-000042,2026-08-14,FLA-04,EQUIPMENT,Secondary charbroiler gas ignition valve difficult to light manually,CLOSED,,5,MGR-14
+BRS-000043,2026-08-15,COL-01,EQUIPMENT,Handheld ordering tablet battery failing to hold charge past two hours,CLOSED,CLI-101554,5,MGR-01
+BRS-000044,2026-08-16,COL-02,EQUIPMENT,Dishwasher rinse cycle pump pressure below standard operating level,CLOSED,,5,MGR-02
+BRS-000045,2026-08-17,COL-03,EQUIPMENT,Emergency exit door sensor triggering false alarm in security panel,CLOSED,,5,MGR-03
+BRS-000046,2026-08-18,COL-04,EQUIPMENT,Walk-in freezer condenser fan motor overheated and shut down briefly,CLOSED,CLI-101665,5,MGR-04
+BRS-000047,2026-08-19,COL-05,SUPPLY,Short shipment of prime picanha beef cuts from regional meat supplier,CLOSED,,5,MGR-05
+BRS-000048,2026-08-20,COL-06,SUPPLY,Delivery truck arrived 90 minutes late causing morning prep delays,CLOSED,,5,MGR-06
+BRS-000049,2026-08-21,COL-07,SUPPLY,Emergency restock needed for biodegradable take-out container packaging,CLOSED,CLI-101776,5,MGR-07
+BRS-000050,2026-08-22,COL-08,SUPPLY,Supplier out of stock on fresh ripe plantains for patacones prep,CLOSED,,5,MGR-08
+BRS-000051,2026-08-23,COL-09,SUPPLY,Charcoal briquette delivery delayed due to highway transport bottleneck,OPEN,,,MGR-09
+BRS-000052,2026-08-24,COL-10,SUPPLY,Local dairy vendor delivered milk cartons with short expiration dates,OPEN,CLI-101887,,MGR-10
+BRS-000053,2026-08-25,FLA-01,SUPPLY,Shortage of branded napkins and wet wipes from central supply warehouse,OPEN,,,MGR-11
+BRS-000054,2026-08-26,FLA-02,SUPPLY,Produce supplier delivered under-ripe avocados unsuitable for guacamole,OPEN,,,MGR-12
+BRS-000055,2026-08-27,FLA-03,SUPPLY,Cooking oil distributor delivered 5 drums instead of scheduled 10 drums,OPEN,CLI-101998,,MGR-13
+BRS-000056,2026-08-28,FLA-04,SUPPLY,Catering packaging boxes arrived damaged from shipping courier,OPEN,,,MGR-14
+BRS-000057,2026-08-01,COL-01,SUPPLY,Specialty chimichurri herb shipment delayed at regional customs depot,OPEN,,,MGR-01
+BRS-000058,2026-08-02,COL-02,SUPPLY,Butcher supplier delivered beef ribs at irregular cut thickness,OPEN,CLI-102109,,MGR-02
+BRS-000059,2026-08-03,COL-03,SUPPLY,Shortage of disposable kitchen gloves across medium and large sizes,OPEN,,,MGR-03
+BRS-000060,2026-08-04,COL-04,SUPPLY,Supplier substituted standard beverage cups with unbranded inventory,OPEN,,,MGR-04
+BRS-000061,2026-08-05,COL-05,SUPPLY,Fresh cilantro and scallion delivery rejected due to poor freshness,OPEN,CLI-102220,,MGR-05
+BRS-000062,2026-08-06,COL-06,SUPPLY,Vendor delivered corn ears for mazorca asada with inconsistent size,OPEN,,,MGR-06
+BRS-000063,2026-08-07,COL-07,SUPPLY,Shortage of food-grade sanitizing chemical refills for dishwashing line,OPEN,,,MGR-07
+BRS-000064,2026-08-08,COL-08,SUPPLY,Regional warehouse ran out of branded wax paper sheets for grill trays,OPEN,CLI-102331,,MGR-08
+BRS-000065,2026-08-09,COL-09,SUPPLY,Butcher delivered bone-in pork chops with excess fat trim percentage,OPEN,,,MGR-09
+BRS-000066,2026-08-10,COL-10,SUPPLY,Emergency purchase of yellow cornmeal required from local market vendor,OPEN,,,MGR-10
+BRS-000067,2026-08-11,FLA-01,SUPPLY,Supplier delivered incorrect gauge aluminum foil rolls for grill station,OPEN,CLI-102442,,MGR-11
+BRS-000068,2026-08-12,FLA-02,SUPPLY,Paper receipt rolls shipment delayed for front-of-house register terminals,OPEN,,,MGR-12
+BRS-000069,2026-08-13,FLA-03,FOOD_QUALITY,Customer reported churrasco steak was cooked well-done instead of medium,OPEN,,,MGR-13
+BRS-000070,2026-08-14,FLA-04,FOOD_QUALITY,Batch of chimichurri sauce overly acidic due to incorrect vinegar ratio,OPEN,CLI-102553,,MGR-14
+BRS-000071,2026-08-15,COL-01,FOOD_QUALITY,Chicharron crispiness below standard quality due to low oil temperature,OPEN,,,MGR-01
+BRS-000072,2026-08-16,COL-02,FOOD_QUALITY,Batch of patacones over-fried resulting in dark color and dry texture,OPEN,,,MGR-02
+BRS-000073,2026-08-17,COL-03,FOOD_QUALITY,Soup of the day seasoned with excessive salt requiring kitchen remaking,OPEN,CLI-102664,,MGR-03
+BRS-000074,2026-08-18,COL-04,FOOD_QUALITY,Grilled corn ears had uneven char marks across dinner service batch,OPEN,,,MGR-04
+BRS-000075,2026-08-19,COL-05,FOOD_QUALITY,Marinated pork loin cutlets lacked standard 12-hour flavor penetration,OPEN,,,MGR-05
+BRS-000076,2026-08-20,COL-06,FOOD_QUALITY,Guacamole batch discolored prematurely due to delayed lime juice addition,OPEN,CLI-102775,,MGR-06
+BRS-000077,2026-08-21,COL-07,FOOD_QUALITY,Mashed yuca consistency too runny following recipe ratio adjustment,OPEN,,,MGR-07
+BRS-000078,2026-08-22,COL-08,FOOD_QUALITY,Grilled chicken breast internal temperature reached minimum late,OPEN,,,MGR-08
+BRS-000079,2026-08-23,COL-09,FOOD_QUALITY,Customer noted arepas were dense rather than light and crispy,OPEN,CLI-102886,,MGR-09
+BRS-000080,2026-08-24,COL-10,FOOD_QUALITY,Hogao sauce batch required reformulation due to tart tomato paste batch,OPEN,,,MGR-10
+BRS-000081,2026-08-25,FLA-01,FOOD_QUALITY,Grilled chorizo link casing split open during cooking process on grill,OPEN,,,MGR-11
+BRS-000082,2026-08-26,FLA-02,FOOD_QUALITY,Coleslaw salad dressing separated in prep container before plating,OPEN,CLI-102997,,MGR-12
+BRS-000083,2026-08-27,FLA-03,FOOD_QUALITY,Steak seasoning rub applied unevenly across evening ribeye portions,DISCARDED,,,MGR-13
+BRS-000084,2026-08-28,FLA-04,FOOD_QUALITY,French fries served slightly soggy during unexpected rush period,DISCARDED,,,MGR-14
+BRS-000085,2026-08-01,COL-01,FOOD_QUALITY,Fried sweet plantains over-caramelized on high heat skillet,DISCARDED,CLI-103108,,MGR-01
+BRS-000086,2026-08-02,COL-02,FOOD_QUALITY,House iced tea brewed too strong requiring cold water balancing,DISCARDED,,,MGR-02
+BRS-000087,2026-08-03,COL-03,FOOD_QUALITY,Rice portion served lukewarm due to heating well temperature fluctuation,DISCARDED,,,MGR-03
+BRS-000088,2026-08-04,COL-04,STAFF,Line cook called in sick 30 minutes before Saturday dinner rush,DISCARDED,CLI-103219,,MGR-04
+BRS-000089,2026-08-05,COL-05,STAFF,Prep cook required first aid treatment for minor kitchen finger laceration,DISCARDED,,,MGR-05
+BRS-000090,2026-08-06,COL-06,STAFF,New cashier trainee required supervisor assistance with split bills,DISCARDED,,,MGR-06
+BRS-000091,2026-08-07,COL-07,STAFF,Server arrived 25 minutes late for opening shift due to public transit,DISCARDED,CLI-103330,,MGR-07
+BRS-000092,2026-08-08,COL-08,STAFF,Disagreement between kitchen expeditor and waitstaff regarding ticket order,DISCARDED,,,MGR-08
+BRS-000093,2026-08-09,COL-09,STAFF,Shift supervisor completed health inspection checklist behind schedule,DISCARDED,,,MGR-09
+BRS-000094,2026-08-10,COL-10,STAFF,Dishwasher staff member required refresher on chemical sanitizing ratios,DISCARDED,CLI-103441,,MGR-10
+BRS-000095,2026-08-11,FLA-01,STAFF,Front-of-house host scheduled double shift without requisite rest break,DISCARDED,,,MGR-11
+BRS-000096,2026-08-12,FLA-02,STAFF,Closing team missed cleaning floor drain traps behind grill station,DISCARDED,,,MGR-12
+BRS-000097,2026-08-29,COL-99,EQUIPMENT,Grill thermometer digital display calibration error during morning prep,OPEN,,,MGR-01
+BRS-000098,2026-08-29,FLA-01,FACILITY_MAINTENANCE,Drive-thru intercom headset battery charger malfunctioned,OPEN,,,MGR-02
+BRS-000099,2026-08-30,COL-03,STAFF,late,OPEN,,,MGR-03
+BRS-000100,2026-08-30,FLA-02,FOOD_QUALITY,Customer reported grilled chicken was slightly over-charred at edges,CLOSED,CLI-554129,,MGR-04
