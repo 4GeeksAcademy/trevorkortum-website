@@ -76,7 +76,7 @@ def validate_record(row):
 
 def analyze_incidents(csv_path):
     """Read the CSV and compute validation + metrics data."""
-    with open(csv_path, newline="", encoding="utf-8") as f:
+    with open(csv_path, newline="", encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
 
     total = len(rows)
@@ -131,6 +131,12 @@ def _pct(count, total):
     return (count / total * 100) if total else 0.0
 
 
+def _line(branch, label, value, width=36):
+    """Render an aligned dot-leader line."""
+    dots = "." * max(3, width - len(label) - 1)
+    return f"  {branch} {label} {dots} {value}"
+
+
 def print_summary(metrics, source_file):
     total = metrics["total"]
     valid = metrics["valid_count"]
@@ -142,8 +148,8 @@ def print_summary(metrics, source_file):
     print("=" * 60)
     print()
     print(f"TOTAL RECORDS IN FILE .......... {total}")
-    print(f"  ├─ Valid records ................ {valid}")
-    print(f"  └─ Invalid / incomplete .......... {invalid}")
+    print(_line("├─", "Valid records", valid))
+    print(_line("└─", "Invalid / incomplete", invalid))
     print()
 
     triggered_rules = [
@@ -155,7 +161,7 @@ def print_summary(metrics, source_file):
         print("INVALID RECORDS BREAKDOWN")
         for i, (label, count) in enumerate(triggered_rules):
             branch = "└─" if i == len(triggered_rules) - 1 else "├─"
-            print(f"  {branch} {label} ... {count}")
+            print(_line(branch, label, count))
         print()
 
     print("BREAKDOWN BY CATEGORY (valid records)")
@@ -164,8 +170,7 @@ def print_summary(metrics, source_file):
     ]
     for i, (cat, count) in enumerate(cat_items):
         branch = "└─" if i == len(cat_items) - 1 else "├─"
-        pct = _pct(count, valid)
-        print(f"  {branch} {cat} ... {count}  ({pct:.1f}%)")
+        print(_line(branch, cat, f"{count:>3}  ({_pct(count, valid):.1f}%)"))
     print()
 
     print("BREAKDOWN BY STATUS (valid records)")
@@ -173,8 +178,7 @@ def print_summary(metrics, source_file):
     status_items = [(s, metrics["status_counts"].get(s, 0)) for s in status_order]
     for i, (status, count) in enumerate(status_items):
         branch = "└─" if i == len(status_items) - 1 else "├─"
-        pct = _pct(count, valid)
-        print(f"  {branch} {status} ... {count}  ({pct:.1f}%)")
+        print(_line(branch, status, f"{count:>3}  ({_pct(count, valid):.1f}%)"))
     print()
 
     print("SATISFACTION INDEX (closed cases)")
@@ -190,7 +194,7 @@ def print_summary(metrics, source_file):
     for i, score in enumerate([1, 2, 3, 4, 5]):
         branch = "└─" if i == 4 else "├─"
         count = metrics["score_counts"].get(score, 0)
-        print(f"  {branch} Score {score} ({score_labels[score]}) ... {count}")
+        print(_line(branch, f"Score {score} ({score_labels[score]})", f"{count:>3}"))
     print()
     print("=" * 60)
 
@@ -237,7 +241,12 @@ def main():
         sys.exit(1)
 
     csv_path = sys.argv[1]
-    metrics = analyze_incidents(csv_path)
+    try:
+        metrics = analyze_incidents(csv_path)
+    except FileNotFoundError:
+        print(f"Error: file not found -> {csv_path}")
+        sys.exit(1)
+
     print_summary(metrics, csv_path)
 
     answer = input("Export results to CSV? [y/n]: ").strip().lower()
