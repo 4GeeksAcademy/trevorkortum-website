@@ -1,0 +1,23 @@
+metric,value,percentage
+total_records,100,
+valid_records,96,
+invalid_records,4,
+invalid_rule:Missing location_id,1,
+invalid_rule:Invalid or missing category,1,
+invalid_rule:Empty description,1,
+"invalid_rule:Closed case, no score",1,
+category:CUSTOMER_COMPLAINT,29,30.2%
+category:EQUIPMENT,17,17.7%
+category:SUPPLY,22,22.9%
+category:FOOD_QUALITY,19,19.8%
+category:STAFF,9,9.4%
+status:OPEN,32,33.3%
+status:CLOSED,50,52.1%
+status:DISCARDED,14,14.6%
+scored_cases,50,
+average_satisfaction_score,3.46,
+satisfaction_score:1,4,
+satisfaction_score:2,6,
+satisfaction_score:3,12,
+satisfaction_score:4,19,
+satisfaction_score:5,9,

@@ -5,6 +5,72 @@
 // Constants
 const USD_TO_COP_RATE = 4000;
 const CURRENT_YEAR = new Date().getFullYear();
+function roundToTwo(value) {
+    return Math.round(value * 100) / 100;
+}
+/**
+ * Sums numeric values from a collection.
+ */
+export function sumBy(items, selector) {
+    return items.reduce((sum, item) => sum + selector(item), 0);
+}
+/**
+ * Returns the minimum selected value, or null when collection is empty.
+ */
+export function minBy(items, selector) {
+    if (items.length === 0) {
+        return null;
+    }
+    let min = selector(items[0]);
+    for (let index = 1; index < items.length; index += 1) {
+        const current = selector(items[index]);
+        if (current < min) {
+            min = current;
+        }
+    }
+    return min;
+}
+/**
+ * Returns the maximum selected value, or null when collection is empty.
+ */
+export function maxBy(items, selector) {
+    if (items.length === 0) {
+        return null;
+    }
+    let max = selector(items[0]);
+    for (let index = 1; index < items.length; index += 1) {
+        const current = selector(items[index]);
+        if (current > max) {
+            max = current;
+        }
+    }
+    return max;
+}
+/**
+ * Returns average selected value rounded to 2 decimals, or 0 when empty.
+ */
+export function averageBy(items, selector) {
+    if (items.length === 0) {
+        return 0;
+    }
+    return roundToTwo(sumBy(items, selector) / items.length);
+}
+/**
+ * Counts menu items by category.
+ */
+export function countMenuItemsByCategory(menuItems) {
+    const counts = {
+        Meat: 0,
+        Side: 0,
+        Beverage: 0,
+        Dessert: 0,
+        Combo: 0,
+    };
+    for (const item of menuItems) {
+        counts[item.category] += 1;
+    }
+    return counts;
+}
 /**
  * Converts amount between USD and COP
  * @param amount - Amount to convert
@@ -14,7 +80,7 @@ const CURRENT_YEAR = new Date().getFullYear();
  */
 export function convertCurrency(amount, fromCurrency, toCurrency) {
     if (fromCurrency === toCurrency) {
-        return Math.round(amount * 100) / 100;
+        return amount;
     }
     let result;
     if (fromCurrency === "USD" && toCurrency === "COP") {
@@ -23,7 +89,7 @@ export function convertCurrency(amount, fromCurrency, toCurrency) {
     else {
         result = amount / USD_TO_COP_RATE;
     }
-    return Math.round(result * 100) / 100;
+    return roundToTwo(result);
 }
 /**
  * Calculates total revenue for a specific date in specified currency
@@ -33,6 +99,9 @@ export function convertCurrency(amount, fromCurrency, toCurrency) {
  * @returns Total revenue rounded to 2 decimal places
  */
 export function calculateDailyRevenue(sales, date, currency) {
+    if (sales.length === 0) {
+        return 0;
+    }
     const dayStart = new Date(date);
     dayStart.setHours(0, 0, 0, 0);
     const dayEnd = new Date(date);
@@ -41,11 +110,7 @@ export function calculateDailyRevenue(sales, date, currency) {
         const saleDate = sale.timestamp;
         return saleDate >= dayStart && saleDate <= dayEnd;
     });
-    let total = 0;
-    for (const sale of dailySales) {
-        total += sale.totalPrice[currency];
-    }
-    return Math.round(total * 100) / 100;
+    return roundToTwo(sumBy(dailySales, (sale) => sale.totalPrice[currency]));
 }
 /**
  * Calculates profit margin for a location
@@ -81,7 +146,7 @@ export function calculateLocationMargin(sales, menuItems, locationId, currency) 
         return 0;
     }
     const margin = ((totalRevenue - totalCost) / totalRevenue) * 100;
-    return Math.round(margin * 100) / 100;
+    return roundToTwo(margin);
 }
 /**
  * Calculates total cost of waste for a location
@@ -92,11 +157,7 @@ export function calculateLocationMargin(sales, menuItems, locationId, currency) 
  */
 export function calculateWasteCost(wasteRecords, locationId, currency) {
     const locationWaste = wasteRecords.filter((record) => record.locationId === locationId);
-    let totalWasteCost = 0;
-    for (const record of locationWaste) {
-        totalWasteCost += record.cost[currency];
-    }
-    return Math.round(totalWasteCost * 100) / 100;
+    return roundToTwo(sumBy(locationWaste, (record) => record.cost[currency]));
 }
 /**
  * Calculates location performance score (0-100)
@@ -115,10 +176,10 @@ export function scoreLocationPerformance(location, sales, wasteRecords, menuItem
     // Revenue Performance (40 points max)
     const locationSales = sales.filter((sale) => sale.locationId === location.id);
     const totalRevenue = locationSales.reduce((sum, sale) => sum + sale.totalPrice.USD, 0);
-    const yearsSinceOpening = CURRENT_YEAR - location.openingYear;
-    const operatingDays = Math.max(1, yearsSinceOpening * 365); // Approximate days
+    const yearsOperating = Math.max(1, CURRENT_YEAR - location.openingYear + 1);
+    const operatingDays = yearsOperating * 365;
     const avgDailyRevenue = totalRevenue / operatingDays;
-    let revenueScore = Math.min((avgDailyRevenue / 1000) * 40, 40);
+    const revenueScore = Math.min((avgDailyRevenue / 1000) * 40, 40);
     // Efficiency (30 points max)
     const seatsEfficiency = Math.min((locationSales.length / location.seatingCapacity) * 30, 30);
     // Waste Control (20 points max)
@@ -129,7 +190,7 @@ export function scoreLocationPerformance(location, sales, wasteRecords, menuItem
     const margin = calculateLocationMargin(sales, menuItems, location.id, "USD");
     const marginScore = Math.min(margin / 10, 10);
     const totalScore = revenueScore + seatsEfficiency + wasteScore + marginScore;
-    return Math.round(totalScore * 100) / 100;
+    return roundToTwo(totalScore);
 }
 /**
  * Ranks locations by performance score
@@ -171,12 +232,7 @@ export function countSalesByPaymentMethod(sales) {
  * @returns Average sale value rounded to 2 decimal places
  */
 export function calculateAverageTicket(sales, currency) {
-    if (sales.length === 0) {
-        return 0;
-    }
-    const total = sales.reduce((sum, sale) => sum + sale.totalPrice[currency], 0);
-    const average = total / sales.length;
-    return Math.round(average * 100) / 100;
+    return averageBy(sales, (sale) => sale.totalPrice[currency]);
 }
 /**
  * Finds top N selling items
@@ -186,6 +242,9 @@ export function calculateAverageTicket(sales, currency) {
  * @returns Array of top selling items with quantities (sorted highest first)
  */
 export function findTopSellingItems(sales, menuItems, topN) {
+    if (topN <= 0 || sales.length === 0 || menuItems.length === 0) {
+        return [];
+    }
     // Create lookup map
     const itemMap = new Map();
     for (const item of menuItems) {
@@ -234,17 +293,20 @@ export function groupWasteByReason(wasteRecords) {
  * @returns Object with metrics for Colombia and USA
  */
 export function calculateCountryComparison(sales, locations, menuItems) {
+    void menuItems;
+    const countryByLocationId = new Map();
+    for (const location of locations) {
+        countryByLocationId.set(location.id, location.country);
+    }
     // Get locations by country
     const colombiaLocations = locations.filter((loc) => loc.country === "Colombia");
     const usaLocations = locations.filter((loc) => loc.country === "USA");
     // Get sales by country locations
     const colombiaSales = sales.filter((sale) => {
-        const location = locations.find((l) => l.id === sale.locationId);
-        return location?.country === "Colombia";
+        return countryByLocationId.get(sale.locationId) === "Colombia";
     });
     const usaSales = sales.filter((sale) => {
-        const location = locations.find((l) => l.id === sale.locationId);
-        return location?.country === "USA";
+        return countryByLocationId.get(sale.locationId) === "USA";
     });
     // Calculate Colombia metrics
     const colombiaTotalRevenue = colombiaSales.reduce((sum, sale) => ({
@@ -253,12 +315,10 @@ export function calculateCountryComparison(sales, locations, menuItems) {
     }), { USD: 0, COP: 0 });
     const colombiaAvgRevenue = {
         USD: colombiaLocations.length > 0
-            ? Math.round((colombiaTotalRevenue.USD / colombiaLocations.length) * 100) /
-                100
+            ? roundToTwo(colombiaTotalRevenue.USD / colombiaLocations.length)
             : 0,
         COP: colombiaLocations.length > 0
-            ? Math.round((colombiaTotalRevenue.COP / colombiaLocations.length) * 100) /
-                100
+            ? roundToTwo(colombiaTotalRevenue.COP / colombiaLocations.length)
             : 0,
     };
     // Calculate USA metrics
@@ -268,18 +328,18 @@ export function calculateCountryComparison(sales, locations, menuItems) {
     }), { USD: 0, COP: 0 });
     const usaAvgRevenue = {
         USD: usaLocations.length > 0
-            ? Math.round((usaTotalRevenue.USD / usaLocations.length) * 100) / 100
+            ? roundToTwo(usaTotalRevenue.USD / usaLocations.length)
             : 0,
         COP: usaLocations.length > 0
-            ? Math.round((usaTotalRevenue.COP / usaLocations.length) * 100) / 100
+            ? roundToTwo(usaTotalRevenue.COP / usaLocations.length)
             : 0,
     };
     return {
         Colombia: {
             totalLocations: colombiaLocations.length,
             totalRevenue: {
-                USD: Math.round(colombiaTotalRevenue.USD * 100) / 100,
-                COP: Math.round(colombiaTotalRevenue.COP * 100) / 100,
+                USD: roundToTwo(colombiaTotalRevenue.USD),
+                COP: roundToTwo(colombiaTotalRevenue.COP),
             },
             averageRevenuePerLocation: colombiaAvgRevenue,
             totalSales: colombiaSales.length,
@@ -287,8 +347,8 @@ export function calculateCountryComparison(sales, locations, menuItems) {
         USA: {
             totalLocations: usaLocations.length,
             totalRevenue: {
-                USD: Math.round(usaTotalRevenue.USD * 100) / 100,
-                COP: Math.round(usaTotalRevenue.COP * 100) / 100,
+                USD: roundToTwo(usaTotalRevenue.USD),
+                COP: roundToTwo(usaTotalRevenue.COP),
             },
             averageRevenuePerLocation: usaAvgRevenue,
             totalSales: usaSales.length,
