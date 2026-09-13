@@ -2,7 +2,7 @@
 
 ## Current Status
 
-Brasaland Digital is initializing its AI-driven monorepo infrastructure and base application surfaces. The repository now tracks active business context, technical constraints, agent operating rules, dev-agent skills, and first-pass UI entry points for the public website and internal backoffice.
+Brasaland Digital is initializing its AI-driven monorepo infrastructure and base application surfaces. The repository now tracks active business context, technical constraints, agent operating rules, dev-agent skills, and first-pass UI entry points for the public website and internal backoffice. Incident CSV analysis now spans a shared Python module, CLI script, FastAPI service, and backoffice upload/export UI.
 
 ## Active Constraints
 
@@ -14,9 +14,10 @@ Brasaland Digital is initializing its AI-driven monorepo infrastructure and base
 
 ## Recent Changes
 
+- Incident analysis stack: extracted shared validation/metrics into `shared/incident_analysis/`, wired `scripts/analyze.py` to that module, added FastAPI endpoints in `services/api` (`POST /api/incidents/analyze`, `GET /api/incidents/results/export`), and connected `uis/backoffice` upload/export to the API with a local fallback.
 - `uis/website/index.html` and `styles.css`: balanced the public locations grid to alternate Colombia/Florida (Medellin Downtown, Miami, Envigado, Doral) and added a "Menu" section listing signature grilled dishes served identically in both markets.
 - `uis/website/index.html` and `styles.css`: added a Medellin, Colombia photo to the hero's Colombia region and replaced five broken Unsplash dish photo URLs (Churrasco, Chorizo, Patacones, Mazorca Asada, Chicharron) with verified, freely licensed Wikimedia Commons images after confirming all image URLs resolve (including under concurrent page load).
-- Added a `tests/` suite (38 tests) covering `src/utils/collections.ts`, `search.ts`, `transformations.ts`, and `validations.ts` using Node's built-in test runner via `tsx --test`, plus a `test` npm script. No new dependencies or lockfile changes were needed. `uis/` (static HTML/CSS) and `services/` (README placeholders only) currently have no executable logic to unit test.
+- Added a `tests/` suite (38 tests) covering `src/utils/collections.ts`, `search.ts`, `transformations.ts`, and `validations.ts` using Node's built-in test runner via `tsx --test`, plus a `test` npm script.
 - `uis/backoffice/index.html`, `styles.css`, and new `app.js`: replaced the Procurement/Training/Executive sidebar links' teaser cards with real data panels (supplier price table, recipe update table, executive weekly snapshot), reusing the existing `.panel`/table styling. Added active-state highlighting and smooth scroll so sidebar navigation gives visible feedback.
 
 ## Planned Roadmap

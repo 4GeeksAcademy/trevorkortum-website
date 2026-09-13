@@ -3,128 +3,23 @@
 
 Usage: python analyze.py <path-to-csv>
 """
+from __future__ import annotations
+
 import csv
 import sys
-from collections import Counter, OrderedDict
+from pathlib import Path
 
-VALID_CATEGORIES = {
-    "CUSTOMER_COMPLAINT",
-    "EQUIPMENT",
-    "SUPPLY",
-    "FOOD_QUALITY",
-    "STAFF",
-}
-VALID_STATUSES = {"OPEN", "CLOSED", "DISCARDED"}
-VALID_LOCATIONS = {f"COL-{i:02d}" for i in range(1, 11)} | {
-    f"FLA-{i:02d}" for i in range(1, 5)
-}
-CATEGORY_ORDER = [
-    "CUSTOMER_COMPLAINT",
-    "EQUIPMENT",
-    "SUPPLY",
-    "FOOD_QUALITY",
-    "STAFF",
-]
+ROOT = Path(__file__).resolve().parents[1]
+SHARED = ROOT / "shared"
+if str(SHARED) not in sys.path:
+    sys.path.insert(0, str(SHARED))
 
-RULE_LABELS = OrderedDict(
-    [
-        ("missing_location", "Missing location_id"),
-        ("invalid_category", "Invalid or missing category"),
-        ("empty_description", "Empty description"),
-        ("missing_reporter", "Missing reporter_id"),
-        ("closed_no_score", "Closed case, no score"),
-        ("score_out_of_range", "Score out of range"),
-    ]
+from incident_analysis import (  # noqa: E402
+    CATEGORY_ORDER,
+    RULE_LABELS,
+    analyze_csv_path,
+    export_metrics_to_csv_rows,
 )
-
-
-def validate_record(row):
-    """Return (is_valid, reasons) for a single CSV row dict."""
-    reasons = []
-
-    location_id = (row.get("location_id") or "").strip()
-    if location_id not in VALID_LOCATIONS:
-        reasons.append("missing_location")
-
-    category = (row.get("category") or "").strip()
-    if category not in VALID_CATEGORIES:
-        reasons.append("invalid_category")
-
-    description = (row.get("description") or "").strip()
-    if len(description) < 5:
-        reasons.append("empty_description")
-
-    reporter_id = (row.get("reporter_id") or "").strip()
-    if not reporter_id:
-        reasons.append("missing_reporter")
-
-    status = (row.get("status") or "").strip()
-    score_raw = (row.get("satisfaction_score") or "").strip()
-
-    if status == "CLOSED" and not score_raw:
-        reasons.append("closed_no_score")
-    elif score_raw:
-        try:
-            score = int(score_raw)
-            if not 1 <= score <= 5:
-                reasons.append("score_out_of_range")
-        except ValueError:
-            reasons.append("score_out_of_range")
-
-    return (len(reasons) == 0, reasons)
-
-
-def analyze_incidents(csv_path):
-    """Read the CSV and compute validation + metrics data."""
-    with open(csv_path, newline="", encoding="utf-8-sig") as f:
-        rows = list(csv.DictReader(f))
-
-    total = len(rows)
-    invalid_count = 0
-    rule_counts = Counter()
-    category_counts = Counter()
-    status_counts = Counter()
-    score_counts = Counter()
-    closed_valid = 0
-
-    for row in rows:
-        is_valid, reasons = validate_record(row)
-        if not is_valid:
-            invalid_count += 1
-            for reason in reasons:
-                rule_counts[reason] += 1
-            continue
-
-        category_counts[row["category"].strip()] += 1
-        status = row["status"].strip()
-        status_counts[status] += 1
-
-        if status == "CLOSED":
-            closed_valid += 1
-            score_raw = (row.get("satisfaction_score") or "").strip()
-            if score_raw:
-                score_counts[int(score_raw)] += 1
-
-    valid_count = total - invalid_count
-    scored_cases = sum(score_counts.values())
-    avg_score = (
-        sum(score * count for score, count in score_counts.items()) / scored_cases
-        if scored_cases
-        else 0.0
-    )
-
-    return {
-        "total": total,
-        "valid_count": valid_count,
-        "invalid_count": invalid_count,
-        "rule_counts": rule_counts,
-        "category_counts": category_counts,
-        "status_counts": status_counts,
-        "closed_valid": closed_valid,
-        "scored_cases": scored_cases,
-        "score_counts": score_counts,
-        "avg_score": avg_score,
-    }
 
 
 def _pct(count, total):
@@ -201,37 +96,10 @@ def print_summary(metrics, source_file):
 
 def export_to_csv(metrics, output_path="results.csv"):
     """Write one row per metric with metric, value, percentage columns."""
-    valid = metrics["valid_count"]
-    rows = [
-        ("total_records", metrics["total"], ""),
-        ("valid_records", valid, ""),
-        ("invalid_records", metrics["invalid_count"], ""),
-    ]
-
-    for key, label in RULE_LABELS.items():
-        count = metrics["rule_counts"][key]
-        if count > 0:
-            rows.append((f"invalid_rule:{label}", count, ""))
-
-    for cat in CATEGORY_ORDER:
-        count = metrics["category_counts"].get(cat, 0)
-        rows.append((f"category:{cat}", count, f"{_pct(count, valid):.1f}%"))
-
-    for status in ["OPEN", "CLOSED", "DISCARDED"]:
-        count = metrics["status_counts"].get(status, 0)
-        rows.append((f"status:{status}", count, f"{_pct(count, valid):.1f}%"))
-
-    rows.append(("scored_cases", metrics["scored_cases"], ""))
-    rows.append(("average_satisfaction_score", f"{metrics['avg_score']:.2f}", ""))
-    for score in [1, 2, 3, 4, 5]:
-        count = metrics["score_counts"].get(score, 0)
-        rows.append((f"satisfaction_score:{score}", count, ""))
-
-    with open(output_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
+    with open(output_path, "w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
         writer.writerow(["metric", "value", "percentage"])
-        writer.writerows(rows)
-
+        writer.writerows(export_metrics_to_csv_rows(metrics))
     print(f"Results exported to {output_path}")
 
 
@@ -242,9 +110,12 @@ def main():
 
     csv_path = sys.argv[1]
     try:
-        metrics = analyze_incidents(csv_path)
+        metrics = analyze_csv_path(csv_path)
     except FileNotFoundError:
         print(f"Error: file not found -> {csv_path}")
+        sys.exit(1)
+    except ValueError as exc:
+        print(f"Error: {exc}")
         sys.exit(1)
 
     print_summary(metrics, csv_path)

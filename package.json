@@ -10,7 +10,8 @@
     "test": "tsx --test tests/*.test.ts",
     "serve": "npx http-server . -p 3000 -a localhost",
     "dev:website": "npx http-server ./uis/website -p 3001 -a localhost",
-    "dev:backoffice": "npx http-server ./uis/backoffice -p 3002 -a localhost"
+    "dev:backoffice": "npx http-server ./uis/backoffice -p 3002 -a localhost",
+    "dev:api": "cd services/api && .venv/bin/uvicorn app.main:app --reload --host 127.0.0.1 --port 8000"
   },
   "keywords": ["brasaland", "typescript", "data-processing"],
   "author": "Brasaland Digital Team",
