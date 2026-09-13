@@ -37,22 +37,27 @@ let latestSummary = null;
 let usedApiForLatest = false;
 let activeFilter = "all";
 
+function asText(value) {
+  if (value === null || value === undefined) return "";
+  return String(value).trim();
+}
+
 function validateRecord(row) {
   const errors = [];
-  const location = (row.location_id || "").trim();
+  const location = asText(row.location_id);
   if (!VALID_LOCATIONS.has(location)) errors.push(RULE_LABELS.missing_location);
 
-  const category = (row.category || "").trim();
+  const category = asText(row.category);
   if (!VALID_CATEGORIES.has(category)) errors.push(RULE_LABELS.invalid_category);
 
-  const description = (row.description || "").trim();
+  const description = asText(row.description);
   if (description.length < 5) errors.push(RULE_LABELS.empty_description);
 
-  const reporter = (row.reporter_id || "").trim();
+  const reporter = asText(row.reporter_id);
   if (!reporter) errors.push(RULE_LABELS.missing_reporter);
 
-  const status = (row.status || "").trim();
-  const scoreRaw = (row.satisfaction_score || "").trim();
+  const status = asText(row.status);
+  const scoreRaw = asText(row.satisfaction_score);
 
   if (status === "CLOSED" && !scoreRaw) {
     errors.push(RULE_LABELS.closed_no_score);
@@ -527,7 +532,7 @@ function buildSampleRows() {
     const isClosed = i <= 50;
     const isDiscarded = i > 50 && i <= 64;
     const status = isClosed ? "CLOSED" : isDiscarded ? "DISCARDED" : "OPEN";
-    const score = isClosed ? (i <= 4 ? 1 : i <= 10 ? 2 : i <= 22 ? 3 : i <= 41 ? 4 : 5) : "";
+    const score = isClosed ? String(i <= 4 ? 1 : i <= 10 ? 2 : i <= 22 ? 3 : i <= 41 ? 4 : 5) : "";
     sampleRows.push({
       incident_id: `BRS-${String(i).padStart(6, "0")}`,
       date: "2026-08-15",

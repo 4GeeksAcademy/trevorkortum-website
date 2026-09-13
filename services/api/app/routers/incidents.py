@@ -50,7 +50,7 @@ async def analyze_incidents(file: UploadFile = File(...)):
 def analyze_sample_dataset():
     """Analyze the bundled Brasaland sample CSV and return the JSON summary."""
     sample_path = (
-        Path(__file__).resolve().parents[4] / "data" / "raw" / "incidents-brasaland.csv"
+        Path(__file__).resolve().parents[4] / "scripts" / "incidents-brasaland.csv"
     )
     if not sample_path.exists():
         raise HTTPException(status_code=404, detail=f"Sample file not found: {sample_path}")
