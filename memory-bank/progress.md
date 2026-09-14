@@ -14,6 +14,7 @@ Brasaland Digital is initializing its AI-driven monorepo infrastructure and base
 
 ## Recent Changes
 
+- AUTH-01/02/03: TinyDB users/profiles + JWT auth (`services/api/security.py`, `routes/auth.py|users.py|profiles.py`), password reset via Resend (console fallback), protected supplier + incident routes, and Next.js portal at `uis/portal` (`/login`, `/register`, `/forgot-password`, `/reset-password`, `/account/*`).
 - Aligned monorepo to required layout: supplier API at `services/api/{main,models,database,seed}.py` + `routes/suppliers.py`; supplier UI at `uis/application/app/suppliers/`. Added PR evidence screenshots under `docs/screenshots/` (`uv run seed`, Swagger country filter, filtered supplier list).
 - Migrated remaining `apps/` UI content into `uis/`: Brasa Points form (`application.html`, `validation.js`) now lives under `uis/website`, root redirect points to `/uis/website/index.html`, and the obsolete `apps/` directory was removed. Docs/READMEs now describe `uis/` + `services/` as the application surfaces.
 - Closed Supplier Directory audit gaps: moved supplier API to checklist paths (`services/api/models.py`, `database.py`, `routes/suppliers.py`, `main.py`), enabled `uv run seed`, accepted `/suppliers` with or without trailing slash, and expanded the backoffice table to show currency, `updated_at`, contact email, and notes alongside rate/status controls.

@@ -12,6 +12,7 @@
     "dev:website": "npx http-server ./uis/website -p 3001 -a localhost",
     "dev:backoffice": "npx http-server ./uis/backoffice -p 3002 -a localhost",
     "dev:application": "npx http-server ./uis/application -p 3003 -a localhost",
+    "dev:portal": "npm --prefix ./uis/portal run dev",
     "dev:api": "cd services/api && .venv/bin/uvicorn main:app --reload --host 127.0.0.1 --port 8000"
   },
   "keywords": ["brasaland", "typescript", "data-processing"],
