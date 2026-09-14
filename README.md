@@ -26,7 +26,8 @@ ai-engineering-project-template/
 ├── README.md                 # This file
 ├── AGENTS.md                 # Index for AI agents: which skills exist and when to use them (you will add it in the future)
 ├── CONTEXT.md                # Your company context (Brasaland | TrackFlow | Nexova) — add after assignment
-├── apps/                     # Your applications (web app, API, dashboards)
+├── uis/                      # UI apps (public website, backoffice)
+├── services/                 # Backend services (API, workers)
 ├── packages/
 │   └── shared-types/         # Shared TypeScript/JSON types used across apps
 ├── pipelines/
@@ -47,7 +48,7 @@ ai-engineering-project-template/
 2. **Clone** your fork (or open in GitHub Codespaces).
 3. **Add your CONTEXT**: copy the `CONTEXT-<company>.md` for your assigned company into the root as `CONTEXT.md`.
 4. **Read** `AGENTS.md` so you know which skills are available when working with AI.
-5. **Build** your milestone deliverables inside `apps/`, reusing `packages/shared-types` and `pipelines/data` as needed.
+5. **Build** your milestone deliverables inside `uis/` and `services/`, reusing `packages/shared-types` and `pipelines/data` as needed.
 
 ---
 

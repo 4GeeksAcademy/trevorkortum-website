@@ -21,6 +21,7 @@
         <a class="active" href="#operations">Operations</a>
         <a href="#talent-pipeline">Talent Pipeline</a>
         <a href="#incident-analysis">Incident Analysis</a>
+        <a href="#suppliers">Supplier Directory</a>
         <a href="#procurement">Procurement</a>
         <a href="#training">Training</a>
         <a href="#executive">Executive</a>
@@ -311,6 +312,105 @@
             </thead>
             <tbody id="incidents-table-body"></tbody>
           </table>
+        </div>
+      </section>
+
+      <section class="panel" id="suppliers" aria-labelledby="suppliers-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Lucia Fernandez · Procurement</p>
+            <h2 id="suppliers-title">Supplier directory</h2>
+          </div>
+          <button type="button" id="btn-refresh-suppliers">Refresh</button>
+        </div>
+
+        <div class="supplier-toolbar">
+          <label>
+            Country
+            <select id="filter-supplier-country">
+              <option value="">All</option>
+              <option value="Colombia">Colombia</option>
+              <option value="USA">USA</option>
+            </select>
+          </label>
+          <label>
+            Category
+            <select id="filter-supplier-category">
+              <option value="">All</option>
+              <option value="carne">carne</option>
+              <option value="verduras_y_hortalizas">verduras_y_hortalizas</option>
+              <option value="salsas_y_condimentos">salsas_y_condimentos</option>
+              <option value="bebidas">bebidas</option>
+              <option value="packaging">packaging</option>
+              <option value="productos_limpieza">productos_limpieza</option>
+              <option value="lacteos">lacteos</option>
+              <option value="carbon_y_combustible">carbon_y_combustible</option>
+            </select>
+          </label>
+          <p class="supplier-feedback" id="supplier-list-feedback" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Categories</th>
+                <th>Rate</th>
+                <th>Currency</th>
+                <th>Updated at</th>
+                <th>Status</th>
+                <th>Contact email</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="suppliers-table-body"></tbody>
+          </table>
+        </div>
+
+        <div class="supplier-form-wrap">
+          <h3>Register supplier</h3>
+          <form id="supplier-create-form" class="supplier-form" novalidate>
+            <label>Name <input id="supplier-name" name="name" required /></label>
+            <label>Country
+              <select id="supplier-country" name="country" required>
+                <option value="Colombia">Colombia</option>
+                <option value="USA">USA</option>
+              </select>
+            </label>
+            <label>Currency
+              <select id="supplier-currency" name="currency" required>
+                <option value="COP">COP</option>
+                <option value="USD">USD</option>
+              </select>
+            </label>
+            <label>Rate per unit <input id="supplier-rate" name="rate_per_unit" type="number" step="any" min="0.01" required /></label>
+            <label>Status
+              <select id="supplier-status" name="status">
+                <option value="active">active</option>
+                <option value="suspended">suspended</option>
+              </select>
+            </label>
+            <label>Contact email <input id="supplier-email" name="contact_email" type="email" /></label>
+            <fieldset class="category-fieldset">
+              <legend>Categories</legend>
+              <label><input type="checkbox" name="categories" value="carne" /> carne</label>
+              <label><input type="checkbox" name="categories" value="verduras_y_hortalizas" /> verduras_y_hortalizas</label>
+              <label><input type="checkbox" name="categories" value="salsas_y_condimentos" /> salsas_y_condimentos</label>
+              <label><input type="checkbox" name="categories" value="bebidas" /> bebidas</label>
+              <label><input type="checkbox" name="categories" value="packaging" /> packaging</label>
+              <label><input type="checkbox" name="categories" value="productos_limpieza" /> productos_limpieza</label>
+              <label><input type="checkbox" name="categories" value="lacteos" /> lacteos</label>
+              <label><input type="checkbox" name="categories" value="carbon_y_combustible" /> carbon_y_combustible</label>
+            </fieldset>
+            <label class="full-width">Notes <textarea id="supplier-notes" name="notes" rows="2"></textarea></label>
+            <div class="form-actions full-width">
+              <button type="submit">Create supplier</button>
+              <p class="supplier-feedback" id="supplier-form-feedback" role="status" aria-live="polite"></p>
+            </div>
+          </form>
         </div>
       </section>
 
