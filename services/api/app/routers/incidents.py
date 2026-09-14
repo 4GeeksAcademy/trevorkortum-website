@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from fastapi.responses import Response
 
 from incident_analysis import (
@@ -15,13 +15,16 @@ from incident_analysis import (
 )
 
 from app import state
+from security import get_current_user
 
 router = APIRouter(prefix="/api/incidents", tags=["incidents"])
 
 
 @router.post("/analyze")
-async def analyze_incidents(file: UploadFile = File(...)):
-    """Accept a CSV upload and return a JSON analysis summary."""
+async def analyze_incidents(
+    file: UploadFile = File(...),
+    _user: dict = Depends(get_current_user),
+):
     filename = file.filename or "upload.csv"
     if not filename.lower().endswith(".csv"):
         raise HTTPException(status_code=400, detail="Uploaded file must be a .csv")
@@ -47,8 +50,7 @@ async def analyze_incidents(file: UploadFile = File(...)):
 
 
 @router.post("/analyze-sample")
-def analyze_sample_dataset():
-    """Analyze the bundled Brasaland sample CSV and return the JSON summary."""
+def analyze_sample_dataset(_user: dict = Depends(get_current_user)):
     sample_path = (
         Path(__file__).resolve().parents[4] / "scripts" / "incidents-brasaland.csv"
     )
@@ -66,8 +68,7 @@ def analyze_sample_dataset():
 
 
 @router.get("/results/export")
-def export_latest_results():
-    """Return a downloadable CSV of the latest analysis summary."""
+def export_latest_results(_user: dict = Depends(get_current_user)):
     metrics, source_file = state.get_latest()
     if metrics is None:
         raise HTTPException(

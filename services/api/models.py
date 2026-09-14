@@ -89,3 +89,78 @@ class Supplier(BaseModel):
     status: SupplierStatus
     contact_email: Optional[EmailStr] = None
     notes: Optional[str] = None
+
+
+class UserRole(str, Enum):
+    admin = "admin"
+    manager = "manager"
+    user = "user"
+
+
+class ProfileData(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str = Field(..., min_length=8)
+    profile: Optional[ProfileData] = None
+
+
+class UserUpdate(BaseModel):
+    email: Optional[EmailStr] = None
+    is_active: Optional[bool] = None
+    role: Optional[UserRole] = None
+
+
+class UserOut(BaseModel):
+    id: str
+    email: EmailStr
+    is_active: bool
+    role: UserRole
+    created_at: datetime
+
+
+class ProfileOut(BaseModel):
+    id: int
+    user_id: str
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+
+
+class ProfileUpdate(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str = Field(..., min_length=8)
+
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str = Field(..., min_length=8)
+
+
+class MeResponse(BaseModel):
+    user: UserOut
+    profile: Optional[ProfileOut] = None

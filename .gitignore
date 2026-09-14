@@ -1,6 +1,8 @@
 .venv/
 services/api/.venv/
 services/api/db.json
+services/api/.env
+uis/portal/.env.local
 __pycache__/
 *.pyc
 .DS_Store

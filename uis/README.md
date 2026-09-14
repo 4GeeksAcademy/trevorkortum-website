@@ -8,8 +8,13 @@ UI entry points for Brasaland Digital.
 
 - **Type**: Internal procurement application
 - **Entry**: `uis/application/app/suppliers/`
-- **Features**: Supplier directory list, country/category filters, registration, inline rate/status updates
 - **Run**: `npm run dev:application` → http://127.0.0.1:3003/app/suppliers/
+
+### `portal`
+
+- **Type**: Next.js authenticated portal
+- **Entry**: `uis/portal` (`/login`, `/register`, account pages)
+- **Run**: `npm run dev:portal` → http://127.0.0.1:3004
 
 ### `website`
 

@@ -5,10 +5,11 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import List, Optional
 
-from fastapi import APIRouter, HTTPException, Query, Response
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 
 from database import suppliers_table
 from models import RateUpdate, StatusUpdate, Supplier, SupplierCreate
+from security import get_current_user
 
 router = APIRouter(prefix="/suppliers", tags=["suppliers"])
 
@@ -30,7 +31,10 @@ def _get_or_404(supplier_id: int) -> tuple[int, dict]:
 
 @router.post("", response_model=Supplier, status_code=201)
 @router.post("/", response_model=Supplier, status_code=201, include_in_schema=False)
-def create_supplier(payload: SupplierCreate) -> Supplier:
+def create_supplier(
+    payload: SupplierCreate,
+    _user: dict = Depends(get_current_user),
+) -> Supplier:
     data = payload.model_dump(mode="json")
     data["updated_at"] = _now()
     doc_id = suppliers_table.insert(data)
@@ -42,6 +46,7 @@ def create_supplier(payload: SupplierCreate) -> Supplier:
 def list_suppliers(
     country: Optional[str] = Query(None),
     category: Optional[str] = Query(None),
+    _user: dict = Depends(get_current_user),
 ) -> List[Supplier]:
     results: List[Supplier] = []
     for row in suppliers_table.all():
@@ -55,13 +60,20 @@ def list_suppliers(
 
 
 @router.get("/{supplier_id}", response_model=Supplier)
-def get_supplier(supplier_id: int) -> Supplier:
+def get_supplier(
+    supplier_id: int,
+    _user: dict = Depends(get_current_user),
+) -> Supplier:
     doc_id, doc = _get_or_404(supplier_id)
     return _doc_to_supplier(doc_id, doc)
 
 
 @router.patch("/{supplier_id}/rate", response_model=Supplier)
-def update_rate(supplier_id: int, payload: RateUpdate) -> Supplier:
+def update_rate(
+    supplier_id: int,
+    payload: RateUpdate,
+    _user: dict = Depends(get_current_user),
+) -> Supplier:
     doc_id, doc = _get_or_404(supplier_id)
     doc["rate_per_unit"] = payload.rate_per_unit
     doc["updated_at"] = _now()
@@ -70,7 +82,11 @@ def update_rate(supplier_id: int, payload: RateUpdate) -> Supplier:
 
 
 @router.patch("/{supplier_id}/status", response_model=Supplier)
-def update_status(supplier_id: int, payload: StatusUpdate) -> Supplier:
+def update_status(
+    supplier_id: int,
+    payload: StatusUpdate,
+    _user: dict = Depends(get_current_user),
+) -> Supplier:
     doc_id, doc = _get_or_404(supplier_id)
     doc["status"] = payload.status.value
     doc["updated_at"] = _now()
@@ -79,7 +95,10 @@ def update_status(supplier_id: int, payload: StatusUpdate) -> Supplier:
 
 
 @router.delete("/{supplier_id}", status_code=204)
-def delete_supplier(supplier_id: int) -> Response:
+def delete_supplier(
+    supplier_id: int,
+    _user: dict = Depends(get_current_user),
+) -> Response:
     _get_or_404(supplier_id)
     suppliers_table.remove(doc_ids=[supplier_id])
     return Response(status_code=204)

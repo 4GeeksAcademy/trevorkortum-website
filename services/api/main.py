@@ -17,13 +17,13 @@ if str(API_ROOT) not in sys.path:
 if str(SHARED) not in sys.path:
     sys.path.insert(0, str(SHARED))
 
-from routes import suppliers  # noqa: E402
+from routes import auth, profiles, suppliers, users  # noqa: E402
 from app.routers import incidents  # noqa: E402
 
 app = FastAPI(
     title="Brasaland Central API",
-    description="Incident analysis, supplier directory, and operations endpoints for Brasaland Digital.",
-    version="0.2.0",
+    description="Auth, supplier directory, and incident analysis for Brasaland Digital.",
+    version="0.3.0",
 )
 
 app.add_middleware(
@@ -32,15 +32,20 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:3002",
         "http://localhost:3003",
+        "http://localhost:3004",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:3002",
         "http://127.0.0.1:3003",
+        "http://127.0.0.1:3004",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(profiles.router)
 app.include_router(incidents.router)
 app.include_router(suppliers.router)
 
