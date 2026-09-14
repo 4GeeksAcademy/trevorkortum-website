@@ -6,7 +6,7 @@
 - Current root package: `brasaland-data-utils` with `typecheck`, `build`, `demo`, and static serving scripts.
 - Current TypeScript scope: source files under `src/`, compiled to `dist/`.
 - Initial UI delivery: static HTML, CSS, and JavaScript app shells under `uis/` so each product can run independently on `/` while the monorepo architecture matures.
-- Incident analysis API: FastAPI under `services/api`, with shared Python logic in `shared/incident_analysis`.
+- Incident analysis API: FastAPI under `services/api`, with shared Python logic in `packages/shared/incident_analysis`.
 - Supplier directory API: TinyDB (`services/api/db.json`) with FastAPI routes in `services/api/routes/suppliers.py`, models in `services/api/models.py`, seeded via `uv run seed`.
 - Auth API: TinyDB users/profiles + JWT (`python-jose`, `passlib[bcrypt]`); Next.js portal under `uis/portal`.
 
@@ -26,7 +26,7 @@
 - Treat location, currency, language, and market as first-class dimensions in data models.
 - Prefer explicit service boundaries for locations, menu, sales, customers, suppliers, HR, training, telemetry, and reporting.
 - Build toward API-driven UIs rather than spreadsheet or PDF-driven operations.
-- Share incident CSV validation/metrics in `shared/incident_analysis` so `scripts/analyze.py` and `services/api` use one source of truth.
+- Share incident CSV validation/metrics and manager transforms in `packages/shared/incident_analysis` so `scripts/analyze.py`, `scripts/seed_incidents.py`, and `services/api` use one source of truth; TypeScript incident types live in `packages/shared/types`.
 
 ## Dual-Currency Guidelines
 

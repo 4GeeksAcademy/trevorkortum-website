@@ -20,6 +20,7 @@
       <nav>
         <a class="active" href="#operations">Operations</a>
         <a href="#talent-pipeline">Talent Pipeline</a>
+        <a href="#incident-manager">Incident Manager</a>
         <a href="#incident-analysis">Incident Analysis</a>
         <a href="#suppliers">Supplier Directory</a>
         <a href="#procurement">Procurement</a>
@@ -201,6 +202,184 @@
                 <td>2026-09-09</td>
                 <td><span class="tag good">Interview scheduled</span></td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="incident-manager" aria-labelledby="incident-manager-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Felipe Guerrero · Restaurant Operations</p>
+            <h2 id="incident-manager-title">Centralized incident manager</h2>
+          </div>
+          <button type="button" id="btn-refresh-incidents">Refresh</button>
+        </div>
+
+        <div class="incident-summary-wrap" id="incident-summary-panel" aria-live="polite">
+          <p class="incident-panel-status" id="incident-summary-status">Loading summary…</p>
+          <div class="metric-grid incident-summary-grid" id="incident-summary-metrics" hidden>
+            <article class="metric-card">
+              <span>Total incidents</span>
+              <strong id="summary-total">0</strong>
+              <small>All branches</small>
+            </article>
+            <article class="metric-card alert">
+              <span>Open</span>
+              <strong id="summary-open">0</strong>
+              <small>Pending assignment</small>
+            </article>
+            <article class="metric-card">
+              <span>In progress</span>
+              <strong id="summary-in-progress">0</strong>
+              <small>Actively handled</small>
+            </article>
+            <article class="metric-card">
+              <span>Resolved</span>
+              <strong id="summary-resolved">0</strong>
+              <small>Closed confirmed</small>
+            </article>
+          </div>
+          <div class="incident-summary-breakdown" id="incident-summary-breakdown" hidden></div>
+        </div>
+
+        <div class="incident-form-wrap">
+          <h3>Register incident</h3>
+          <p class="incident-form-hint">Touch-friendly form for kitchen tablets and headquarters desks.</p>
+          <form id="incident-create-form" class="incident-form" novalidate>
+            <label>
+              Title
+              <input id="incident-title" name="title" maxlength="120" required autocomplete="off" />
+              <span class="field-error" id="error-title" role="alert"></span>
+            </label>
+            <label class="full-width">
+              Description
+              <textarea id="incident-description" name="description" rows="3" required></textarea>
+              <span class="field-error" id="error-description" role="alert"></span>
+            </label>
+            <label>
+              Category
+              <select id="incident-category" name="category" required>
+                <option value="equipment_failure">Equipment failure</option>
+                <option value="supply_issue">Supply issue</option>
+                <option value="customer_complaint">Customer complaint</option>
+                <option value="staff_issue">Staff issue</option>
+                <option value="facility_issue">Facility issue</option>
+                <option value="pos_system">POS system</option>
+                <option value="delivery_issue">Delivery issue</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="field-error" id="error-category" role="alert"></span>
+            </label>
+            <label>
+              Origin
+              <select id="incident-origin" name="origin" required>
+                <option value="customer">Customer</option>
+                <option value="branch">Branch</option>
+                <option value="internal">Internal</option>
+              </select>
+              <span class="field-error" id="error-origin" role="alert"></span>
+            </label>
+            <label id="incident-branch-label">
+              Branch
+              <select id="incident-branch" name="branch" required>
+                <option value="central">Central (Medellín / Miami)</option>
+                <option value="medellin_centro">Medellín Centro</option>
+                <option value="medellin_laureles">Medellín Laureles</option>
+                <option value="medellin_envigado">Medellín Envigado</option>
+                <option value="medellin_bello">Medellín Bello</option>
+                <option value="medellin_itagui">Medellín Itagüí</option>
+                <option value="bogota_chapinero">Bogotá Chapinero</option>
+                <option value="bogota_usaquen">Bogotá Usaquén</option>
+                <option value="cali_granada">Cali Granada</option>
+                <option value="barranquilla_norte">Barranquilla Norte</option>
+                <option value="miami_doral">Miami Doral</option>
+                <option value="miami_hialeah">Miami Hialeah</option>
+                <option value="miami_kendall">Miami Kendall</option>
+                <option value="orlando_international">Orlando International Drive</option>
+                <option value="fort_lauderdale">Fort Lauderdale</option>
+              </select>
+              <span class="field-error" id="error-branch" role="alert"></span>
+            </label>
+            <label>
+              Status
+              <select id="incident-status" name="status">
+                <option value="open">Open</option>
+                <option value="in_progress">In progress</option>
+                <option value="resolved">Resolved</option>
+                <option value="discarded">Discarded</option>
+              </select>
+              <span class="field-error" id="error-status" role="alert"></span>
+            </label>
+            <div class="form-actions full-width">
+              <button type="submit" id="incident-submit-btn">
+                <span class="btn-label">Submit incident</span>
+                <span class="btn-spinner" hidden aria-hidden="true"></span>
+              </button>
+              <p class="incident-feedback" id="incident-form-feedback" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+
+        <div class="incident-toolbar">
+          <label>
+            Status
+            <select id="filter-incident-status">
+              <option value="">All</option>
+              <option value="open">Open</option>
+              <option value="in_progress">In progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="discarded">Discarded</option>
+            </select>
+          </label>
+          <label>
+            Origin
+            <select id="filter-incident-origin">
+              <option value="">All</option>
+              <option value="customer">Customer</option>
+              <option value="branch">Branch</option>
+              <option value="internal">Internal</option>
+            </select>
+          </label>
+          <label>
+            Branch
+            <select id="filter-incident-branch">
+              <option value="">All</option>
+              <option value="central">Central (Medellín / Miami)</option>
+              <option value="medellin_centro">Medellín Centro</option>
+              <option value="medellin_laureles">Medellín Laureles</option>
+              <option value="medellin_envigado">Medellín Envigado</option>
+              <option value="medellin_bello">Medellín Bello</option>
+              <option value="medellin_itagui">Medellín Itagüí</option>
+              <option value="bogota_chapinero">Bogotá Chapinero</option>
+              <option value="bogota_usaquen">Bogotá Usaquén</option>
+              <option value="cali_granada">Cali Granada</option>
+              <option value="barranquilla_norte">Barranquilla Norte</option>
+              <option value="miami_doral">Miami Doral</option>
+              <option value="miami_hialeah">Miami Hialeah</option>
+              <option value="miami_kendall">Miami Kendall</option>
+              <option value="orlando_international">Orlando International Drive</option>
+              <option value="fort_lauderdale">Fort Lauderdale</option>
+            </select>
+          </label>
+          <p class="incident-feedback" id="incident-list-feedback" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Branch</th>
+                <th>Category</th>
+                <th>Origin</th>
+                <th>Created</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="incidents-manager-body">
+              <tr><td colspan="7">Loading incidents…</td></tr>
             </tbody>
           </table>
         </div>

@@ -2,7 +2,7 @@
 
 ## Current Status
 
-Brasaland Digital is initializing its AI-driven monorepo infrastructure and base application surfaces. The repository now tracks active business context, technical constraints, agent operating rules, dev-agent skills, and first-pass UI entry points for the public website and internal backoffice. Incident CSV analysis now spans a shared Python module, CLI script, FastAPI service, and backoffice upload/export UI.
+Brasaland Digital is initializing its AI-driven monorepo infrastructure and base application surfaces. The repository now tracks active business context, technical constraints, agent operating rules, dev-agent skills, and first-pass UI entry points for the public website and internal backoffice. Incident CSV analysis now spans a shared Python module, CLI script, FastAPI service, and backoffice upload/export UI. A centralized Incident Manager now stores operational incidents in TinyDB with CRUD/status/summary APIs and a backoffice registration panel for Felipe Guerrero.
 
 ## Active Constraints
 
@@ -14,6 +14,8 @@ Brasaland Digital is initializing its AI-driven monorepo infrastructure and base
 
 ## Recent Changes
 
+- Centralized Incident Manager: shared CSV→model transforms in `packages/shared/incident_analysis/manager.py` (reuses analyzer validation); TinyDB `incidents` table; FastAPI `POST/GET /api/incidents`, `GET /api/incidents/{id}`, `PATCH /api/incidents/{id}/status` (lifecycle rules), `GET /api/incidents/summary`; seed script `scripts/seed_incidents.py` asserts 96 / open 32 / resolved 50 / discarded 14; backoffice Incident Manager panel (touch form, filters, inline status, isolated summary).
+- Moved incident CSV validation/transforms from `shared/incident_analysis` into `packages/shared/incident_analysis` so seed, analyzer CLI, and API share one package under `packages/shared/`.
 - AUTH-01/02/03: TinyDB users/profiles + JWT auth (`services/api/security.py`, `routes/auth.py|users.py|profiles.py`), password reset via Resend (console fallback), protected supplier + incident routes, and Next.js portal at `uis/portal` (`/login`, `/register`, `/forgot-password`, `/reset-password`, `/account/*`).
 - Aligned monorepo to required layout: supplier API at `services/api/{main,models,database,seed}.py` + `routes/suppliers.py`; supplier UI at `uis/application/app/suppliers/`. Added PR evidence screenshots under `docs/screenshots/` (`uv run seed`, Swagger country filter, filtered supplier list).
 - Migrated remaining `apps/` UI content into `uis/`: Brasa Points form (`application.html`, `validation.js`) now lives under `uis/website`, root redirect points to `/uis/website/index.html`, and the obsolete `apps/` directory was removed. Docs/READMEs now describe `uis/` + `services/` as the application surfaces.
@@ -36,3 +38,4 @@ Brasaland Digital is initializing its AI-driven monorepo infrastructure and base
 - Create operational alerts for no-sales windows, ingredient stockouts, and supplier price changes.
 - Expand backoffice modules for procurement, HR, training updates, and executive reporting.
 - Add AI assistant capabilities for natural-language executive questions and weekly report generation.
+- Alert when `customer_complaint` incidents stay `open` longer than 48 hours (data model ready; automation not yet built).

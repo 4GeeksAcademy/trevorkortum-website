@@ -7,6 +7,6 @@ This folder is reserved for **unbundled shared resources** in the monorepo: temp
 
 ## Active modules
 
-- `incident_analysis/`: shared Python validation and metrics used by `scripts/analyze.py` and `services/api`.
+- Incident CSV validation moved to `packages/shared/incident_analysis/` (see that package README). This folder keeps a redirect note only.
 
 > _Spanish version: [README.es.md](./README.es.md)._

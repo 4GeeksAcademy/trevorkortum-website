@@ -914,3 +914,359 @@ document.getElementById("supplier-create-form")?.addEventListener("submit", asyn
 });
 
 if (document.getElementById("suppliers-table-body")) loadSuppliers();
+
+// --- Centralized Incident Manager ---
+const BRANCH_DISPLAY = {
+  central: "Central (Medellín / Miami)",
+  medellin_centro: "Medellín Centro",
+  medellin_laureles: "Medellín Laureles",
+  medellin_envigado: "Medellín Envigado",
+  medellin_bello: "Medellín Bello",
+  medellin_itagui: "Medellín Itagüí",
+  bogota_chapinero: "Bogotá Chapinero",
+  bogota_usaquen: "Bogotá Usaquén",
+  cali_granada: "Cali Granada",
+  barranquilla_norte: "Barranquilla Norte",
+  miami_doral: "Miami Doral",
+  miami_hialeah: "Miami Hialeah",
+  miami_kendall: "Miami Kendall",
+  orlando_international: "Orlando International Drive",
+  fort_lauderdale: "Fort Lauderdale",
+};
+
+const CATEGORY_DISPLAY = {
+  equipment_failure: "Equipment failure",
+  supply_issue: "Supply issue",
+  customer_complaint: "Customer complaint",
+  staff_issue: "Staff issue",
+  facility_issue: "Facility issue",
+  pos_system: "POS system",
+  delivery_issue: "Delivery issue",
+  other: "Other",
+};
+
+const STATUS_OPTIONS = ["open", "in_progress", "resolved", "discarded"];
+const STATUS_TRANSITIONS = {
+  open: ["in_progress", "discarded"],
+  in_progress: ["resolved", "discarded"],
+  resolved: [],
+  discarded: [],
+};
+
+let managedIncidents = [];
+
+function showIncidentToast(message, isError = false) {
+  let toast = document.getElementById("incident-toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "incident-toast";
+    toast.className = "incident-toast";
+    toast.setAttribute("role", "status");
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.toggle("error", isError);
+  toast.classList.add("visible");
+  window.clearTimeout(showIncidentToast._timer);
+  showIncidentToast._timer = window.setTimeout(() => {
+    toast.classList.remove("visible");
+  }, 3200);
+}
+
+function setIncidentFeedback(id, message, kind = "") {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = message;
+  el.classList.toggle("error", kind === "error");
+  el.classList.toggle("success", kind === "success");
+}
+
+function clearIncidentFieldErrors() {
+  document.querySelectorAll("#incident-create-form .field-error").forEach((el) => {
+    el.textContent = "";
+  });
+}
+
+function setIncidentFieldError(field, message) {
+  const el = document.getElementById(`error-${field}`);
+  if (el) el.textContent = message;
+}
+
+function allowedNextStatuses(current) {
+  const next = STATUS_TRANSITIONS[current] || [];
+  return [current, ...next];
+}
+
+function formatIncidentDate(value) {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+async function loadIncidentSummary() {
+  const statusEl = document.getElementById("incident-summary-status");
+  const metricsEl = document.getElementById("incident-summary-metrics");
+  const breakdownEl = document.getElementById("incident-summary-breakdown");
+  if (!statusEl) return;
+
+  statusEl.textContent = "Loading summary…";
+  statusEl.classList.remove("error");
+
+  try {
+    const response = await fetch(`${API_BASE}/api/incidents/summary`);
+    const payload = await response.json().catch(() => null);
+    if (!response.ok) {
+      throw new Error(formatApiDetail(payload && payload.detail) || `HTTP ${response.status}`);
+    }
+
+    setText("summary-total", payload.total ?? 0);
+    setText("summary-open", (payload.by_status && payload.by_status.open) || 0);
+    setText("summary-in-progress", (payload.by_status && payload.by_status.in_progress) || 0);
+    setText("summary-resolved", (payload.by_status && payload.by_status.resolved) || 0);
+
+    if (metricsEl) metricsEl.hidden = false;
+    if (breakdownEl) {
+      breakdownEl.hidden = false;
+      const sections = [
+        ["By category", payload.by_category || {}, CATEGORY_DISPLAY],
+        ["By origin", payload.by_origin || {}, { customer: "Customer", branch: "Branch", internal: "Internal" }],
+        ["By branch", payload.by_branch || {}, BRANCH_DISPLAY],
+      ];
+      breakdownEl.innerHTML = sections
+        .map(([title, counts, labels]) => {
+          const items = Object.entries(counts)
+            .filter(([, count]) => count > 0)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 6)
+            .map(
+              ([key, count]) =>
+                `<li class="breakdown-item"><span>${labels[key] || key}</span><strong>${count}</strong></li>`
+            )
+            .join("");
+          return `<div class="breakdown-card"><div class="breakdown-header"><h3>${title}</h3></div><ul class="breakdown-list">${
+            items || '<li class="breakdown-item"><span>No data yet</span></li>'
+          }</ul></div>`;
+        })
+        .join("");
+    }
+
+    statusEl.textContent = `Summary updated · ${payload.total ?? 0} total`;
+  } catch (error) {
+    statusEl.textContent = `Summary unavailable (${error.message}). List and form still work.`;
+    statusEl.classList.add("error");
+    if (metricsEl) metricsEl.hidden = true;
+    if (breakdownEl) breakdownEl.hidden = true;
+  }
+}
+
+function renderManagedIncidents() {
+  const tbody = document.getElementById("incidents-manager-body");
+  if (!tbody) return;
+
+  if (!managedIncidents.length) {
+    tbody.innerHTML = `<tr><td colspan="7">No incidents match the current filters.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = managedIncidents
+    .map((incident) => {
+      const options = allowedNextStatuses(incident.status)
+        .map(
+          (status) =>
+            `<option value="${status}" ${status === incident.status ? "selected" : ""}>${status}</option>`
+        )
+        .join("");
+      const locked = STATUS_TRANSITIONS[incident.status]?.length === 0;
+      return `
+      <tr data-incident-id="${incident.id}">
+        <td><strong>#${incident.id}</strong></td>
+        <td class="notes-cell">${incident.title}</td>
+        <td>${BRANCH_DISPLAY[incident.branch] || incident.branch}</td>
+        <td>${CATEGORY_DISPLAY[incident.category] || incident.category}</td>
+        <td>${incident.origin}</td>
+        <td>${formatIncidentDate(incident.created_at)}</td>
+        <td>
+          <select class="incident-status-select" data-previous="${incident.status}" ${locked ? "disabled" : ""} aria-label="Update status for incident ${incident.id}">
+            ${options}
+          </select>
+        </td>
+      </tr>`;
+    })
+    .join("");
+}
+
+async function loadManagedIncidents() {
+  const tbody = document.getElementById("incidents-manager-body");
+  if (!tbody) return;
+
+  const status = document.getElementById("filter-incident-status")?.value || "";
+  const origin = document.getElementById("filter-incident-origin")?.value || "";
+  const branch = document.getElementById("filter-incident-branch")?.value || "";
+  const params = new URLSearchParams();
+  if (status) params.set("status", status);
+  if (origin) params.set("origin", origin);
+  if (branch) params.set("branch", branch);
+
+  setIncidentFeedback("incident-list-feedback", "Loading incidents…");
+  tbody.innerHTML = `<tr><td colspan="7">Loading incidents…</td></tr>`;
+
+  try {
+    const query = params.toString();
+    const response = await fetch(`${API_BASE}/api/incidents${query ? `?${query}` : ""}`);
+    const payload = await response.json().catch(() => null);
+    if (!response.ok) {
+      throw new Error(formatApiDetail(payload && payload.detail) || `HTTP ${response.status}`);
+    }
+    managedIncidents = Array.isArray(payload) ? payload : [];
+    renderManagedIncidents();
+    if (!managedIncidents.length) {
+      setIncidentFeedback("incident-list-feedback", "No incidents yet. Register one or run the seed script.");
+    } else {
+      setIncidentFeedback("incident-list-feedback", `${managedIncidents.length} incident(s) loaded.`);
+    }
+  } catch (error) {
+    managedIncidents = [];
+    tbody.innerHTML = `<tr><td colspan="7">Could not load incidents. Start the API (npm run dev:api), then refresh.</td></tr>`;
+    setIncidentFeedback("incident-list-feedback", error.message, "error");
+  }
+}
+
+async function updateManagedIncidentStatus(incidentId, selectEl) {
+  const previous = selectEl.dataset.previous;
+  const next = selectEl.value;
+  if (next === previous) return;
+
+  try {
+    const response = await fetch(`${API_BASE}/api/incidents/${incidentId}/status`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: next }),
+    });
+    const payload = await response.json().catch(() => null);
+    if (!response.ok) {
+      const message =
+        (payload && payload.message) ||
+        formatApiDetail(payload && payload.detail) ||
+        `HTTP ${response.status}`;
+      throw new Error(message);
+    }
+
+    selectEl.dataset.previous = payload.status;
+    const index = managedIncidents.findIndex((item) => item.id === incidentId);
+    if (index >= 0) managedIncidents[index] = payload;
+    renderManagedIncidents();
+    loadIncidentSummary();
+    showIncidentToast(`Incident #${incidentId} → ${payload.status}`);
+  } catch (error) {
+    selectEl.value = previous;
+    showIncidentToast(`Status update failed: ${error.message}`, true);
+  }
+}
+
+function syncBranchHighlight() {
+  const origin = document.getElementById("incident-origin")?.value;
+  const branchLabel = document.getElementById("incident-branch-label");
+  if (!branchLabel) return;
+  branchLabel.classList.toggle("branch-required", origin === "branch");
+}
+
+document.getElementById("incident-origin")?.addEventListener("change", syncBranchHighlight);
+syncBranchHighlight();
+
+document.getElementById("incidents-manager-body")?.addEventListener("change", (event) => {
+  const select = event.target.closest("select.incident-status-select");
+  if (!select) return;
+  const row = select.closest("tr[data-incident-id]");
+  if (!row) return;
+  updateManagedIncidentStatus(Number(row.dataset.incidentId), select);
+});
+
+["filter-incident-status", "filter-incident-origin", "filter-incident-branch"].forEach((id) => {
+  document.getElementById(id)?.addEventListener("change", () => loadManagedIncidents());
+});
+
+document.getElementById("btn-refresh-incidents")?.addEventListener("click", () => {
+  loadManagedIncidents();
+  loadIncidentSummary();
+});
+
+document.getElementById("incident-create-form")?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const submitBtn = document.getElementById("incident-submit-btn");
+  const spinner = submitBtn?.querySelector(".btn-spinner");
+  const label = submitBtn?.querySelector(".btn-label");
+
+  clearIncidentFieldErrors();
+  setIncidentFeedback("incident-form-feedback", "");
+
+  const body = {
+    title: form.title.value.trim(),
+    description: form.description.value,
+    category: form.category.value,
+    origin: form.origin.value,
+    branch: form.branch.value,
+    status: form.status.value || "open",
+  };
+
+  if (!body.title) {
+    setIncidentFieldError("title", "Title is required.");
+    return;
+  }
+  if (!body.description.trim()) {
+    setIncidentFieldError("description", "Description is required.");
+    return;
+  }
+
+  if (submitBtn) submitBtn.disabled = true;
+  if (spinner) spinner.hidden = false;
+  if (label) label.textContent = "Submitting…";
+
+  try {
+    const response = await fetch(`${API_BASE}/api/incidents`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const payload = await response.json().catch(() => null);
+    if (!response.ok) {
+      if (payload && payload.field && payload.message) {
+        setIncidentFieldError(payload.field, payload.message);
+        setIncidentFeedback("incident-form-feedback", payload.message, "error");
+      } else {
+        setIncidentFeedback(
+          "incident-form-feedback",
+          formatApiDetail(payload && payload.detail) || `HTTP ${response.status}`,
+          "error"
+        );
+      }
+      return;
+    }
+
+    form.reset();
+    form.status.value = "open";
+    form.branch.value = "central";
+    syncBranchHighlight();
+    setIncidentFeedback("incident-form-feedback", `Incident #${payload.id} registered.`, "success");
+    await loadManagedIncidents();
+    await loadIncidentSummary();
+  } catch (error) {
+    setIncidentFeedback("incident-form-feedback", error.message, "error");
+  } finally {
+    if (submitBtn) submitBtn.disabled = false;
+    if (spinner) spinner.hidden = true;
+    if (label) label.textContent = "Submit incident";
+  }
+});
+
+if (document.getElementById("incidents-manager-body")) {
+  loadManagedIncidents();
+  loadIncidentSummary();
+}

@@ -164,3 +164,96 @@ class ChangePasswordRequest(BaseModel):
 class MeResponse(BaseModel):
     user: UserOut
     profile: Optional[ProfileOut] = None
+
+
+# --- Incident Manager ---
+
+
+class IncidentCategory(str, Enum):
+    equipment_failure = "equipment_failure"
+    supply_issue = "supply_issue"
+    customer_complaint = "customer_complaint"
+    staff_issue = "staff_issue"
+    facility_issue = "facility_issue"
+    pos_system = "pos_system"
+    delivery_issue = "delivery_issue"
+    other = "other"
+
+
+class IncidentStatus(str, Enum):
+    open = "open"
+    in_progress = "in_progress"
+    resolved = "resolved"
+    discarded = "discarded"
+
+
+class IncidentOrigin(str, Enum):
+    customer = "customer"
+    branch = "branch"
+    internal = "internal"
+
+
+class IncidentBranch(str, Enum):
+    central = "central"
+    medellin_centro = "medellin_centro"
+    medellin_laureles = "medellin_laureles"
+    medellin_envigado = "medellin_envigado"
+    medellin_bello = "medellin_bello"
+    medellin_itagui = "medellin_itagui"
+    bogota_chapinero = "bogota_chapinero"
+    bogota_usaquen = "bogota_usaquen"
+    cali_granada = "cali_granada"
+    barranquilla_norte = "barranquilla_norte"
+    miami_doral = "miami_doral"
+    miami_hialeah = "miami_hialeah"
+    miami_kendall = "miami_kendall"
+    orlando_international = "orlando_international"
+    fort_lauderdale = "fort_lauderdale"
+
+
+class IncidentCreate(BaseModel):
+    title: str = Field(..., min_length=1)
+    description: str = Field(..., min_length=1)
+    category: IncidentCategory
+    status: IncidentStatus = IncidentStatus.open
+    origin: IncidentOrigin
+    branch: IncidentBranch = IncidentBranch.central
+
+    @field_validator("title", "description")
+    @classmethod
+    def strip_required_text(cls, value: str) -> str:
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError("must not be empty")
+        return cleaned
+
+
+class IncidentStatusUpdate(BaseModel):
+    status: IncidentStatus
+
+
+class Incident(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    title: str
+    description: str
+    category: IncidentCategory
+    status: IncidentStatus
+    origin: IncidentOrigin
+    branch: IncidentBranch
+    created_at: datetime
+    updated_at: datetime
+
+
+class IncidentSummary(BaseModel):
+    total: int
+    by_status: dict[str, int]
+    by_category: dict[str, int]
+    by_origin: dict[str, int]
+    by_branch: dict[str, int]
+
+
+class FieldError(BaseModel):
+    field: str
+    message: str

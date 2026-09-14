@@ -1,13 +1,14 @@
 {
-  "name": "@repo/shared-types",
-  "version": "0.0.1",
+  "name": "@repo/shared",
+  "version": "0.0.2",
   "private": true,
-  "description": "Shared types for AI Engineering transversal projects",
-  "main": "index.ts",
-  "types": "index.ts",
+  "description": "Shared Brasaland types and Python incident analysis utilities",
+  "main": "types/index.ts",
+  "types": "types/index.ts",
   "scripts": {},
   "keywords": [
     "types",
+    "incident-analysis",
     "shared"
   ],
   "author": "",

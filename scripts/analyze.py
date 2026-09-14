@@ -10,9 +10,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SHARED = ROOT / "shared"
-if str(SHARED) not in sys.path:
-    sys.path.insert(0, str(SHARED))
+PACKAGES_SHARED = ROOT / "packages" / "shared"
+if str(PACKAGES_SHARED) not in sys.path:
+    sys.path.insert(0, str(PACKAGES_SHARED))
 
 from incident_analysis import (  # noqa: E402
     CATEGORY_ORDER,

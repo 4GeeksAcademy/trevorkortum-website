@@ -11,5 +11,5 @@ Backend services will provide the central Brasaland API, integrations, telemetry
 
 ## Current Status
 
-- `api/`: FastAPI service with incident CSV analyze/export endpoints (`/api/incidents/*`), backed by `shared/incident_analysis`.
+- `api/`: FastAPI service with incident manager + CSV analyze/export endpoints (`/api/incidents/*`), backed by `packages/shared/incident_analysis`.
 - `telemetry/`: still a placeholder for real-time location event streams.

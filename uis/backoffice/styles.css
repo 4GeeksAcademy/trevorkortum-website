@@ -602,3 +602,207 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+/* --- Incident Manager --- */
+
+.incident-summary-wrap,
+.incident-form-wrap,
+.incident-toolbar {
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.incident-summary-wrap {
+  background: #fafbfa;
+}
+
+.incident-panel-status {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.incident-panel-status.error {
+  color: var(--red);
+}
+
+.incident-summary-grid {
+  margin-bottom: 0.75rem;
+}
+
+.incident-summary-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.incident-summary-breakdown .breakdown-card {
+  margin: 0;
+}
+
+.incident-form-wrap h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.incident-form-hint {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.incident-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.incident-form label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.incident-form .full-width {
+  grid-column: 1 / -1;
+}
+
+.incident-form input,
+.incident-form select,
+.incident-form textarea,
+.incident-toolbar select {
+  min-height: 3rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  color: var(--ink);
+  background: #fff;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.incident-form textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.incident-form label.branch-required {
+  padding: 0.65rem;
+  border: 2px solid var(--accent);
+  border-radius: 0.5rem;
+  background: var(--accent-soft);
+}
+
+.field-error {
+  min-height: 1rem;
+  color: var(--red);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.incident-feedback {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.incident-feedback.error {
+  color: var(--red);
+}
+
+.incident-feedback.success {
+  color: var(--green);
+}
+
+#incident-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 3rem;
+  min-width: 10rem;
+  font-size: 1rem;
+}
+
+#incident-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.btn-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: incident-spin 0.7s linear infinite;
+}
+
+@keyframes incident-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.incident-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+  background: #fafbfa;
+}
+
+.incident-toolbar label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.incident-status-select {
+  min-height: 2.4rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  font: inherit;
+  background: #fff;
+}
+
+.incident-toast {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 40;
+  max-width: 22rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.45rem;
+  background: var(--ink);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  transform: translateY(0.5rem);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.incident-toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.incident-toast.error {
+  background: var(--red);
+}
+
+@media (max-width: 980px) {
+  .incident-form,
+  .incident-summary-breakdown {
+    grid-template-columns: 1fr;
+  }
+}

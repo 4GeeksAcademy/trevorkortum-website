@@ -11,5 +11,5 @@ Esta carpeta contiene **scripts auxiliares** del monorepo: automatizaciones de d
 python3 scripts/analyze.py scripts/incidents-brasaland.csv
 ```
 
-El archivo de prueba es `scripts/incidents-brasaland.csv`. La validación compartida está en `shared/incident_analysis`.
+El archivo de prueba es `scripts/incidents-brasaland.csv`. La validación compartida está en `packages/shared/incident_analysis`.
 
