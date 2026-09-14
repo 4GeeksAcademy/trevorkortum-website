@@ -26,7 +26,8 @@ ai-engineering-project-template/
 ├── README.es.md              # Este archivo
 ├── AGENTS.md                 # Índice para agentes de IA: qué skills existen y cuándo usarlas (lo añadirás en el futuro)
 ├── CONTEXT.md                # Contexto de tu empresa (Brasaland | TrackFlow | Nexova) — añadir tras la asignación
-├── apps/                     # Tus aplicaciones (web, API, dashboards)
+├── uis/                      # Apps de UI (sitio público, backoffice)
+├── services/                 # Servicios backend (API, workers)
 ├── packages/
 │   └── shared-types/         # Tipos TypeScript/JSON compartidos entre apps
 ├── pipelines/
@@ -47,7 +48,7 @@ ai-engineering-project-template/
 2. **Clona** tu fork (o ábrelo en GitHub Codespaces).
 3. **Añade tu CONTEXT**: copia el `CONTEXT-<empresa>.md` de tu empresa asignada en la raíz como `CONTEXT.md`.
 4. **Lee** `AGENTS.md` para saber qué skills tienes disponibles al trabajar con IA.
-5. **Construye** los entregables de cada hito dentro de `apps/`, reutilizando `packages/shared-types` y `pipelines/data` cuando convenga.
+5. **Construye** los entregables de cada hito dentro de `uis/` y `services/`, reutilizando `packages/shared-types` y `pipelines/data` cuando convenga.
 
 ---
 

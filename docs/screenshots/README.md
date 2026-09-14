@@ -1,9 +1,11 @@
-# Incident analysis screenshots
+# Supplier directory screenshots
 
-Evidence for the incident CSV analysis deliverable.
+Evidence for Milestone 09 — Lightweight Storage API (Supplier Directory).
 
 | File | Description |
 |------|-------------|
-| `script-console-output.png` | CLI output of `python3 scripts/analyze.py scripts/incidents-brasaland.csv` (100-row sample) |
-| `backoffice-incident-analysis.png` | Backoffice Incident Analysis panel with loaded metrics and breakdowns |
-| `cli-output.txt` | Raw text capture used to produce the console screenshot |
+| `uv-run-seed.png` | Terminal output of `uv run seed` inserting 15 supplier records |
+| `swagger-suppliers-filter-usa.png` | Swagger UI `GET /suppliers?country=USA` response |
+| `supplier-list-filtered-usa.png` | Supplier Directory UI with Country filter set to USA |
+| `uv-run-seed.txt` | Raw text capture of the seed command |
+| `suppliers-filter-usa.json` | Raw JSON response for the USA country filter |

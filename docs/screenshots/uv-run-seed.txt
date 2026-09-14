@@ -1,0 +1,2 @@
+tdestryk@MacBook-Pro api % uv run seed
+Inserted 15 supplier records.

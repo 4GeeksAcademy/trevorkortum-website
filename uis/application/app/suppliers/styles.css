@@ -20,7 +20,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+body.suppliers-app {
   min-height: 100vh;
   margin: 0;
   display: grid;
@@ -28,6 +28,7 @@ body {
   color: var(--ink);
   background: var(--canvas);
 }
+
 
 a {
   color: inherit;

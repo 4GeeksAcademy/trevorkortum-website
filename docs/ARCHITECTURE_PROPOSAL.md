@@ -21,7 +21,10 @@
 - Proposed structure:
 
 ```text
-apps/
+uis/
+  website/
+  backoffice/
+services/
   api/
     app/
       main.py
@@ -84,10 +87,6 @@ apps/
       test_sales.py
       test_suppliers.py
       test_reports.py
-  website/
-    ...
-  backoffice/
-    ...
 ```
 
 - Folder responsibilities:
@@ -144,9 +143,9 @@ apps/
 
 - Brasaland will have separate frontend applications and a dedicated backend API.
 - Recommended split:
-  - `apps/website`: public-facing customer experience and brand site.
-  - `apps/backoffice`: internal operations, procurement, HR, training, and executive views.
-  - `apps/api`: central FastAPI backend serving both internal and digital customer features.
+  - `uis/website`: public-facing customer experience and brand site.
+  - `uis/backoffice`: internal operations, procurement, HR, training, and executive views.
+  - `services/api`: central FastAPI backend serving both internal and digital customer features.
 - Interaction model:
   - Frontends call the API through environment-based base URLs, for example:
     - `API_BASE_URL=http://localhost:8000/api/v1`

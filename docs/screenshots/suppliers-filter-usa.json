@@ -1,0 +1,87 @@
+[
+    {
+        "id": 9,
+        "name": "Miami Meat Distributors LLC",
+        "country": "USA",
+        "categories": [
+            "carne"
+        ],
+        "rate_per_unit": 6.8,
+        "currency": "USD",
+        "updated_at": "2026-09-14T20:23:07.642117Z",
+        "status": "active",
+        "contact_email": "orders@miamimeat.com",
+        "notes": "Primary meat supplier for Florida locations."
+    },
+    {
+        "id": 10,
+        "name": "Sunshine Produce FL",
+        "country": "USA",
+        "categories": [
+            "verduras_y_hortalizas"
+        ],
+        "rate_per_unit": 2.15,
+        "currency": "USD",
+        "updated_at": "2026-09-14T20:23:07.642117Z",
+        "status": "active",
+        "contact_email": "sales@sunshineproduce.com",
+        "notes": null
+    },
+    {
+        "id": 11,
+        "name": "Latin Flavors Inc.",
+        "country": "USA",
+        "categories": [
+            "salsas_y_condimentos",
+            "bebidas"
+        ],
+        "rate_per_unit": 4.5,
+        "currency": "USD",
+        "updated_at": "2026-09-14T20:23:07.642117Z",
+        "status": "active",
+        "contact_email": "orders@latinflavors.com",
+        "notes": "Imports Colombian sauces for the Florida market."
+    },
+    {
+        "id": 12,
+        "name": "PackRight USA",
+        "country": "USA",
+        "categories": [
+            "packaging"
+        ],
+        "rate_per_unit": 0.35,
+        "currency": "USD",
+        "updated_at": "2026-09-14T20:23:07.642117Z",
+        "status": "active",
+        "contact_email": "info@packright.us",
+        "notes": null
+    },
+    {
+        "id": 13,
+        "name": "CleanPro Florida",
+        "country": "USA",
+        "categories": [
+            "productos_limpieza"
+        ],
+        "rate_per_unit": 12.9,
+        "currency": "USD",
+        "updated_at": "2026-09-14T20:23:07.642117Z",
+        "status": "active",
+        "contact_email": "orders@cleanproflorida.com",
+        "notes": null
+    },
+    {
+        "id": 14,
+        "name": "GrillFuel Supply Co.",
+        "country": "USA",
+        "categories": [
+            "carbon_y_combustible"
+        ],
+        "rate_per_unit": 38.5,
+        "currency": "USD",
+        "updated_at": "2026-09-14T20:23:07.642117Z",
+        "status": "active",
+        "contact_email": "supply@grillfuel.com",
+        "notes": "Charcoal supplier for Florida. Price subject to quarterly review."
+    }
+]
