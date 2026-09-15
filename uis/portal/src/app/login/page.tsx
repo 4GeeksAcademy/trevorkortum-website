@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { api, setToken } from "@/lib/api";
+import { api, setToken, toUserMessage } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,17 +16,24 @@ export default function LoginPage() {
     setLoading(true);
     const form = new FormData(e.currentTarget);
     try {
-      const data = await api<{ access_token: string }>("/auth/login", {
+      const data = await api<{ access_token?: string }>("/auth/login", {
         method: "POST",
         body: JSON.stringify({
           email: form.get("email"),
           password: form.get("password"),
         }),
       });
-      setToken(data.access_token);
+      const token = data?.access_token;
+      if (!token) {
+        setError("Sign-in failed. Please try again.");
+        return;
+      }
+      setToken(token);
       router.replace("/");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      setError(
+        toUserMessage(err, "Sign-in failed. Check your email and password, then try again.")
+      );
     } finally {
       setLoading(false);
     }
@@ -45,7 +52,14 @@ export default function LoginPage() {
           Password
           <input name="password" type="password" required minLength={8} />
         </label>
-        {error ? <p className="error">{error}</p> : null}
+        {error ? (
+          <p className="error">
+            {error}{" "}
+            <button type="submit" disabled={loading}>
+              Retry
+            </button>
+          </p>
+        ) : null}
         <button type="submit" disabled={loading}>
           {loading ? "Signing in…" : "Sign in"}
         </button>

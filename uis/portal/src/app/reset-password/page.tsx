@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FormEvent, Suspense, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { api } from "@/lib/api";
+import { api, toUserMessage } from "@/lib/api";
 
 function ResetForm() {
   const router = useRouter();
@@ -34,7 +34,12 @@ function ResetForm() {
       });
       router.replace("/login");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Reset failed");
+      setError(
+        toUserMessage(
+          err,
+          "Could not reset your password. Request a new reset link and try again."
+        )
+      );
     } finally {
       setLoading(false);
     }
@@ -52,7 +57,16 @@ function ResetForm() {
           Confirm password
           <input name="confirm" type="password" required minLength={8} />
         </label>
-        {error ? <p className="error">{error}</p> : null}
+        {error ? (
+          <p className="error">
+            {error}{" "}
+            <button type="submit" disabled={loading}>
+              Retry
+            </button>
+            {" · "}
+            <Link href="/forgot-password">Request a new reset link</Link>
+          </p>
+        ) : null}
         <button type="submit" disabled={loading}>
           {loading ? "Updating…" : "Update password"}
         </button>

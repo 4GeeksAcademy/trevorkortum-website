@@ -22,6 +22,7 @@ from models import (
 from security import (
     ALGORITHM,
     SECRET_KEY,
+    EmailDeliveryError,
     create_access_token,
     create_reset_token,
     get_current_user,
@@ -56,10 +57,16 @@ def _profile_out(user_id: str) -> Optional[ProfileOut]:
 @router.post("/login", response_model=TokenResponse)
 def login(payload: LoginRequest) -> TokenResponse:
     user = get_user_by_email(str(payload.email))
-    if not user or not verify_password(payload.password, user["hashed_password"]):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    hashed = (user or {}).get("hashed_password", "")
+    if not user or not verify_password(payload.password, hashed):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
+        )
     if not user.get("is_active", True):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User inactive")
+        # Same wording as bad credentials to avoid account-status enumeration.
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
+        )
     token = create_access_token(user["id"], {"role": user.get("role", "user")})
     return TokenResponse(access_token=token)
 
@@ -77,7 +84,11 @@ def forgot_password(payload: ForgotPasswordRequest) -> dict:
     user = get_user_by_email(str(payload.email))
     if user and user.get("is_active", True):
         token = create_reset_token(user["id"])
-        send_reset_email(user["email"], token)
+        try:
+            send_reset_email(user["email"], token)
+        except EmailDeliveryError:
+            # Keep anti-enumeration response; ops learn from server logs.
+            pass
     return {"detail": "If that email exists, a reset link has been sent."}
 
 
@@ -98,14 +109,20 @@ def reset_password(payload: ResetPasswordRequest) -> dict:
         raise HTTPException(status_code=400, detail="Reset token already used or expired")
 
     User = Query()
-    rows = users_table.search(User.id == user_id)
+    try:
+        rows = users_table.search(User.id == user_id)
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail="Database temporarily unavailable") from exc
     if not rows:
         raise HTTPException(status_code=400, detail="Invalid or expired reset token")
 
-    users_table.update(
-        {"hashed_password": hash_password(payload.new_password)},
-        doc_ids=[rows[0].doc_id],
-    )
+    try:
+        users_table.update(
+            {"hashed_password": hash_password(payload.new_password)},
+            doc_ids=[rows[0].doc_id],
+        )
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail="Database temporarily unavailable") from exc
     mark_reset_token_used(jti)
     return {"detail": "Password updated."}
 
@@ -115,12 +132,21 @@ def change_password(
     payload: ChangePasswordRequest,
     current_user: dict = Depends(get_current_user),
 ) -> dict:
-    if not verify_password(payload.current_password, current_user["hashed_password"]):
+    hashed = current_user.get("hashed_password", "")
+    if not verify_password(payload.current_password, hashed):
         raise HTTPException(status_code=400, detail="Current password is incorrect")
     User = Query()
-    rows = users_table.search(User.id == current_user["id"])
-    users_table.update(
-        {"hashed_password": hash_password(payload.new_password)},
-        doc_ids=[rows[0].doc_id],
-    )
+    try:
+        rows = users_table.search(User.id == current_user["id"])
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail="Database temporarily unavailable") from exc
+    if not rows:
+        raise HTTPException(status_code=404, detail="User not found")
+    try:
+        users_table.update(
+            {"hashed_password": hash_password(payload.new_password)},
+            doc_ids=[rows[0].doc_id],
+        )
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail="Database temporarily unavailable") from exc
     return {"detail": "Password changed."}

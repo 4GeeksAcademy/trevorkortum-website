@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
+from pydantic import ValidationError
 
 from database import suppliers_table
 from models import RateUpdate, StatusUpdate, Supplier, SupplierCreate
@@ -13,17 +14,29 @@ from security import get_current_user
 
 router = APIRouter(prefix="/suppliers", tags=["suppliers"])
 
+def _db_unavailable(exc: OSError) -> HTTPException:
+    return HTTPException(status_code=503, detail="Database temporarily unavailable")
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
 def _doc_to_supplier(doc_id: int, doc: dict) -> Supplier:
-    return Supplier(id=doc_id, **doc)
+    try:
+        return Supplier(id=doc_id, **doc)
+    except ValidationError as exc:
+        raise HTTPException(
+            status_code=500,
+            detail="Supplier record is invalid. Contact support.",
+        ) from exc
 
 
 def _get_or_404(supplier_id: int) -> tuple[int, dict]:
-    row = suppliers_table.get(doc_id=supplier_id)
+    try:
+        row = suppliers_table.get(doc_id=supplier_id)
+    except OSError as exc:
+        raise _db_unavailable(exc) from exc
     if row is None:
         raise HTTPException(status_code=404, detail=f"Supplier {supplier_id} not found")
     return supplier_id, dict(row)
@@ -37,7 +50,10 @@ def create_supplier(
 ) -> Supplier:
     data = payload.model_dump(mode="json")
     data["updated_at"] = _now()
-    doc_id = suppliers_table.insert(data)
+    try:
+        doc_id = suppliers_table.insert(data)
+    except OSError as exc:
+        raise _db_unavailable(exc) from exc
     return _doc_to_supplier(doc_id, data)
 
 
@@ -49,13 +65,21 @@ def list_suppliers(
     _user: dict = Depends(get_current_user),
 ) -> List[Supplier]:
     results: List[Supplier] = []
-    for row in suppliers_table.all():
+    try:
+        rows = suppliers_table.all()
+    except OSError as exc:
+        raise _db_unavailable(exc) from exc
+
+    for row in rows:
         doc = dict(row)
         if country and doc.get("country") != country:
             continue
         if category and category not in (doc.get("categories") or []):
             continue
-        results.append(_doc_to_supplier(row.doc_id, doc))
+        try:
+            results.append(_doc_to_supplier(row.doc_id, doc))
+        except HTTPException:
+            continue
     return results
 
 
@@ -77,7 +101,10 @@ def update_rate(
     doc_id, doc = _get_or_404(supplier_id)
     doc["rate_per_unit"] = payload.rate_per_unit
     doc["updated_at"] = _now()
-    suppliers_table.update(doc, doc_ids=[doc_id])
+    try:
+        suppliers_table.update(doc, doc_ids=[doc_id])
+    except OSError as exc:
+        raise _db_unavailable(exc) from exc
     return _doc_to_supplier(doc_id, doc)
 
 
@@ -90,7 +117,10 @@ def update_status(
     doc_id, doc = _get_or_404(supplier_id)
     doc["status"] = payload.status.value
     doc["updated_at"] = _now()
-    suppliers_table.update(doc, doc_ids=[doc_id])
+    try:
+        suppliers_table.update(doc, doc_ids=[doc_id])
+    except OSError as exc:
+        raise _db_unavailable(exc) from exc
     return _doc_to_supplier(doc_id, doc)
 
 
@@ -100,5 +130,8 @@ def delete_supplier(
     _user: dict = Depends(get_current_user),
 ) -> Response:
     _get_or_404(supplier_id)
-    suppliers_table.remove(doc_ids=[supplier_id])
+    try:
+        suppliers_table.remove(doc_ids=[supplier_id])
+    except OSError as exc:
+        raise _db_unavailable(exc) from exc
     return Response(status_code=204)

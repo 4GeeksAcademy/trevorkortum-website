@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { api } from "@/lib/api";
+import { api, toUserMessage } from "@/lib/api";
 
 export default function ChangePasswordPage() {
   const [error, setError] = useState("");
@@ -13,7 +13,8 @@ export default function ChangePasswordPage() {
     e.preventDefault();
     setError("");
     setMessage("");
-    const form = new FormData(e.currentTarget);
+    const formEl = e.currentTarget;
+    const form = new FormData(formEl);
     const currentPassword = String(form.get("current_password") || "");
     const newPassword = String(form.get("new_password") || "");
     const confirm = String(form.get("confirm") || "");
@@ -23,7 +24,7 @@ export default function ChangePasswordPage() {
     }
     setLoading(true);
     try {
-      const data = await api<{ detail: string }>(
+      const data = await api<{ detail?: string }>(
         "/auth/change-password",
         {
           method: "POST",
@@ -34,10 +35,10 @@ export default function ChangePasswordPage() {
         },
         true
       );
-      setMessage(data.detail || "Password changed.");
-      e.currentTarget.reset();
+      setMessage(data?.detail || "Password changed.");
+      formEl?.reset();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Change failed");
+      setError(toUserMessage(err, "Could not change your password. Please try again."));
     } finally {
       setLoading(false);
     }
@@ -63,7 +64,14 @@ export default function ChangePasswordPage() {
           Confirm new password
           <input name="confirm" type="password" required minLength={8} />
         </label>
-        {error ? <p className="error">{error}</p> : null}
+        {error ? (
+          <p className="error">
+            {error}{" "}
+            <button type="submit" disabled={loading}>
+              Retry
+            </button>
+          </p>
+        ) : null}
         {message ? <p className="success">{message}</p> : null}
         <button type="submit" disabled={loading}>
           {loading ? "Updating…" : "Update password"}

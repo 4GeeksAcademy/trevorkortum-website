@@ -3,16 +3,18 @@
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { api, setToken } from "@/lib/api";
+import { api, setToken, toUserMessage } from "@/lib/api";
 
 export default function RegisterPage() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [createdNeedsLogin, setCreatedNeedsLogin] = useState(false);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
+    setCreatedNeedsLogin(false);
     setLoading(true);
     const form = new FormData(e.currentTarget);
     const email = String(form.get("email") || "");
@@ -27,17 +29,29 @@ export default function RegisterPage() {
         body: JSON.stringify({
           email,
           password,
-          profile: name || phone || address ? { name: name || null, phone: phone || null, address: address || null } : null,
+          profile:
+            name || phone || address
+              ? { name: name || null, phone: phone || null, address: address || null }
+              : null,
         }),
       });
-      const data = await api<{ access_token: string }>("/auth/login", {
+
+      const data = await api<{ access_token?: string }>("/auth/login", {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });
-      setToken(data.access_token);
+      const token = data?.access_token;
+      if (!token) {
+        setCreatedNeedsLogin(true);
+        setError(
+          "Account created, but sign-in failed. Please go to login and sign in with your new credentials."
+        );
+        return;
+      }
+      setToken(token);
       router.replace("/");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Registration failed");
+      setError(toUserMessage(err, "Could not create your account. Please try again."));
     } finally {
       setLoading(false);
     }
@@ -67,7 +81,18 @@ export default function RegisterPage() {
           Address (optional)
           <input name="address" />
         </label>
-        {error ? <p className="error">{error}</p> : null}
+        {error ? (
+          <p className="error">
+            {error}{" "}
+            {createdNeedsLogin ? (
+              <Link href="/login">Sign in now</Link>
+            ) : (
+              <button type="submit" disabled={loading}>
+                Retry
+              </button>
+            )}
+          </p>
+        ) : null}
         <button type="submit" disabled={loading}>
           {loading ? "Creating…" : "Create account"}
         </button>

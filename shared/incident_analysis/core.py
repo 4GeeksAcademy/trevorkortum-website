@@ -32,6 +32,7 @@ RULE_LABELS = OrderedDict(
         ("invalid_category", "Invalid or missing category"),
         ("empty_description", "Empty description"),
         ("missing_reporter", "Missing reporter_id"),
+        ("invalid_status", "Invalid or missing status"),
         ("closed_no_score", "Closed case, no score"),
         ("score_out_of_range", "Score out of range"),
     ]
@@ -70,6 +71,9 @@ def validate_record(row: dict[str, Any]) -> tuple[bool, list[str]]:
 
     status = (row.get("status") or "").strip()
     score_raw = (row.get("satisfaction_score") or "").strip()
+
+    if status not in VALID_STATUSES:
+        reasons.append("invalid_status")
 
     if status == "CLOSED" and not score_raw:
         reasons.append("closed_no_score")
@@ -230,14 +234,24 @@ def export_metrics_to_csv_string(metrics: dict[str, Any]) -> str:
     return buffer.getvalue()
 
 
-def metrics_to_dict(metrics: dict[str, Any], source_file: str = "") -> dict[str, Any]:
-    """Convert internal metrics (with Counters) into JSON-safe payload."""
+def metrics_to_dict(
+    metrics: dict[str, Any],
+    source_file: str = "",
+    *,
+    include_records: bool = True,
+    redact_pii: bool = True,
+) -> dict[str, Any]:
+    """Convert internal metrics (with Counters) into JSON-safe payload.
+
+    When ``redact_pii`` is True (default), omit reporter_id and truncate
+    descriptions in the records payload.
+    """
     rule_counts = {
         RULE_LABELS[key]: metrics["rule_counts"].get(key, 0)
         for key in RULE_LABELS
         if metrics["rule_counts"].get(key, 0)
     }
-    return {
+    payload: dict[str, Any] = {
         "source_file": source_file,
         "total": metrics["total"],
         "valid_count": metrics["valid_count"],
@@ -249,12 +263,25 @@ def metrics_to_dict(metrics: dict[str, Any], source_file: str = "") -> dict[str,
         "scored_cases": metrics["scored_cases"],
         "score_counts": {str(k): v for k, v in sorted(metrics["score_counts"].items())},
         "avg_score": round(float(metrics["avg_score"]), 2),
-        "records": [
+    }
+    if not include_records:
+        payload["records"] = []
+        return payload
+
+    records = []
+    for record in metrics.get("records", []):
+        row = {k: v for k, v in record.items() if not k.startswith("_")}
+        if redact_pii:
+            row.pop("reporter_id", None)
+            description = str(row.get("description") or "")
+            if len(description) > 120:
+                row["description"] = description[:117] + "..."
+        records.append(
             {
-                **{k: v for k, v in record.items() if not k.startswith("_")},
+                **row,
                 "is_valid": record["_validation"]["is_valid"],
                 "errors": record["_validation"]["errors"],
             }
-            for record in metrics.get("records", [])
-        ],
-    }
+        )
+    payload["records"] = records
+    return payload

@@ -53,7 +53,10 @@ def _assert_owner_or_admin(current: dict, user_id: str) -> None:
 @router.post("/", response_model=MeResponse, status_code=201, include_in_schema=False)
 def create_user(payload: UserCreate) -> MeResponse:
     if get_user_by_email(str(payload.email)):
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(
+            status_code=400,
+            detail="Unable to create account with the provided details",
+        )
 
     user_id = str(uuid4())
     user_doc = {
@@ -64,17 +67,19 @@ def create_user(payload: UserCreate) -> MeResponse:
         "role": UserRole.user.value,
         "created_at": _now(),
     }
-    users_table.insert(user_doc)
-
-    profile_data = payload.profile
-    profiles_table.insert(
-        {
-            "user_id": user_id,
-            "name": profile_data.name if profile_data else None,
-            "phone": profile_data.phone if profile_data else None,
-            "address": profile_data.address if profile_data else None,
-        }
-    )
+    try:
+        users_table.insert(user_doc)
+        profile_data = payload.profile
+        profiles_table.insert(
+            {
+                "user_id": user_id,
+                "name": profile_data.name if profile_data else None,
+                "phone": profile_data.phone if profile_data else None,
+                "address": profile_data.address if profile_data else None,
+            }
+        )
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail="Database temporarily unavailable") from exc
 
     return MeResponse(user=UserOut(**public_user(user_doc)), profile=_profile_out(user_id))
 
@@ -84,7 +89,11 @@ def create_user(payload: UserCreate) -> MeResponse:
 def list_users(current_user: dict = Depends(get_current_user)) -> List[UserOut]:
     if current_user.get("role") != "admin":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin only")
-    return [UserOut(**public_user(dict(row))) for row in users_table.all()]
+    try:
+        rows = users_table.all()
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail="Database temporarily unavailable") from exc
+    return [UserOut(**public_user(dict(row))) for row in rows]
 
 
 @router.get("/{user_id}", response_model=UserOut)
@@ -118,9 +127,17 @@ def update_user(
         updates["email"] = str(updates["email"]).lower()
 
     User = Query()
-    rows = users_table.search(User.id == user_id)
-    users_table.update(updates, doc_ids=[rows[0].doc_id])
-    return UserOut(**public_user(get_user_by_id(user_id)))
+    try:
+        rows = users_table.search(User.id == user_id)
+        if not rows:
+            raise HTTPException(status_code=404, detail="User not found")
+        users_table.update(updates, doc_ids=[rows[0].doc_id])
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail="Database temporarily unavailable") from exc
+    updated = get_user_by_id(user_id)
+    if not updated:
+        raise HTTPException(status_code=404, detail="User not found")
+    return UserOut(**public_user(updated))
 
 
 @router.delete("/{user_id}", status_code=204)
@@ -130,9 +147,12 @@ def delete_user(user_id: str, current_user: dict = Depends(get_current_user)) ->
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     User = Query()
-    rows = users_table.search(User.id == user_id)
-    users_table.remove(doc_ids=[rows[0].doc_id])
-    Profile = Query()
-    for row in profiles_table.search(Profile.user_id == user_id):
-        profiles_table.remove(doc_ids=[row.doc_id])
+    try:
+        rows = users_table.search(User.id == user_id)
+        users_table.remove(doc_ids=[rows[0].doc_id])
+        Profile = Query()
+        for row in profiles_table.search(Profile.user_id == user_id):
+            profiles_table.remove(doc_ids=[row.doc_id])
+    except OSError as exc:
+        raise HTTPException(status_code=503, detail="Database temporarily unavailable") from exc
     return Response(status_code=204)

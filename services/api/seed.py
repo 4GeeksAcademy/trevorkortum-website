@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 from datetime import datetime, timezone
 
 from tinydb import Query
@@ -159,18 +160,37 @@ SUPPLIERS_SEED = [
 
 
 def main() -> None:
+    from pydantic import ValidationError
+
     Supplier = Query()
     inserted = 0
     now = datetime.now(timezone.utc).isoformat()
 
     for raw in SUPPLIERS_SEED:
-        existing = suppliers_table.search(Supplier.name == raw["name"])
+        try:
+            existing = suppliers_table.search(Supplier.name == raw["name"])
+        except OSError as exc:
+            print(f"Seed failed: unable to read database ({type(exc).__name__})", file=sys.stderr)
+            sys.exit(1)
         if existing:
             continue
-        payload = SupplierCreate(**raw)
+
+        try:
+            payload = SupplierCreate(**raw)
+        except ValidationError as exc:
+            print(
+                f"Seed failed: invalid supplier data for {raw.get('name', '?')} ({type(exc).__name__})",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
         data = payload.model_dump(mode="json")
         data["updated_at"] = now
-        suppliers_table.insert(data)
+        try:
+            suppliers_table.insert(data)
+        except OSError as exc:
+            print(f"Seed failed: unable to write database ({type(exc).__name__})", file=sys.stderr)
+            sys.exit(1)
         inserted += 1
 
     print(f"Inserted {inserted} supplier records.")

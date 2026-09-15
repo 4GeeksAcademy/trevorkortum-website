@@ -166,30 +166,30 @@ function computeMetricsLocal(data) {
 
 function summaryFromApiPayload(payload) {
   const scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-  Object.entries(payload.score_counts || {}).forEach(([score, count]) => {
-    scores[Number(score)] = count;
+  Object.entries(payload?.score_counts || {}).forEach(([score, count]) => {
+    scores[Number(score)] = Number(count) || 0;
   });
 
   return {
-    total: payload.total,
-    validCount: payload.valid_count,
-    invalidCount: payload.invalid_count,
-    categories: payload.category_counts || {},
-    statuses: payload.status_counts || {},
-    invalidRules: payload.rule_counts || {},
+    total: Number(payload?.total) || 0,
+    validCount: Number(payload?.valid_count) || 0,
+    invalidCount: Number(payload?.invalid_count) || 0,
+    categories: payload?.category_counts || {},
+    statuses: payload?.status_counts || {},
+    invalidRules: payload?.rule_counts || {},
     scores,
-    closedValid: payload.closed_valid,
-    scoredCount: payload.scored_cases,
-    avgSatisfaction: Number(payload.avg_score).toFixed(2),
+    closedValid: Number(payload?.closed_valid) || 0,
+    scoredCount: Number(payload?.scored_cases) || 0,
+    avgSatisfaction: Number(payload?.avg_score || 0).toFixed(2),
   };
 }
 
 function recordsFromApiPayload(payload) {
-  return (payload.records || []).map((row) => ({
-    ...row,
+  return (payload?.records || []).map((row) => ({
+    ...(row || {}),
     _validation: {
-      isValid: Boolean(row.is_valid),
-      errors: row.errors || [],
+      isValid: Boolean(row?.is_valid),
+      errors: row?.errors || [],
     },
   }));
 }
@@ -259,8 +259,8 @@ function renderTable() {
   if (!tbody) return;
 
   const filtered = currentIncidents.filter((item) => {
-    if (activeFilter === "valid") return item._validation.isValid;
-    if (activeFilter === "invalid") return !item._validation.isValid;
+    if (activeFilter === "valid") return item._validation?.isValid;
+    if (activeFilter === "invalid") return !item._validation?.isValid;
     return true;
   });
 
@@ -276,7 +276,7 @@ function renderTable() {
       <td><span class="tag ${row.status === "CLOSED" ? "good" : row.status === "OPEN" ? "warn" : "danger"}">${row.status || "—"}</span></td>
       <td>${row.satisfaction_score ? `${row.satisfaction_score} / 5` : "—"}</td>
       <td>${row.reporter_id || "—"}</td>
-      <td><span class="tag ${row._validation.isValid ? "good" : "danger"}">${row._validation.isValid ? "Valid" : row._validation.errors[0]}</span></td>
+      <td><span class="tag ${row._validation?.isValid ? "good" : "danger"}">${row._validation?.isValid ? "Valid" : row._validation?.errors?.[0] || "Invalid"}</span></td>
     </tr>
   `
     )
@@ -327,8 +327,8 @@ async function analyzeViaApi(file) {
   }
 
   if (!response.ok) {
-    const detail = payload && payload.detail ? payload.detail : `HTTP ${response.status}`;
-    throw new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
+    const detail = payload && payload.detail ? payload.detail : null;
+    throw new Error(formatApiDetail(detail));
   }
 
   usedApiForLatest = true;
@@ -378,6 +378,10 @@ async function loadIncidentFile(file) {
     button.classList.toggle("active", button.dataset.filter === "all");
   });
 
+  const sampleBtn = document.getElementById("btn-load-sample");
+  const exportBtn = document.getElementById("btn-export-incident-csv");
+  if (sampleBtn) sampleBtn.disabled = true;
+  if (exportBtn) exportBtn.disabled = true;
   setUploadFeedback(`Analyzing ${file.name}…`);
 
   try {
@@ -386,12 +390,18 @@ async function loadIncidentFile(file) {
     try {
       await analyzeFileLocally(file);
       setUploadFeedback(
-        `${file.name} loaded locally. API note: ${apiError.message}`,
+        `${file.name} loaded locally. API unavailable — using local analysis.`,
         false
       );
     } catch (localError) {
-      setUploadFeedback(localError.message, true);
+      setUploadFeedback(
+        safeUserError(localError, "Could not analyze this CSV. Check the file and try again."),
+        true
+      );
     }
+  } finally {
+    if (sampleBtn) sampleBtn.disabled = false;
+    if (exportBtn) exportBtn.disabled = false;
   }
 }
 
@@ -453,31 +463,43 @@ async function exportResultsCsv() {
     return;
   }
 
-  if (usedApiForLatest) {
-    try {
-      const response = await fetch(`${API_BASE}/api/incidents/results/export`);
-      if (!response.ok) {
-        const payload = await response.json().catch(() => ({}));
-        throw new Error(payload.detail || `HTTP ${response.status}`);
-      }
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "results.csv";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-      setUploadFeedback("Results CSV downloaded from API.");
-      return;
-    } catch (error) {
-      setUploadFeedback(`API export failed (${error.message}). Falling back to local CSV.`, false);
-    }
-  }
+  const exportBtn = document.getElementById("btn-export-incident-csv");
+  if (exportBtn) exportBtn.disabled = true;
+  setUploadFeedback("Exporting results…");
 
-  downloadTextFile("results.csv", `${buildResultsCsv(latestSummary)}\n`, "text/csv;charset=utf-8");
-  setUploadFeedback("Results CSV downloaded.");
+  try {
+    if (usedApiForLatest) {
+      try {
+        const response = await fetch(`${API_BASE}/api/incidents/results/export`);
+        if (!response.ok) {
+          throw new Error("API export unavailable");
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "results.csv";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        setUploadFeedback("Results CSV downloaded from API.");
+        return;
+      } catch (error) {
+        downloadTextFile("results.csv", `${buildResultsCsv(latestSummary)}\n`, "text/csv;charset=utf-8");
+        setUploadFeedback(
+          "API export unavailable. Downloaded a local CSV copy instead.",
+          false
+        );
+        return;
+      }
+    }
+
+    downloadTextFile("results.csv", `${buildResultsCsv(latestSummary)}\n`, "text/csv;charset=utf-8");
+    setUploadFeedback("Results CSV downloaded.");
+  } finally {
+    if (exportBtn) exportBtn.disabled = false;
+  }
 }
 
 if (fileInput) {
@@ -624,6 +646,9 @@ async function loadSampleDataset() {
   // Always paint results immediately so the panel never looks empty.
   applyLocalAnalysis(sampleRows, "incidents-brasaland.csv", "Loading sample analysis…");
 
+  const sampleBtn = document.getElementById("btn-load-sample");
+  if (sampleBtn) sampleBtn.disabled = true;
+
   try {
     const response = await fetch(`${API_BASE}/api/incidents/analyze-sample`, {
       method: "POST",
@@ -635,20 +660,22 @@ async function loadSampleDataset() {
       payload = null;
     }
     if (!response.ok) {
-      const detail = payload && payload.detail ? payload.detail : `HTTP ${response.status}`;
-      throw new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
+      const detail = payload && payload.detail ? payload.detail : null;
+      throw new Error(formatApiDetail(detail));
     }
 
     usedApiForLatest = true;
     const summary = summaryFromApiPayload(payload);
     const records = recordsFromApiPayload(payload);
-    renderDashboardFromSummary(summary, records, payload.source_file || "incidents-brasaland.csv");
+    renderDashboardFromSummary(summary, records, payload?.source_file || "incidents-brasaland.csv");
     setUploadFeedback("Sample dataset loaded from API (incidents-brasaland.csv).");
   } catch (error) {
     usedApiForLatest = false;
     setUploadFeedback(
-      `Sample dataset loaded locally. Start the API (npm run dev:api) for live analyze/export. (${error.message})`
+      "Sample dataset loaded locally. Start the API (npm run dev:api) for live analyze/export."
     );
+  } finally {
+    if (sampleBtn) sampleBtn.disabled = false;
   }
 }
 
@@ -661,12 +688,14 @@ if (document.getElementById("incidents-table-body")) loadSampleDataset();
 let allSuppliers = [];
 
 function formatSupplierRate(supplier) {
-  const locale = supplier.country === "Colombia" ? "es-CO" : "en-US";
-  const amount = Number(supplier.rate_per_unit).toLocaleString(locale, {
-    minimumFractionDigits: supplier.currency === "COP" ? 0 : 2,
+  const country = supplier?.country || "USA";
+  const currency = supplier?.currency || (country === "Colombia" ? "COP" : "USD");
+  const locale = country === "Colombia" ? "es-CO" : "en-US";
+  const amount = Number(supplier?.rate_per_unit || 0).toLocaleString(locale, {
+    minimumFractionDigits: currency === "COP" ? 0 : 2,
     maximumFractionDigits: 2,
   });
-  return `${supplier.currency} ${amount}`;
+  return `${currency} ${amount}`;
 }
 
 function setSupplierFeedback(id, message, isError = false) {
@@ -677,17 +706,37 @@ function setSupplierFeedback(id, message, isError = false) {
 }
 
 function formatApiDetail(detail) {
-  if (!detail) return "Request failed.";
-  if (typeof detail === "string") return detail;
-  if (Array.isArray(detail)) {
-    return detail
-      .map((item) => {
-        const loc = Array.isArray(item.loc) ? item.loc.slice(1).join(".") : "";
-        return loc ? `${loc}: ${item.msg}` : item.msg;
-      })
-      .join("; ");
+  if (!detail) return "Request failed. Please try again.";
+  if (typeof detail === "string") {
+    if (detail.length > 160) return "Request failed. Please try again.";
+    return detail;
   }
-  return JSON.stringify(detail);
+  if (Array.isArray(detail)) {
+    const parts = detail
+      .map((item) => {
+        const loc = Array.isArray(item?.loc) ? item.loc.slice(1).join(".") : "";
+        return loc ? `${loc}: ${item?.msg || "Invalid"}` : item?.msg;
+      })
+      .filter(Boolean);
+    return parts.length ? parts.join("; ") : "Request failed. Please try again.";
+  }
+  return "Request failed. Please try again.";
+}
+
+function safeUserError(error, fallback) {
+  if (error instanceof TypeError) {
+    return "Unable to reach the API. Check your connection and try again.";
+  }
+  const message = error && error.message ? String(error.message) : "";
+  if (!message) return fallback;
+  if (/failed to fetch|networkerror|load failed/i.test(message)) {
+    return "Unable to reach the API. Check your connection and try again.";
+  }
+  if (message.startsWith("HTTP ") || message.includes("{")) {
+    return fallback;
+  }
+  if (message.length > 160) return fallback;
+  return message;
 }
 
 function filteredSuppliers() {
@@ -750,6 +799,8 @@ function renderSuppliersTable() {
 
 async function loadSuppliers() {
   setSupplierFeedback("supplier-list-feedback", "Loading suppliers…");
+  const refreshBtn = document.getElementById("btn-refresh-suppliers");
+  if (refreshBtn) refreshBtn.disabled = true;
   try {
     const response = await fetch(`${API_BASE}/suppliers`);
     const payload = await response.json().catch(() => null);
@@ -764,9 +815,21 @@ async function loadSuppliers() {
     renderSuppliersTable();
     setSupplierFeedback(
       "supplier-list-feedback",
-      `Could not load suppliers. Start the API (npm run dev:api) then refresh. (${error.message})`,
+      "Could not load suppliers. Start the API (npm run dev:api) then use Refresh.",
       true
     );
+    const feedback = document.getElementById("supplier-list-feedback");
+    if (feedback && !feedback.querySelector("[data-retry-supplier]")) {
+      const retry = document.createElement("button");
+      retry.type = "button";
+      retry.dataset.retrySupplier = "1";
+      retry.textContent = "Retry";
+      retry.addEventListener("click", () => loadSuppliers());
+      feedback.appendChild(document.createTextNode(" "));
+      feedback.appendChild(retry);
+    }
+  } finally {
+    if (refreshBtn) refreshBtn.disabled = false;
   }
 }
 
@@ -791,7 +854,10 @@ async function updateSupplierRate(supplierId, rateValue) {
   if (index >= 0) allSuppliers[index] = payload;
   else allSuppliers.push(payload);
   renderSuppliersTable();
-  setSupplierFeedback("supplier-list-feedback", `Updated rate for ${payload.name}.`);
+  setSupplierFeedback(
+    "supplier-list-feedback",
+    `Updated rate for ${payload?.name || "supplier"}.`
+  );
 }
 
 async function updateSupplierStatus(supplierId, status) {
@@ -809,7 +875,10 @@ async function updateSupplierStatus(supplierId, status) {
   if (index >= 0) allSuppliers[index] = payload;
   else allSuppliers.push(payload);
   renderSuppliersTable();
-  setSupplierFeedback("supplier-list-feedback", `${payload.name} is now ${payload.status}.`);
+  setSupplierFeedback(
+    "supplier-list-feedback",
+    `${payload?.name || "Supplier"} is now ${payload?.status || status}.`
+  );
 }
 
 document.getElementById("suppliers-table-body")?.addEventListener("click", async (event) => {
@@ -819,6 +888,7 @@ document.getElementById("suppliers-table-body")?.addEventListener("click", async
   if (!row) return;
   const supplierId = Number(row.dataset.supplierId);
 
+  button.disabled = true;
   try {
     if (button.dataset.action === "update-rate") {
       const input = row.querySelector("input[type='number']");
@@ -828,7 +898,23 @@ document.getElementById("suppliers-table-body")?.addEventListener("click", async
       await updateSupplierStatus(supplierId, button.dataset.nextStatus);
     }
   } catch (error) {
-    setSupplierFeedback("supplier-list-feedback", error.message, true);
+    const feedback = document.getElementById("supplier-list-feedback");
+    setSupplierFeedback(
+      "supplier-list-feedback",
+      safeUserError(error, "Could not update supplier. Please try again."),
+      true
+    );
+    if (feedback && !feedback.querySelector("[data-retry-supplier]")) {
+      const retry = document.createElement("button");
+      retry.type = "button";
+      retry.dataset.retrySupplier = "1";
+      retry.textContent = "Retry";
+      retry.addEventListener("click", () => loadSuppliers());
+      feedback.appendChild(document.createTextNode(" "));
+      feedback.appendChild(retry);
+    }
+  } finally {
+    button.disabled = false;
   }
 });
 
@@ -893,6 +979,8 @@ document.getElementById("supplier-create-form")?.addEventListener("submit", asyn
   if (notes) body.notes = notes;
 
   setSupplierFeedback("supplier-form-feedback", "Creating supplier…");
+  const submitButton = form.querySelector('button[type="submit"]');
+  if (submitButton) submitButton.disabled = true;
   try {
     const response = await fetch(`${API_BASE}/suppliers`, {
       method: "POST",
@@ -906,10 +994,27 @@ document.getElementById("supplier-create-form")?.addEventListener("submit", asyn
     allSuppliers.push(payload);
     renderSuppliersTable();
     form.reset();
-    document.getElementById("supplier-currency").value = "COP";
-    setSupplierFeedback("supplier-form-feedback", `Created ${payload.name}.`);
+    const currencyEl = document.getElementById("supplier-currency");
+    if (currencyEl) currencyEl.value = "COP";
+    setSupplierFeedback("supplier-form-feedback", `Created ${payload?.name || "supplier"}.`);
   } catch (error) {
-    setSupplierFeedback("supplier-form-feedback", error.message, true);
+    const feedbackId = "supplier-form-feedback";
+    setSupplierFeedback(
+      feedbackId,
+      safeUserError(error, "Could not create supplier. Please try again."),
+      true
+    );
+    const feedback = document.getElementById(feedbackId);
+    if (feedback && !feedback.querySelector("[data-retry-create]")) {
+      const retry = document.createElement("button");
+      retry.type = "submit";
+      retry.dataset.retryCreate = "1";
+      retry.textContent = "Retry";
+      feedback.appendChild(document.createTextNode(" "));
+      feedback.appendChild(retry);
+    }
+  } finally {
+    if (submitButton) submitButton.disabled = false;
   }
 });
 

@@ -96,10 +96,14 @@ def print_summary(metrics, source_file):
 
 def export_to_csv(metrics, output_path="results.csv"):
     """Write one row per metric with metric, value, percentage columns."""
-    with open(output_path, "w", newline="", encoding="utf-8") as handle:
-        writer = csv.writer(handle)
-        writer.writerow(["metric", "value", "percentage"])
-        writer.writerows(export_metrics_to_csv_rows(metrics))
+    try:
+        with open(output_path, "w", newline="", encoding="utf-8") as handle:
+            writer = csv.writer(handle)
+            writer.writerow(["metric", "value", "percentage"])
+            writer.writerows(export_metrics_to_csv_rows(metrics))
+    except OSError as exc:
+        print(f"Error: unable to write export file ({type(exc).__name__})")
+        sys.exit(1)
     print(f"Results exported to {output_path}")
 
 
@@ -114,13 +118,31 @@ def main():
     except FileNotFoundError:
         print(f"Error: file not found -> {csv_path}")
         sys.exit(1)
+    except UnicodeDecodeError:
+        print("Error: CSV must be UTF-8 encoded")
+        sys.exit(1)
+    except OSError as exc:
+        print(f"Error: unable to read file ({type(exc).__name__})")
+        sys.exit(1)
     except ValueError as exc:
-        print(f"Error: {exc}")
+        message = str(exc)
+        if message.startswith("Missing required columns:") or message in {
+            "CSV file is missing a header row",
+            "CSV file contains no data rows",
+        }:
+            print(f"Error: {message}")
+        else:
+            print("Error: unable to analyze CSV")
         sys.exit(1)
 
     print_summary(metrics, csv_path)
 
-    answer = input("Export results to CSV? [y/n]: ").strip().lower()
+    try:
+        answer = input("Export results to CSV? [y/n]: ").strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        print("\nSkipping export.")
+        return
+
     if answer == "y":
         export_to_csv(metrics)
 

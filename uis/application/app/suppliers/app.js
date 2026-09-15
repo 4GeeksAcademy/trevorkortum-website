@@ -3,12 +3,14 @@ const API_BASE = window.BRASALAND_API_BASE || "http://127.0.0.1:8000";
 let allSuppliers = [];
 
 function formatSupplierRate(supplier) {
-  const locale = supplier.country === "Colombia" ? "es-CO" : "en-US";
-  const amount = Number(supplier.rate_per_unit).toLocaleString(locale, {
-    minimumFractionDigits: supplier.currency === "COP" ? 0 : 2,
+  const country = supplier?.country || "USA";
+  const currency = supplier?.currency || (country === "Colombia" ? "COP" : "USD");
+  const locale = country === "Colombia" ? "es-CO" : "en-US";
+  const amount = Number(supplier?.rate_per_unit || 0).toLocaleString(locale, {
+    minimumFractionDigits: currency === "COP" ? 0 : 2,
     maximumFractionDigits: 2,
   });
-  return `${supplier.currency} ${amount}`;
+  return `${currency} ${amount}`;
 }
 
 function setSupplierFeedback(id, message, isError = false) {
@@ -19,17 +21,49 @@ function setSupplierFeedback(id, message, isError = false) {
 }
 
 function formatApiDetail(detail) {
-  if (!detail) return "Request failed.";
-  if (typeof detail === "string") return detail;
-  if (Array.isArray(detail)) {
-    return detail
-      .map((item) => {
-        const loc = Array.isArray(item.loc) ? item.loc.slice(1).join(".") : "";
-        return loc ? `${loc}: ${item.msg}` : item.msg;
-      })
-      .join("; ");
+  if (!detail) return "Request failed. Please try again.";
+  if (typeof detail === "string") {
+    if (detail.length > 160) return "Request failed. Please try again.";
+    return detail;
   }
-  return JSON.stringify(detail);
+  if (Array.isArray(detail)) {
+    const parts = detail
+      .map((item) => {
+        const loc = Array.isArray(item?.loc) ? item.loc.slice(1).join(".") : "";
+        return loc ? `${loc}: ${item?.msg || "Invalid"}` : item?.msg;
+      })
+      .filter(Boolean);
+    return parts.length ? parts.join("; ") : "Request failed. Please try again.";
+  }
+  return "Request failed. Please try again.";
+}
+
+function safeUserError(error, fallback) {
+  if (error instanceof TypeError) {
+    return "Unable to reach the API. Check your connection and try again.";
+  }
+  const message = error && error.message ? String(error.message) : "";
+  if (!message) return fallback;
+  if (/failed to fetch|networkerror|load failed/i.test(message)) {
+    return "Unable to reach the API. Check your connection and try again.";
+  }
+  if (message.startsWith("HTTP ") || message.includes("{")) {
+    return fallback;
+  }
+  if (message.length > 160) return fallback;
+  return message;
+}
+
+function appendRetryButton(feedbackId, onRetry) {
+  const feedback = document.getElementById(feedbackId);
+  if (!feedback || feedback.querySelector("[data-retry]")) return;
+  const retry = document.createElement("button");
+  retry.type = "button";
+  retry.dataset.retry = "1";
+  retry.textContent = "Retry";
+  retry.addEventListener("click", onRetry);
+  feedback.appendChild(document.createTextNode(" "));
+  feedback.appendChild(retry);
 }
 
 function filteredSuppliers() {
@@ -92,6 +126,8 @@ function renderSuppliersTable() {
 
 async function loadSuppliers() {
   setSupplierFeedback("supplier-list-feedback", "Loading suppliers…");
+  const refreshBtn = document.getElementById("btn-refresh-suppliers");
+  if (refreshBtn) refreshBtn.disabled = true;
   try {
     const response = await fetch(`${API_BASE}/suppliers`);
     const payload = await response.json().catch(() => null);
@@ -106,9 +142,12 @@ async function loadSuppliers() {
     renderSuppliersTable();
     setSupplierFeedback(
       "supplier-list-feedback",
-      `Could not load suppliers. Start the API (npm run dev:api) then refresh. (${error.message})`,
+      "Could not load suppliers. Start the API (npm run dev:api) then use Refresh.",
       true
     );
+    appendRetryButton("supplier-list-feedback", () => loadSuppliers());
+  } finally {
+    if (refreshBtn) refreshBtn.disabled = false;
   }
 }
 
@@ -133,7 +172,10 @@ async function updateSupplierRate(supplierId, rateValue) {
   if (index >= 0) allSuppliers[index] = payload;
   else allSuppliers.push(payload);
   renderSuppliersTable();
-  setSupplierFeedback("supplier-list-feedback", `Updated rate for ${payload.name}.`);
+  setSupplierFeedback(
+    "supplier-list-feedback",
+    `Updated rate for ${payload?.name || "supplier"}.`
+  );
 }
 
 async function updateSupplierStatus(supplierId, status) {
@@ -151,7 +193,10 @@ async function updateSupplierStatus(supplierId, status) {
   if (index >= 0) allSuppliers[index] = payload;
   else allSuppliers.push(payload);
   renderSuppliersTable();
-  setSupplierFeedback("supplier-list-feedback", `${payload.name} is now ${payload.status}.`);
+  setSupplierFeedback(
+    "supplier-list-feedback",
+    `${payload?.name || "Supplier"} is now ${payload?.status || status}.`
+  );
 }
 
 document.getElementById("suppliers-table-body")?.addEventListener("click", async (event) => {
@@ -161,6 +206,7 @@ document.getElementById("suppliers-table-body")?.addEventListener("click", async
   if (!row) return;
   const supplierId = Number(row.dataset.supplierId);
 
+  button.disabled = true;
   try {
     if (button.dataset.action === "update-rate") {
       const input = row.querySelector("input[type='number']");
@@ -170,7 +216,14 @@ document.getElementById("suppliers-table-body")?.addEventListener("click", async
       await updateSupplierStatus(supplierId, button.dataset.nextStatus);
     }
   } catch (error) {
-    setSupplierFeedback("supplier-list-feedback", error.message, true);
+    setSupplierFeedback(
+      "supplier-list-feedback",
+      safeUserError(error, "Could not update supplier. Please try again."),
+      true
+    );
+    appendRetryButton("supplier-list-feedback", () => loadSuppliers());
+  } finally {
+    button.disabled = false;
   }
 });
 
@@ -235,6 +288,8 @@ document.getElementById("supplier-create-form")?.addEventListener("submit", asyn
   if (notes) body.notes = notes;
 
   setSupplierFeedback("supplier-form-feedback", "Creating supplier…");
+  const submitButton = form.querySelector('button[type="submit"]');
+  if (submitButton) submitButton.disabled = true;
   try {
     const response = await fetch(`${API_BASE}/suppliers`, {
       method: "POST",
@@ -248,10 +303,20 @@ document.getElementById("supplier-create-form")?.addEventListener("submit", asyn
     allSuppliers.push(payload);
     renderSuppliersTable();
     form.reset();
-    document.getElementById("supplier-currency").value = "COP";
-    setSupplierFeedback("supplier-form-feedback", `Created ${payload.name}.`);
+    const currencyEl = document.getElementById("supplier-currency");
+    if (currencyEl) currencyEl.value = "COP";
+    setSupplierFeedback("supplier-form-feedback", `Created ${payload?.name || "supplier"}.`);
   } catch (error) {
-    setSupplierFeedback("supplier-form-feedback", error.message, true);
+    setSupplierFeedback(
+      "supplier-form-feedback",
+      safeUserError(error, "Could not create supplier. Please try again."),
+      true
+    );
+    appendRetryButton("supplier-form-feedback", () => {
+      form.requestSubmit();
+    });
+  } finally {
+    if (submitButton) submitButton.disabled = false;
   }
 });
 
