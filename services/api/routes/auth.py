@@ -67,7 +67,13 @@ def login(payload: LoginRequest) -> TokenResponse:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
         )
-    token = create_access_token(user["id"], {"role": user.get("role", "user")})
+    token = create_access_token(
+        user["id"],
+        {
+            "role": user.get("role", "user"),
+            "tv": int(user.get("token_version", 0)),
+        },
+    )
     return TokenResponse(access_token=token)
 
 
@@ -117,8 +123,12 @@ def reset_password(payload: ResetPasswordRequest) -> dict:
         raise HTTPException(status_code=400, detail="Invalid or expired reset token")
 
     try:
+        next_tv = int(rows[0].get("token_version", 0)) + 1
         users_table.update(
-            {"hashed_password": hash_password(payload.new_password)},
+            {
+                "hashed_password": hash_password(payload.new_password),
+                "token_version": next_tv,
+            },
             doc_ids=[rows[0].doc_id],
         )
     except OSError as exc:
@@ -143,8 +153,12 @@ def change_password(
     if not rows:
         raise HTTPException(status_code=404, detail="User not found")
     try:
+        next_tv = int(current_user.get("token_version", 0)) + 1
         users_table.update(
-            {"hashed_password": hash_password(payload.new_password)},
+            {
+                "hashed_password": hash_password(payload.new_password),
+                "token_version": next_tv,
+            },
             doc_ids=[rows[0].doc_id],
         )
     except OSError as exc:
