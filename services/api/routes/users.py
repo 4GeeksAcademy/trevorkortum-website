@@ -65,6 +65,7 @@ def create_user(payload: UserCreate) -> MeResponse:
         "hashed_password": hash_password(payload.password),
         "is_active": True,
         "role": UserRole.user.value,
+        "token_version": 0,
         "created_at": _now(),
     }
     try:

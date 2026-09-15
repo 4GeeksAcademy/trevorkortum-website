@@ -21,3 +21,5 @@ Copy `.env.example` → `.env`. Supplier and incident routes require Bearer JWT.
 uv sync
 uvicorn main:app --reload --port 8000
 ```
+
+Auth tests: see [TESTING.md](./TESTING.md) (`uv sync --group dev && uv run pytest tests/ -v`).
