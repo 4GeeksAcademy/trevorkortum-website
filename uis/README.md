@@ -25,6 +25,7 @@ UI entry points for Brasaland Digital.
 
 ### `backoffice`
 
-- **Type**: Internal operations overview (incidents, talent, executive panels)
-- **Entry**: `uis/backoffice/index.html`
+- **Type**: Next.js internal operations UI (ingredient inventory)
+- **Entry**: `uis/backoffice` — `/login`, `/backoffice/inventory/*`
 - **Run**: `npm run dev:backoffice` → http://127.0.0.1:3002
+- **Legacy static panels**: `uis/backoffice/legacy/` via `npm run dev:backoffice:legacy` → http://127.0.0.1:3012

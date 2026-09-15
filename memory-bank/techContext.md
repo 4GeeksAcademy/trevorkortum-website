@@ -14,7 +14,7 @@
 ## Monorepo Conventions
 
 - `uis/website`: public Brasaland corporate website for guests, brand storytelling, location discovery, and future ordering/loyalty entry points.
-- `uis/backoffice`: internal Brasaland Digital operations interface for leadership, operations, HR, procurement, and training workflows.
+- `uis/backoffice`: Next.js internal operations UI (ingredient inventory on port 3002); legacy static panels under `uis/backoffice/legacy/`.
 - `services`: backend service placeholders for the future central API, data ingestion, telemetry, integrations, and automation workers.
 - `agents`: product code for runtime AI agents used by Brasaland applications.
 - `skills`: product code for reusable runtime skills used by Brasaland applications.
