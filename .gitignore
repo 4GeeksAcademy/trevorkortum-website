@@ -1,9 +1,16 @@
 .venv/
 services/api/.venv/
 services/api/db.json
-services/api/.env
 uis/portal/.env.local
 __pycache__/
 *.pyc
 .DS_Store
 node_modules/
+.coverage
+**/.coverage
+
+# Secrets — never commit real env files (templates like .env.example stay tracked)
+.env
+.env.*
+!.env.example
+!**/.env.example

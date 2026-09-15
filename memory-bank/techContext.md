@@ -7,8 +7,9 @@
 - Current TypeScript scope: source files under `src/`, compiled to `dist/`.
 - Initial UI delivery: static HTML, CSS, and JavaScript app shells under `uis/` so each product can run independently on `/` while the monorepo architecture matures.
 - Incident analysis API: FastAPI under `services/api`, with shared Python logic in `shared/incident_analysis`.
-- Supplier directory API: TinyDB (`services/api/db.json`) with FastAPI routes in `services/api/routes/suppliers.py`, models in `services/api/models.py`, seeded via `uv run seed`.
+- Supplier directory API: TinyDB (`services/api/db.json`) with FastAPI routes in `services/api/routes/suppliers.py`, Pydantic schemas in `services/api/api_schemas.py`, seeded via `uv run seed`.
 - Auth API: TinyDB users/profiles + JWT (`python-jose`, `passlib[bcrypt]`); Next.js portal under `uis/portal`.
+- Inventory API: SQLModel on PostgreSQL/Supabase (`DATABASE_URL`) for ingredients/entries/exits (`services/api/models.py` + `schemas.py`); TinyDB remains the auth source of truth for `user_uuid`.
 
 ## Monorepo Conventions
 
