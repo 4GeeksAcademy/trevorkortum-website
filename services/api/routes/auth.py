@@ -9,7 +9,7 @@ from jose import JWTError, jwt
 from tinydb import Query
 
 from database import profiles_table, users_table
-from models import (
+from api_schemas import (
     ChangePasswordRequest,
     ForgotPasswordRequest,
     LoginRequest,

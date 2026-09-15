@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from tinydb import Query
 
 from database import suppliers_table
-from models import SupplierCreate
+from api_schemas import SupplierCreate
 
 SUPPLIERS_SEED = [
     {
@@ -196,5 +196,18 @@ def main() -> None:
     print(f"Inserted {inserted} supplier records.")
 
 
-if __name__ == "__main__":
+def run_all() -> None:
     main()
+    from seed_inventory import seed_inventory
+
+    ok = seed_inventory(exit_on_config_error=False)
+    if not ok:
+        print(
+            "Inventory seed skipped: set a real DATABASE_URL password in .env, then run "
+            "`uv run python seed_inventory.py`.",
+            file=sys.stderr,
+        )
+
+
+if __name__ == "__main__":
+    run_all()

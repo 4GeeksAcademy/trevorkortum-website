@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from pydantic import ValidationError
 
 from database import suppliers_table
-from models import RateUpdate, StatusUpdate, Supplier, SupplierCreate
+from api_schemas import RateUpdate, StatusUpdate, Supplier, SupplierCreate
 from security import get_current_user
 
 router = APIRouter(prefix="/suppliers", tags=["suppliers"])
