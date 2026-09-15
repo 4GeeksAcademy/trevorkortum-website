@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from tinydb import Query
 
 from database import profiles_table
-from models import ProfileOut, ProfileUpdate
+from api_schemas import ProfileOut, ProfileUpdate
 from security import get_current_user, get_profile_by_user_id
 
 router = APIRouter(prefix="/profiles", tags=["profiles"])

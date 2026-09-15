@@ -25,15 +25,20 @@ if str(API_ROOT) not in sys.path:
 if str(SHARED) not in sys.path:
     sys.path.insert(0, str(SHARED))
 
+from database import init_inventory_db  # noqa: E402
 from routes import auth, profiles, suppliers, users  # noqa: E402
 from app.routers import incidents  # noqa: E402
+from routers import inventory as inventory_router  # noqa: E402
 
 logger = logging.getLogger("brasaland.api")
 
 app = FastAPI(
     title="Brasaland Central API",
-    description="Auth, supplier directory, and incident analysis for Brasaland Digital.",
-    version="0.3.0",
+    description=(
+        "Auth (TinyDB), supplier directory, incident analysis, "
+        "and ingredient inventory (SQLModel / Supabase) for Brasaland Digital."
+    ),
+    version="0.4.0",
 )
 
 app.add_middleware(
@@ -58,6 +63,12 @@ app.include_router(users.router)
 app.include_router(profiles.router)
 app.include_router(incidents.router)
 app.include_router(suppliers.router)
+app.include_router(inventory_router.router)
+
+
+@app.on_event("startup")
+def on_startup() -> None:
+    init_inventory_db()
 
 
 @app.exception_handler(Exception)

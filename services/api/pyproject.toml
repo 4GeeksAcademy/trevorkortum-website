@@ -14,6 +14,8 @@ dependencies = [
   "bcrypt<4.1",
   "resend>=2.45.0",
   "python-dotenv>=1.2.1",
+  "sqlmodel>=0.0.22",
+  "psycopg2-binary>=2.9.9",
 ]
 
 [project.scripts]
@@ -24,8 +26,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["app", "routes"]
-py-modules = ["seed", "database", "models", "main", "security"]
+packages = ["app", "routes", "routers"]
+py-modules = ["seed", "database", "main", "security", "schemas", "models", "api_schemas"]
 
 [dependency-groups]
 dev = [

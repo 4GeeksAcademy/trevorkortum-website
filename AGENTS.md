@@ -6,7 +6,7 @@ This repository supports Brasaland Digital, the internal technology team moderni
 
 Every agent session MUST read the following files before proposing code, editing files, or making architectural recommendations:
 
-- `CONTEXT.md`
+- `CONTEXT-agent-memory.md`
 - `memory-bank/projectbrief.md`
 - `memory-bank/techContext.md`
 - `memory-bank/progress.md`
@@ -20,7 +20,7 @@ Before any commit is proposed or created, agents MUST complete these steps in or
 
 ### Step 1: Context Verification & Rule Audit
 
-- Re-read `CONTEXT.md` and all files in `memory-bank/`.
+- Re-read `CONTEXT-agent-memory.md` and all files in `memory-bank/`.
 - Review `.agents/rules/` for always-active and file-pattern-specific rules.
 - Confirm whether the intended changes affect protected paths.
 

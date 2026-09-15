@@ -2,7 +2,7 @@
 
 ## Objective
 
-Add one focused, verifiable backoffice view to `uis/backoffice` that helps Brasaland staff monitor or act on a real operational need from `CONTEXT.md`.
+Add one focused, verifiable backoffice view to `uis/backoffice` that helps Brasaland staff monitor or act on a real operational need from `CONTEXT-agent-memory.md`.
 
 ## Inputs
 

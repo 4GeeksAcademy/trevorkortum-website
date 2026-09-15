@@ -11,7 +11,7 @@ from fastapi.responses import Response
 from tinydb import Query
 
 from database import profiles_table, users_table
-from models import MeResponse, ProfileOut, UserCreate, UserOut, UserRole, UserUpdate
+from api_schemas import MeResponse, ProfileOut, UserCreate, UserOut, UserRole, UserUpdate
 from security import (
     get_current_user,
     get_profile_by_user_id,
