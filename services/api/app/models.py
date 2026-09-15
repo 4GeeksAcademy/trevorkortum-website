@@ -1,6 +1,6 @@
 """Compatibility re-exports for legacy `app.*` imports."""
 
-from models import (
+from api_schemas import (
     COUNTRY_CURRENCY,
     VALID_CATEGORIES,
     Country,
