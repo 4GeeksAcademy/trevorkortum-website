@@ -1,6 +1,13 @@
-# Supplier directory screenshots
+# Screenshots
 
-Evidence for Milestone 09 — Lightweight Storage API (Supplier Directory).
+## Agent memory-bank delivery (`feature/agent-memory-bank`)
+
+| File | Description |
+|------|-------------|
+| `website-corporate-landing.png` | Corporate website at `/` from `uis/website` (Brasaland hero, Medellin–Miami) |
+| `backoffice-operations-overview.png` | Backoffice at `/` from `uis/backoffice` (COP/USD ops metrics, Felipe Guerrero locations table) |
+
+## Supplier directory (Milestone 09)
 
 | File | Description |
 |------|-------------|

@@ -14,6 +14,7 @@ Brasaland Digital is initializing its AI-driven monorepo infrastructure and base
 
 ## Recent Changes
 
+- Added PR delivery screenshots under `docs/screenshots/` for `feature/agent-memory-bank`: `website-corporate-landing.png` (`uis/website`) and `backoffice-operations-overview.png` (`uis/backoffice` with COP/USD and named department leads).
 - Kept root `CONTEXT.md` absent (matching `main`) and placed the full Brasaland company briefing in `CONTEXT-agent-memory.md` on `feature/agent-memory-bank`. Updated `AGENTS.md` and the add-backoffice-view skill to read that file instead.
 - AUTH-088: Per-endpoint pytest files under `services/api/tests/` (30 tests, `--cov-fail-under=70` ≈71%); Jest portal auth tests (`npm --prefix uis/portal test`); root `TESTING.md`; fixed access JWTs surviving password change via `token_version`/`tv`.
 - Error-handling audit remediation on `feature/error-handling-audit`: stopped logging password-reset JWTs; fail-fast when `SECRET_KEY` is the known default outside development; generic 500 handler; sanitized incident/supplier API errors (no filesystem paths / raw exception text); hardened login/register enumeration messages; portal profile load distinguishes 404 vs failure with Retry; forgot-password surfaces network errors; portal/backoffice/application UIs map failures to safe copy and disable in-flight actions; CLI `analyze.py` and `seed.py` exit non-zero with clear messages; shared validator now rejects invalid statuses and redacts PII in analysis payloads by default.
