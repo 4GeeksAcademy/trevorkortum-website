@@ -205,6 +205,15 @@ def get_current_user(
             detail="Invalid or expired token",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    # Reject access tokens minted before the latest password change/reset.
+    claim_tv = payload.get("tv", 0)
+    user_tv = int(user.get("token_version", 0))
+    if claim_tv != user_tv:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     return user
 
 
